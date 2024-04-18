@@ -3,13 +3,17 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import CreationSession from './interface/CreationSession';
 import ConnectionServeur from './interface/ConnectionServeur';
 import DemandeEnvoye from './interface/DemandeEnvoye';
+import ErrorConnection from './interface/ErrorConnection';
+import DemandeAccepter from './interface/DemandeAccepter';
 
 export default function App() {
   return (
     <View style={styles.container}>
       {/* <CreationSession /> */}
       {/* <ConnectionServeur /> */}
-      <DemandeEnvoye />
+      {/* <DemandeEnvoye /> */}
+      {/* <ErrorConnection /> */}
+      <DemandeAccepter />
     </View>
   );
 }
