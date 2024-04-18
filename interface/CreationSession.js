@@ -1,15 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import CreationSession from './interface/CreationSession';
-import ConnectionServeur from './interface/ConnectionServeur';
-import DemandeEnvoye from './interface/DemandeEnvoye';
 
-export default function App() {
+export default function CreationSession() {
   return (
     <View style={styles.container}>
-      {/* <CreationSession /> */}
-      {/* <ConnectionServeur /> */}
-      <DemandeEnvoye />
+      <Text style={styles.text}>cette table n'est pas associée au serveur</Text>
+      <View style={styles.button}>
+        <Button title='associer au serveur' />
+      </View>
     </View>
   );
 }
@@ -20,5 +18,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text:{
+    marginBottom:20,
+  },
+  button:{
+    marginTop:30,
+    padding:6,
+    width:300,
   },
 });
