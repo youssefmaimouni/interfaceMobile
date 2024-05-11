@@ -1,22 +1,36 @@
 import React from 'react';
-import { View,Text ,SafeAreaView,StyleSheet, Button, TouchableOpacity} from 'react-native';
+import { View,Text ,SafeAreaView,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import rapportList from './data.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+const Head = () => (
+    <View style={styles.headContainer}>
+      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Text style={styles.year}>Année universitaire ____-____</Text>
+    </View>
+  );
 export default function Rapp() {
     return (
-      
-        <View style={styles.scrollView}>
+    <View style={styles.container}>
+        
+       <GestureHandlerRootView>
+        <ScrollView style={styles.scrollView}>
+        <Head/>
+        <Text style={styles.title}>Rapport</Text>
+        <TouchableOpacity style={styles.buttonAjout}>
+        <Text style={styles.buttonText}>Ajouter</Text>
+        </TouchableOpacity>
           <FlatList
             data={rapportList}
             renderItem={({ item }) => {
               return (
                 <View style={styles.card} key={item.id}>
                   <Text style={styles.cardText}>{item.titre}</Text>
-                  <View style={styles.con}>
+                  <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.nom}</Text>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Modifier</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.button}>
@@ -28,8 +42,9 @@ export default function Rapp() {
             }}
             keyExtractor={(item, index) => item.id.toString()}
           />
-        </View>
-        
+        </ScrollView>
+       </GestureHandlerRootView> 
+       </View>
     );
   }
   
@@ -40,9 +55,53 @@ export default function Rapp() {
       justifyContent: 'center',
       paddingTop: StatusBar.currentHeight,
     },
+    headContainer: {
+        flex: 1,
+        flexDirection:'row',
+        marginTop:10,
+      },
+      logo: {
+        marginRight:0,
+        marginLeft:5,
+        height:50,
+        width:120,
+            
+      },
+      headContainer: {
+            flex: 1,
+            flexDirection:'row',
+            marginTop:10,
+          },
+          logo: {
+            marginLeft:5,
+            height:50,
+            width:120,
+           
+          },
+          year: {
+            fontSize:13,
+            marginLeft:110,
+            marginTop:20,
+          },
+          title:{
+            fontSize: 30,
+            fontWeight: 'bold', // Police en gras
+            color: 'black', // Couleur bleu clair
+            textAlign: 'center', // Alignement au centre
+            padding:30,
+          },
+          buttonAjout:{
+          flexDirection: 'row',
+          backgroundColor: 'blue', // Change to your desired button color
+          borderRadius: 5,
+          marginTop: 14,
+          marginLeft:300,
+          marginRight:50,
+          padding:5,
+          },
     scrollView: {
-      paddingHorizontal: 16,
-      marginBottom:100,
+      marginBottom:60,
+      marginTop:20,
     },
     card: {
       backgroundColor: 'white',
@@ -51,7 +110,7 @@ export default function Rapp() {
       borderWidth: 1,
       margin:10,
     },
-    con:{
+    contenu:{
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -64,7 +123,7 @@ export default function Rapp() {
     button: {
       flexDirection: 'row',
       backgroundColor: 'blue', // Change to your desired button color
-      padding: 10,
+      padding: 5,
       borderRadius: 5,
       marginTop: 14,
       marginLeft:5,

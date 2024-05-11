@@ -7,7 +7,7 @@ import Acceuil from './interface/navigation/Acceuil';
 import Etudiants from './interface/navigation/Etudiants';
 import Rapp from './interface/navigation/Rapp';
 import Signature from './interface/navigation/Scanner';
-import { Scanner } from './interface/navigation/indexe';
+import { Scanner } from './interface/navigation';
 import PV from './interface/PV';
 
 

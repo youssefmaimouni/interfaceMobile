@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Rapp, Scanner, Signature ,Acceuil,Etudiants} from './navigation/indexe';
+import { Rapp, Scanner, Signature ,Acceuil,Etudiants} from './navigation';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text,StyleSheet,Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
