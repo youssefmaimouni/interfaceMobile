@@ -101,10 +101,11 @@ export default function Seance1() {
 
 const styles=StyleSheet.create({
     page:{
-        height:600
+        flex:1,
+        backgroundColor:'#fff'
     },
     button:{
-        width:210,
+        flex:2
     },
     container:{
         flexDirection:'row'
