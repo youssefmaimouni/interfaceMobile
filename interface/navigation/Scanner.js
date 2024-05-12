@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
-import listeEtudiants from  '../donnee/listeEtudiants.json';
+import listeEtudiants from  '../donnee/listeEtudiants.json'
 
 export default function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -36,11 +36,16 @@ export default function Scanner() {
 
   const handleBarCodeScanned = ({  data }) => {
     setScanned(true);
-    if (recherchEtuadiant(data) && typeof(data)  === 'object') {
-        alert("Etudiant trouvé"+ JSON.stringify(data));
+    try {
+        if (recherchEtuadiant(JSON.parse(data) )) {
+        alert("Etudiant trouvé"+ data);
     }else{
         alert("Etudiant non trouvé");
     }
+    } catch (error) {
+        alert('qr non valide')
+    }
+    
   };
 
   if (hasPermission === null) {
