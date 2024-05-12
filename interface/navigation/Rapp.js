@@ -1,9 +1,12 @@
-import React from 'react';
-import { View,Text ,SafeAreaView,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import rapportList from './data.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+import AddRapp from './AjoutRapport.js';
+import { createStackNavigator } from 'react-navigation-stack';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -11,7 +14,23 @@ const Head = () => (
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
+
+    
+
 export default function Rapp() {
+    const [rapports, setRapports] = useState(rapportList);
+    
+   
+    
+    const handleDelete = async (id) => {
+        try {
+            const updatedRapports = rapports.filter((rapport) => rapport.id !== id);
+            setRapports(updatedRapports);
+        } catch (error) {
+            console.error('Error deleting report:', error);
+        }
+        
+};
     return (
     <View style={styles.container}>
         
@@ -23,7 +42,7 @@ export default function Rapp() {
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
           <FlatList
-            data={rapportList}
+            data={rapports}
             renderItem={({ item }) => {
               return (
                 <View style={styles.card} key={item.id}>
@@ -33,8 +52,8 @@ export default function Rapp() {
                   <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Modifier</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Supprimer</Text>
+                  <TouchableOpacity style={styles.button} onPress={()=> handleDelete(item.id)}>
+                    <Text style={styles.buttonText} >Supprimer</Text>
                   </TouchableOpacity>
                   </View>
                 </View>
@@ -55,6 +74,7 @@ export default function Rapp() {
       justifyContent: 'center',
       paddingTop: StatusBar.currentHeight,
     },
+
     headContainer: {
         flex: 1,
         flexDirection:'row',

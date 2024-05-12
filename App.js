@@ -9,6 +9,7 @@ import Rapp from './interface/navigation/Rapp';
 import Signature from './interface/navigation/Scanner';
 import { Scanner } from './interface/navigation';
 import PV from './interface/PV';
+import AddRapp from './interface/navigation/AjoutRapport';
 
 
 const Tab = createBottomTabNavigator();
@@ -30,6 +31,7 @@ const screenOptions={
 
 export default function App() {
   return (
+    // <AddRapp/>
     <PV />
     // <NavigationContainer>
     //      <Tab.Navigator screenOptions={screenOptions}>

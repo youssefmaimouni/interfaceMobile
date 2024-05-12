@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "numero_immatriculation": "123456",
+      "nom_complet": "Ahmed Al-Farsi"
+    },
+    {
+      "id": 2,
+      "numero_immatriculation": "789012",
+      "nom_complet": "Fatima Khalidi"
+    },
+    {
+      "id": 3,
+      "numero_immatriculation": "345678",
+      "nom_complet": "Ahmed Ben Salah"
+    },
+    {
+      "id": 4,
+      "numero_immatriculation": "901234",
+      "nom_complet": "Layla Nasser"
+    }
+]
