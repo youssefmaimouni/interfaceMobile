@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import listeEtudiants from '../donnee/listeEtudiants.json'; // Importing the listeEtudiants from the JSON file
+const Head = () => (
+    <View style={styles.headContainer}>
+      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Text style={styles.year}>Année universitaire ____-____</Text>
+    </View>
+  );
 
+  
 const Card = ({ item }) => {
   const [isPresent, setIsPresent] = useState(item.estPerson);
 
   const togglePresence = () => {
     setIsPresent(!isPresent);
   };
+
+  
 
   return (
     <View style={styles.card}>
@@ -33,12 +42,16 @@ const Card = ({ item }) => {
 
 export default function Etudiants(){
   return (
-    <FlatList
-      data={listeEtudiants}
-      renderItem={({ item }) => <Card item={item} />}
-      keyExtractor={(item) => item.id_rapport.toString()}
-      contentContainerStyle={styles.container}
-    />
+    <View style={styles.container}>
+      <Head />
+      <Text style={styles.title}>Liste des étudiants</Text>
+      <FlatList
+        data={listeEtudiants}
+        renderItem={({ item }) => <Card item={item} />}
+        keyExtractor={(item) => item.id_rapport.toString()}
+        contentContainerStyle={styles.container}
+      />
+    </View>
   );
 }
 
@@ -86,6 +99,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
   },
+  
 });
 
 

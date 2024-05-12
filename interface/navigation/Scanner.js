@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Button, TouchableOpacity,Image } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
 import listeEtudiants from  '../donnee/listeEtudiants.json'
+import { StatusBar } from "expo-status-bar";
+const Head = () => (
+  <View style={styles.headContainer}>
+    <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+    <Text style={styles.year}>Année universitaire ____-____</Text>
+  </View>
+);
 
 export default function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -62,6 +69,8 @@ export default function Scanner() {
 
   return (
     <View style={styles.container}>
+      <Head />
+    <View>
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
         <CameraView
@@ -81,17 +90,19 @@ export default function Scanner() {
         <Text style={styles.buttonText}>Cliquer pour scanner une autre fois</Text>
       </TouchableOpacity>
       )}
-    </View>
+    </View></View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  barcodebox: {
+container: {
+      flex: 1,
+      backgroundColor: '#f5f5f5',
+      justifyContent: 'center',
+      alignItems:'center',
+      paddingTop: StatusBar.currentHeight,
+      marginBottom:60,
+},barcodebox: {
     height: 350,
     width: 350,
     overflow: 'hidden',
@@ -99,8 +110,7 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     borderWidth: 1,
     backgroundColor: 'black',
-    marginTop:-10
-  },
+},
   maintext: {
     fontSize: 16,
     margin: 20,
@@ -114,4 +124,70 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight:'bold'
 },
+  headContainer: {
+        flex: 1,
+        flexDirection:'row',
+        marginTop:10,
+        paddingTop: StatusBar.currentHeight,
+      },
+      logo: {
+        marginLeft:5,
+        height:50,
+        width:120,
+       
+      },
+      year: {
+        fontSize:13,
+        marginLeft:110,
+        marginTop:20,
+      },
+      title:{
+        fontSize: 30,
+        fontWeight: 'bold', // Police en gras
+        color: 'black', // Couleur bleu clair
+        textAlign: 'center', // Alignement au centre
+        padding:30,
+      },
+      buttonAjout:{
+      flexDirection: 'row',
+      backgroundColor: 'blue', // Change to your desired button color
+      borderRadius: 5,
+      marginTop: 14,
+      marginLeft:300,
+      marginRight:50,
+      padding:5,
+      },
+scrollView: {
+  marginBottom:60,
+  marginTop:20,
+},
+card: {
+  backgroundColor: 'white',
+  padding: 16,
+  borderRadius: 8,
+  borderWidth: 1,
+  margin:10,
+},
+contenu:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+},
+cardText: {
+    flex: 1,
+marginRight: 16,
+  fontSize: 13,
+},
+button: {
+  flexDirection: 'row',
+  backgroundColor: 'blue', // Change to your desired button color
+  padding: 5,
+  borderRadius: 5,
+  marginTop: 14,
+  marginLeft:5,
+},
+buttonText: {
+  color: 'white',
+  textAlign: 'center',
+}
 });

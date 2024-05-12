@@ -16,7 +16,7 @@ export default function Seance1() {
         <View style={styles.container}>
         <TouchableOpacity
           style={styles.buttons1}
-          onPress={()=>navigation.navigate("Seance1")}
+          onPress={()=>navigation.navigate("Seance1")} 
         >
           <Text style={styles.buttonTexts1}>Seance 1</Text>
         </TouchableOpacity>
