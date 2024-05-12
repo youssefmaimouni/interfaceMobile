@@ -80,11 +80,11 @@
     "estPerson": false
   },
   {
-    "code-apogée": 98765,
+    "code-apogée": 98764,
     "nom": "Tazi",
     "prénom": "Salma",
     "numéro-exam": 9,
-    "CNE": "987654",
+    "CNE": "987655",
     "photo": "http://www.fsac.ac.ma/photo/mnopq",
     "id_rapport": 9,
     "estPerson": false
@@ -160,11 +160,11 @@
     "estPerson": false
   },
   {
-    "code-apogée": 98765,
+    "code-apogée": 98769,
     "nom": "Essaadi",
     "prénom": "Youssef",
     "numéro-exam": 17,
-    "CNE": "987654",
+    "CNE": "987656",
     "photo": "http://www.fsac.ac.ma/photo/qrsuv",
     "id_rapport": 17,
     "estPerson": false
@@ -184,7 +184,7 @@
     "nom": "El Jazouli",
     "prénom": "Mehdi",
     "numéro-exam": 19,
-    "CNE": "987654",
+    "CNE": "987649",
     "photo": "http://www.fsac.ac.ma/photo/abcde",
     "id_rapport": 19,
     "estPerson": false

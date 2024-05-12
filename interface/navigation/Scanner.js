@@ -9,7 +9,6 @@ const Head = () => (
     <Text style={styles.year}>Année universitaire ____-____</Text>
   </View>
 );
-
 export default function Scanner() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -69,8 +68,11 @@ export default function Scanner() {
 
   return (
     <View style={styles.container}>
-      <Head />
-    <View>
+       <Head/>
+      <View >
+
+      
+     
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
         <CameraView
@@ -95,14 +97,30 @@ export default function Scanner() {
 }
 
 const styles = StyleSheet.create({
-container: {
-      flex: 1,
-      backgroundColor: '#f5f5f5',
-      justifyContent: 'center',
-      alignItems:'center',
-      paddingTop: StatusBar.currentHeight,
-      marginBottom:60,
-},barcodebox: {
+  container: {
+    flex: 1,
+    marginTop:20,
+    
+  },
+  headContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginLeft: 5, 
+  },
+  logo: {
+    height: 50,
+    width: 120,
+    marginLeft:10,
+  },
+  year: {
+    fontSize: 13,
+    marginLeft: 10, 
+    marginTop: 20,
+    marginLeft:120,
+  },
+  barcodebox: {
+    alignItems: 'center',
+    justifyContent: 'center',
     height: 350,
     width: 350,
     overflow: 'hidden',
@@ -110,84 +128,14 @@ container: {
     borderColor: '#fff',
     borderWidth: 1,
     backgroundColor: 'black',
-},
+    alignSelf:'center'
+    
+  },
   maintext: {
     fontSize: 16,
-    margin: 20,
-  },button: {
-    backgroundColor:'#5600D3',
-    borderRadius: 5,
-    padding: 10,
-    marginTop: 5,
-  },
-  buttonText: {
-    color: '#fff',
+    marginTop:80,
+    alignSelf:'center',
     fontWeight:'bold'
-},
-  headContainer: {
-        flex: 1,
-        flexDirection:'row',
-        marginTop:10,
-        paddingTop: StatusBar.currentHeight,
-      },
-      logo: {
-        marginLeft:5,
-        height:50,
-        width:120,
-       
-      },
-      year: {
-        fontSize:13,
-        marginLeft:110,
-        marginTop:20,
-      },
-      title:{
-        fontSize: 30,
-        fontWeight: 'bold', // Police en gras
-        color: 'black', // Couleur bleu clair
-        textAlign: 'center', // Alignement au centre
-        padding:30,
-      },
-      buttonAjout:{
-      flexDirection: 'row',
-      backgroundColor: 'blue', // Change to your desired button color
-      borderRadius: 5,
-      marginTop: 14,
-      marginLeft:300,
-      marginRight:50,
-      padding:5,
-      },
-scrollView: {
-  marginBottom:60,
-  marginTop:20,
-},
-card: {
-  backgroundColor: 'white',
-  padding: 16,
-  borderRadius: 8,
-  borderWidth: 1,
-  margin:10,
-},
-contenu:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-},
-cardText: {
-    flex: 1,
-marginRight: 16,
-  fontSize: 13,
-},
-button: {
-  flexDirection: 'row',
-  backgroundColor: 'blue', // Change to your desired button color
-  padding: 5,
-  borderRadius: 5,
-  marginTop: 14,
-  marginLeft:5,
-},
-buttonText: {
-  color: 'white',
-  textAlign: 'center',
-}
+    
+  }
 });

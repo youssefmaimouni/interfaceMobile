@@ -41,10 +41,7 @@ export default function Rapp() {
         <TouchableOpacity style={styles.buttonAjout}>
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
-          <FlatList
-            data={rapports}
-            renderItem={({ item }) => {
-              return (
+         {rapports.map( (item)  => (
                 <View style={styles.card} key={item.id}>
                   <Text style={styles.cardText}>{item.titre}</Text>
                   <View style={styles.contenu}>
@@ -57,10 +54,8 @@ export default function Rapp() {
                   </TouchableOpacity>
                   </View>
                 </View>
-              );
-            }}
-            keyExtractor={(item, index) => item.id.toString()}
-          />
+              ))
+            }
         </ScrollView>
        </GestureHandlerRootView> 
        </View>

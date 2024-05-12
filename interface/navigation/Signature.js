@@ -18,10 +18,8 @@ export default function Signature() {
             <ScrollView style={styles.scrollView}>
             <Head/>
             <Text style={styles.title}>liste des surveillants</Text>
-            <FlatList
-            data={surveillants}
-            renderItem={({ item }) => {
-              return (
+          
+          {surveillants.map(( item ) =>(
                 <View style={styles.card} key={item.id}>
                   <Text style={styles.cardText}>{item.numero_immatriculation}</Text>
                   <View style={styles.contenu}>
@@ -31,10 +29,8 @@ export default function Signature() {
                   </TouchableOpacity>
                   </View>
                 </View>
-              );
-            }}
-            keyExtractor={(item, index) => item.id.toString()}
-          />
+              ))}
+            
                  <TouchableOpacity style={styles.button1} >
                     <Text style={styles.buttonText}>liste des reservistes</Text>
                  </TouchableOpacity>
@@ -44,11 +40,11 @@ export default function Signature() {
     );
 }
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-        paddingTop: 5,
-      },
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    justifyContent: 'center',
+  },
       scrollView: {
         marginBottom: 60,
        
@@ -57,17 +53,18 @@ const styles = StyleSheet.create({
       headContainer: {
         flexDirection: 'row',
         marginTop: 10,
-        marginLeft: 5, // Ajustement de la marge
+        marginLeft: 5, 
       },
       logo: {
         height: 50,
         width: 120,
+        marginLeft:10,
       },
       year: {
         fontSize: 13,
-        marginLeft: 10, // Ajustement de la marge
+        marginLeft: 10, 
         marginTop: 20,
-        marginLeft:50,
+        marginLeft:120,
       },
       title: {
         fontSize: 20,

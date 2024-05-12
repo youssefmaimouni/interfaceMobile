@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import listeEtudiants from '../donnee/listeEtudiants.json'; // Importing the listeEtudiants from the JSON file
+import { StatusBar } from 'expo-status-bar';
 const Head = () => (
     <View style={styles.headContainer}>
       <Image source={require('./logofsac.jpeg')} style={styles.logo} />
@@ -43,21 +44,52 @@ const Card = ({ item }) => {
 export default function Etudiants(){
   return (
     <View style={styles.container}>
+      <ScrollView>
       <Head />
-      <Text style={styles.title}>Liste des étudiants</Text>
-      <FlatList
-        data={listeEtudiants}
-        renderItem={({ item }) => <Card item={item} />}
-        keyExtractor={(item) => item.id_rapport.toString()}
-        contentContainerStyle={styles.container}
-      />
+
+        <Text style={styles.title}>Liste des étudiants</Text> 
+      <View>
+      {listeEtudiants.map((item)=>(
+        <Card item={item} key={item['numéro-exam']}/>
+      ))}
+     </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    flex: 1,
+    marginTop:20,
+    
+  },
+  listeEtudiants: {
+    flex:1,
+   marginTop:50
+  },
+  title:{
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 10,
+    alignSelf:'center',
+  },
+  headContainer: {
+    flexDirection: 'row',
+    marginTop: 10,
+    marginLeft: 5, 
+  },
+  logo: {
+    height: 50,
+    width: 120,
+    marginLeft:10,
+  },
+  year: {
+    fontSize: 13,
+    marginLeft: 10, 
+    marginTop: 20,
+    marginLeft:120,
   },
   card: {
     flexDirection: 'row',
@@ -98,7 +130,22 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-  },
+  },headContainer: {
+            flex: 1,
+            flexDirection:'row',
+            marginTop:10,
+          },
+          logo: {
+            marginLeft:5,
+            height:50,
+            width:120,
+           
+          },
+          year: {
+            fontSize:13,
+            marginLeft:110,
+            marginTop:20,
+          },
   
 });
 
