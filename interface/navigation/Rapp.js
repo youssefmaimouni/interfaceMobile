@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import rapportList from './data.json';
+import rapportList from './data/rapport.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View,Text, StyleSheet, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import surveillants from './surveillant.json';  
+import surveillants from './data/surveillant.json';  
 
 const Head = () => (
     <View style={styles.headContainer}>
