@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Text, View, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
 import listeEtudiants from  '../donnee/listeEtudiants.json'
 
@@ -49,7 +49,7 @@ export default function Scanner() {
   };
 
   if (hasPermission === null) {
-    return <Text>Demande pour la permission d'accéder à la caméra</Text>; // Corrected typo
+    return <Text>Demande pour la permission d'accéder à la caméra</Text>; 
   }
   if (hasPermission === false) {
     return (
@@ -74,7 +74,12 @@ export default function Scanner() {
       </View>
 
       {scanned && (
-        <Button title={"Cliquer pour scanner une autre fois"} onPress={() => setScanned(false)} />
+        <TouchableOpacity
+        style={styles.button}
+        onPress={() => setScanned(false)}
+      >
+        <Text style={styles.buttonText}>Cliquer pour scanner une autre fois</Text>
+      </TouchableOpacity>
       )}
     </View>
   );
@@ -87,18 +92,26 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   barcodebox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 300,
-    width: 300,
+    height: 350,
+    width: 350,
     overflow: 'hidden',
     borderRadius: 30,
     borderColor: '#fff',
     borderWidth: 1,
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    marginTop:-10
   },
   maintext: {
     fontSize: 16,
     margin: 20,
-  }
+  },button: {
+    backgroundColor:'#5600D3',
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight:'bold'
+},
 });
