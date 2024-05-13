@@ -12,9 +12,13 @@ const Head = () => (
   
 const Card = ({ item }) => {
   const [isPresent, setIsPresent] = useState(item.estPerson);
+  const [isReppored, setIsReppored] = useState(item.estPerson);
 
   const togglePresence = () => {
     setIsPresent(!isPresent);
+  };
+  const togglePresenceR = () => {
+    setIsReppored(!isReppored);
   };
 
   
@@ -34,6 +38,12 @@ const Card = ({ item }) => {
           onPress={togglePresence}
         >
           <Text style={styles.buttonText}>{isPresent ? 'Présent' : 'Absent'}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, isReppored ?  styles.nonRepporedButton: styles.reppordButton]}
+          onPress={togglePresenceR}
+        >
+          <Text style={styles.buttonText}>{isReppored ? 'dega rapporée' :'fait Rapport' }</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -127,6 +137,12 @@ const styles = StyleSheet.create({
   },
   absentButton: {
     backgroundColor: 'red',
+  },
+  reppordButton: {
+    backgroundColor: 'red',
+  },
+  nonRepporedButton: {
+    backgroundColor: 'blue',
   },
   buttonText: {
     color: '#fff',

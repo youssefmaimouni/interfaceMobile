@@ -148,7 +148,7 @@ const styles=StyleSheet.create({
         height :65,
         width :65,
         backgroundColor:'#002257',
-        borderRadius:10 ,
+        borderTopEndRadius:10 ,
     },
     nonfocused:{
         alignItems:"center" ,
