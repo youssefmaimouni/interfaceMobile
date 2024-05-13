@@ -27,19 +27,20 @@ export default function Seance2() {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
         </View>
-         <Tab.Navigator screenOptions={({root}) => ({
+        <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
             tabBarStyle:{
                 position:'absolute',
-                height:65,
+                height:68,
                 bottom:0,
                 right:0,
                 left:0,
                 elevation:0,
                 borderRadius:5,
-                backgroundColor:Colors.primary,
+                backgroundColor:'#f5f5f5',
                 borderTopWidth:1,
+                borderColor:'#78909c'
        }})
      }
     initialRouteName='Acceuil'>
@@ -49,7 +50,7 @@ export default function Seance2() {
                     
                     <View style={[focused ? styles.focused : styles.nonfocused]}>
                      <FontAwesome name="file-text-o" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>
+                     {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>}
                 </View>
                 )
             }
@@ -60,7 +61,7 @@ export default function Seance2() {
 
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
                    <MaterialCommunityIcons name="qrcode-scan" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
                 </View>
                 )
             }
@@ -73,7 +74,7 @@ export default function Seance2() {
 
                <View style={[focused ? styles.focused : styles.nonfocused]} >
                    <Entypo name='home' size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                   <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>}
                </View>
                )
            }
@@ -85,7 +86,7 @@ export default function Seance2() {
                           
                           <View style={[focused ? styles.focused : styles.nonfocused]} >
                         <Fontisto name="persons" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                         <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>
+                        {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
                      </View>
                      )
                  }
@@ -98,7 +99,7 @@ export default function Seance2() {
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
                     
                     <FontAwesome5 name="signature" size={24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>
+                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
                 </View>
                 )
             }
@@ -118,49 +119,48 @@ const styles=StyleSheet.create({
         backgroundColor:'#fff'
     },
     buttons2: {
-        alignSelf: 'flex-start',
-        backgroundColor:'gray',
-        padding: 10,
-        marginTop: 10,
-        flex:2
+      alignSelf: 'flex-start',
+      backgroundColor:'#b0bec5',
+      padding: 10,
+      flex:2
       },
       buttons1: {
         alignSelf: 'flex-start',
-        backgroundColor:'#5600D3',
+        backgroundColor:'#5B8BCE',
         padding: 10,
-        marginTop: 10,
         flex:2
       },
       buttonTexts2: {
-        color: '#fff',
+        color: '#90a4ae',
         fontWeight:'bold'
     },
     buttonTexts1: {
-        color: '',
+        color: '#455a64',
         fontWeight:'bold'
       },
     container:{
         flexDirection:'row',
     },
     focused:{
-        alignItems:"center" ,
-        justifyContent:"center",
-        height :65,
-        width :65,
-        backgroundColor:'#002257',
-        borderTopEndRadius:10 ,
-    },
-    nonfocused:{
-        alignItems:"center" ,
-        justifyContent:"center",
-        height :60,
-        width :60,
-        
-    },
-    colorIconFocus:{
-        color:'#00D3BF',
-    },
-    colorIconNonFocus:{
-        color:'#000',
-    }
+      alignItems:"center" ,
+      justifyContent:"center",
+      height :65,
+      width :65,
+      backgroundColor:'#8AABF7',
+      borderRadius:40 ,
+  },
+  nonfocused:{
+      alignItems:"center" ,
+      justifyContent:"center",
+      height :60,
+      width :60,
+      
+  },
+  colorIconFocus:{
+      color:'#546e7a',
+
+  },
+  colorIconNonFocus:{
+      color:'#B6DEF6',
+  }
 })

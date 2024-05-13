@@ -32,14 +32,15 @@ export default function Seance1() {
             headerShown:false,
             tabBarStyle:{
                 position:'absolute',
-                height:65,
+                height:68,
                 bottom:0,
                 right:0,
                 left:0,
                 elevation:0,
                 borderRadius:5,
-                backgroundColor:Colors.primary,
+                backgroundColor:'#f5f5f5',
                 borderTopWidth:1,
+                borderColor:'#78909c'
        }})
      }
     initialRouteName='Acceuil'>
@@ -49,7 +50,7 @@ export default function Seance1() {
                     
                     <View style={[focused ? styles.focused : styles.nonfocused]}>
                      <FontAwesome name="file-text-o" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>
+                     {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>}
                 </View>
                 )
             }
@@ -60,7 +61,7 @@ export default function Seance1() {
 
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
                    <MaterialCommunityIcons name="qrcode-scan" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
                 </View>
                 )
             }
@@ -73,7 +74,7 @@ export default function Seance1() {
 
                <View style={[focused ? styles.focused : styles.nonfocused]} >
                    <Entypo name='home' size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                   <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>}
                </View>
                )
            }
@@ -85,7 +86,7 @@ export default function Seance1() {
                           
                           <View style={[focused ? styles.focused : styles.nonfocused]} >
                         <Fontisto name="persons" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                         <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>
+                        {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
                      </View>
                      )
                  }
@@ -98,7 +99,7 @@ export default function Seance1() {
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
                     
                     <FontAwesome5 name="signature" size={24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
-                    <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>
+                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
                 </View>
                 )
             }
@@ -119,24 +120,22 @@ const styles=StyleSheet.create({
     },
     buttons1: {
         alignSelf: 'flex-start',
-        backgroundColor:'gray',
+        backgroundColor:'#b0bec5',
         padding: 10,
-        marginTop: 10,
         flex:2
       },
       buttons2: {
         alignSelf: 'flex-start',
-        backgroundColor:'#5600D3',
+        backgroundColor:'#5B8BCE',
         padding: 10,
-        marginTop: 10,
         flex:2
       },
       buttonTexts1: {
-        color: '#fff',
+        color: '#90a4ae',
         fontWeight:'bold'
     },
     buttonTexts2: {
-        color: '#11DBFC',
+        color: '#455a64',
         fontWeight:'bold'
       },
     container:{
@@ -147,8 +146,8 @@ const styles=StyleSheet.create({
         justifyContent:"center",
         height :65,
         width :65,
-        backgroundColor:'#002257',
-        borderRadius:10 ,
+        backgroundColor:'#8AABF7',
+        borderRadius:40 ,
     },
     nonfocused:{
         alignItems:"center" ,
@@ -158,9 +157,10 @@ const styles=StyleSheet.create({
         
     },
     colorIconFocus:{
-        color:'#00D3BF',
+        color:'#546e7a',
+
     },
     colorIconNonFocus:{
-        color:'#000',
+        color:'#B6DEF6',
     }
 })

@@ -49,7 +49,7 @@ export default function Rapp() {
                   <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Modifier</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button} onPress={()=> handleDelete(item.id)}>
+                  <TouchableOpacity style={styles.button1} onPress={()=> handleDelete(item.id)}>
                     <Text style={styles.buttonText} >Supprimer</Text>
                   </TouchableOpacity>
                   </View>
@@ -107,7 +107,7 @@ export default function Rapp() {
           },
           buttonAjout:{
           flexDirection: 'row',
-          backgroundColor: 'blue', // Change to your desired button color
+          backgroundColor: '#1b5e20', // Change to your desired button color
           borderRadius: 5,
           marginTop: 14,
           marginLeft:300,
@@ -116,7 +116,7 @@ export default function Rapp() {
           },
     scrollView: {
       marginBottom:60,
-      marginTop:20,
+      marginTop:10,
     },
     card: {
       backgroundColor: 'white',
@@ -135,9 +135,17 @@ export default function Rapp() {
     marginRight: 16,
       fontSize: 13,
     },
+    button1: {
+      flexDirection: 'row',
+      backgroundColor: '#b71c1c', // Change to your desired button color
+      padding: 5,
+      borderRadius: 5,
+      marginTop: 14,
+      marginLeft:5,
+    },
     button: {
       flexDirection: 'row',
-      backgroundColor: 'blue', // Change to your desired button color
+      backgroundColor: '#01579b', // Change to your desired button color
       padding: 5,
       borderRadius: 5,
       marginTop: 14,

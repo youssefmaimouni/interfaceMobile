@@ -99,7 +99,7 @@ export default function Scanner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:20,
+    marginTop:10,
     
   },
   headContainer: {
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
   logo: {
     height: 50,
     width: 120,
-    marginLeft:10,
   },
   year: {
     fontSize: 13,
@@ -133,9 +132,19 @@ const styles = StyleSheet.create({
   },
   maintext: {
     fontSize: 16,
-    marginTop:80,
+    marginBottom:10,
+    marginTop:60,
     alignSelf:'center',
     fontWeight:'bold'
-    
-  }
+  },buttonText:{
+    fontSize: 16,
+    alignSelf:'center',
+    color :'#fff'
+  },button: {
+        alignSelf: 'center',
+        backgroundColor:'#1b5e20',
+        padding: 10,
+        marginTop: 10,
+        borderRadius:10
+  },
 });

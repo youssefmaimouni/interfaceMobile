@@ -47,8 +47,7 @@ const styles = StyleSheet.create({
   },
       scrollView: {
         marginBottom: 60,
-       
-        paddingHorizontal: 10, // Ajout pour éviter les débordements horizontaux
+        marginTop:10,
       },
       headContainer: {
         flexDirection: 'row',
@@ -58,18 +57,18 @@ const styles = StyleSheet.create({
       logo: {
         height: 50,
         width: 120,
-        marginLeft:10,
       },
       year: {
-        fontSize: 13,
-        marginLeft: 10, 
-        marginTop: 20,
-        marginLeft:120,
+        fontSize:13,
+        marginLeft:110,
+        marginTop:20,
       },
       title: {
         fontSize: 20,
         color: 'black',
         paddingTop: 50,
+        fontWeight:'bold',
+        alignSelf:'center'
       },
       card: {
         backgroundColor: 'white',
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
       },
       button: {
         flexDirection: 'row',
-        backgroundColor: 'blue', 
+        backgroundColor: '#01579b', 
         padding: 5,
         borderRadius: 5,
         marginTop: 14,
@@ -101,7 +100,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
       },
       button1: {
-        backgroundColor: 'blue', 
+        backgroundColor: '#01579b', 
         padding: 5,
         borderRadius: 5,
         margin: 14,

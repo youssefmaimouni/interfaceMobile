@@ -26,13 +26,14 @@ const Card = ({ item }) => {
   return (
     <View style={styles.card}>
       <Image
-        source={require('../fsacLogo.png')}
+        source={require('../acceuil.png')}
         style={styles.image}
       />
       <View style={styles.cardContent}>
         <Text style={styles.name}>{item.nom} {item.prénom}</Text>
         <Text>Code Apogée: {item['code-apogée']}</Text>
         <Text>CNE: {item.CNE}</Text>
+        <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
         <TouchableOpacity
           style={[styles.button, isPresent ? styles.presentButton : styles.absentButton]}
           onPress={togglePresence}
@@ -43,9 +44,9 @@ const Card = ({ item }) => {
           style={[styles.button, isReppored ?  styles.nonRepporedButton: styles.reppordButton]}
           onPress={togglePresenceR}
         >
-          <Text style={styles.buttonText}>{isReppored ? 'dega rapporée' :'fait Rapport' }</Text>
+          <Text style={styles.buttonText}>{isReppored ? 'modifier Rapport' :'fait Rapport' }</Text>
         </TouchableOpacity>
-      </View>
+      </View></View>
     </View>
   );
 };
@@ -54,15 +55,14 @@ const Card = ({ item }) => {
 export default function Etudiants(){
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollView}> 
       <Head />
 
-        <Text style={styles.title}>Liste des étudiants</Text> 
-      <View>
+        <Text style={styles.title}>Liste des étudiants</Text>
       {listeEtudiants.map((item)=>(
         <Card item={item} key={item['numéro-exam']}/>
       ))}
-     </View>
+    
       </ScrollView>
     </View>
   );
@@ -71,12 +71,6 @@ export default function Etudiants(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:20,
-    
-  },
-  listeEtudiants: {
-    flex:1,
-   marginTop:50
   },
   title:{
     fontSize: 20,
@@ -127,22 +121,22 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
-    alignSelf: 'flex-start',
-    padding: 10,
+    alignSelf: 'center',
+    padding: 8,
     borderRadius: 5,
-    marginTop: 10,
+    margin: 10,
   },
   presentButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#1b5e20',
   },
   absentButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#b71c1c',
   },
   reppordButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#b71c1c',
   },
   nonRepporedButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#01579b',
   },
   buttonText: {
     color: '#fff',
@@ -161,7 +155,10 @@ const styles = StyleSheet.create({
             fontSize:13,
             marginLeft:110,
             marginTop:20,
-          },
+          },scrollView: {
+            marginBottom:60,
+            marginTop:10,
+          }
   
 });
 
