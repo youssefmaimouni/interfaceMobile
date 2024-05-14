@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity,Image, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Button, TouchableOpacity,Image, ScrollView, Modal } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
-import { StatusBar } from "expo-status-bar";
+import { useEtudiants } from "./dataScreen";
 const Head = () => (
   <View style={styles.headContainer}>
     <Image source={require('./logofsac.jpeg')} style={styles.logo} />
     <Text style={styles.year}>Année universitaire ____-____</Text>
   </View>
 );
-export default function Scanner({route}) {
-  const {listeEtudiants,setListeEtudiants}=route.params;
+export default function Scanner() {
+  const { listeEtudiants, setListeEtudiants } = useEtudiants();
+  const [modalVisible, setModalVisible] =useState(false);
+  const [scannedData, setScannedData] = useState({});
 
   const updateObject = (updatedValues) => {
     const updatedArray = listeEtudiants.map((item) => {
@@ -41,16 +43,20 @@ if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom']
   const recherchEtuadiant = (data)=>{
     return listeEtudiants.some(element => isEqual(element, data));
   }
+  const verificationEtudiant=()=>{  
+        updateObject(scannedData);
+        setModalVisible(false);
+}
   
 
-  const handleBarCodeScanned = ({  data },updateObject) => {
+  const handleBarCodeScanned = ({  data }) => {
     setScanned(true);
     try{
         if (recherchEtuadiant(JSON.parse(data) )) {
           data=JSON.parse(data);
           data.estPerson = true;
-          updateObject(data);
-          alert("Etudiant trouvé"+JSON.stringify(data));
+          setScannedData(data);
+          setModalVisible(true);
     }else{
         alert("Etudiant non trouvé");
     }
@@ -81,7 +87,7 @@ if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom']
      
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
-      <CameraView
+      {!modalVisible &&  <CameraView
   onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
   barcodeScannerSettings={{
     barcodeTypes: ["qr"],
@@ -89,10 +95,37 @@ if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom']
   style={StyleSheet.absoluteFillObject}
   // Pass updateObject as a prop
   updateObject={updateObject}
-/>
+/> }
+        
+       {modalVisible && <View style={styles.card}>
+        <Image
+          source={require('../acceuil.png')}
+          style={styles.image}
+        />
+        <View style={styles.cardContent}>
+        <Text style={styles.name}>{scannedData.nom && scannedData.prénom ? `${scannedData.nom} ${scannedData.prénom}` : ''}</Text>
+      <Text>Code Apogée: {scannedData['code-apogée'] || ''}</Text>
+      <Text>CNE: {scannedData.CNE || ''}</Text>
+      <Text>Numéro exam: {scannedData['numéro-exam'] || ''}</Text>
+          </View>
+          <View style={{flexDirection:'row'}}>
+          <TouchableOpacity
+            style={styles.buttonRapp}
+            onPress={()=>setModalVisible(false)}
+          >
+            <Text style={styles.buttonText}>rapport</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonVer}
+            onPress={verificationEtudiant}
+          >
+            <Text style={styles.buttonText}>verifier</Text>
+          </TouchableOpacity>
+      </View>
+      </View>}
       </View>
 
-      {scanned && (
+      {(scanned && !modalVisible) && (
         <TouchableOpacity
         style={styles.button}
         onPress={() => setScanned(false)}
@@ -101,13 +134,6 @@ if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom']
       </TouchableOpacity>
       )}
     </View>
-    <ScrollView style={{alignSelf:'center'}}>
-              {
-                listeEtudiants.map((item)=>(
-                  <Text>{JSON.stringify(item.estPerson)}</Text>
-                ))
-              }
-            </ScrollView>
     </View>
   );
 }
@@ -148,7 +174,7 @@ const styles = StyleSheet.create({
   },
   maintext: {
     fontSize: 16,
-    marginBottom:10,
+    marginBottom:15,
     marginTop:60,
     alignSelf:'center',
     fontWeight:'bold'
@@ -162,5 +188,41 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         borderRadius:10
+  },card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 350,
+    width: 350,
+    borderRadius: 30,
+    borderColor: '#000',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    alignSelf:'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+  },buttonVer: {
+    alignSelf: 'flex-end',
+    backgroundColor:'#1b5e20',
+    padding: 10,
+    margin: 20,
+    borderRadius:10
+},buttonRapp: {
+    alignSelf: 'flex-start',
+    backgroundColor:'#01579b',
+    padding: 10,
+    margin: 20,
+    borderRadius:10
+},name: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 5,
+}
 });

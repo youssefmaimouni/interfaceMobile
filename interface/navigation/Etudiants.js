@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useEtudiants } from './dataScreen';
+
 const Head = () => (
     <View style={styles.headContainer}>
       <Image source={require('./logofsac.jpeg')} style={styles.logo} />
@@ -8,8 +9,8 @@ const Head = () => (
     </View>
   );
 
-export default function Etudiants({route}){
-   const {listeEtudiants,setListeEtudiants}=route.params;
+export default function Etudiants(){
+  const { listeEtudiants, setListeEtudiants } = useEtudiants();
   const updateObject = (updatedValues) => {
     const updatedArray = listeEtudiants.map((item) => {
       if (updatedValues===item) {
@@ -54,6 +55,7 @@ export default function Etudiants({route}){
           <Text style={styles.name}>{item.nom} {item.prénom}</Text>
           <Text>Code Apogée: {item['code-apogée']}</Text>
           <Text>CNE: {item.CNE}</Text>
+          <Text>numéro exam: {item['numéro-exam']}</Text>
           <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
           <TouchableOpacity
             style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}

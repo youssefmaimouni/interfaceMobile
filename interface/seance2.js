@@ -3,333 +3,332 @@ import { Rapp, Scanner, Signature ,Acceuil,Etudiants} from './navigation';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, Button,StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { LogBox } from 'react-native';
+import { EtudiantsProvider } from './navigation/dataScreen';
 
-
-
-
-LogBox.ignoreLogs([
-  'Non-serializable values were found in the navigation state',
-]);
 
 
 
 const Tab = createBottomTabNavigator();
 const seance='seance 2';
 
+
+
 export default function Seance2() {
   const [listeEtudiants,setListeEtudiants]=useState([
     {
-      "code-apogée": 12345,
-      "nom": "El Amrani",
-      "prénom": "Fatima",
+      "code-apogée": 10001,
+      "nom": "Ait Hamou",
+      "prénom": "Karim",
       "numéro-exam": 1,
-      "CNE": "123456",
-      "photo": "http://www.fsac.ac.ma/photo/abcde",
+      "CNE": "100021",
+      "photo": "http://www.fsac.ac.ma/photo/abcde1",
       "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 54321,
-      "nom": "Bouazzaoui",
-      "prénom": "Mohammed",
+      "code-apogée": 10002,
+      "nom": "Benkiran",
+      "prénom": "Laila",
       "numéro-exam": 2,
-      "CNE": "654321",
-      "photo": "http://www.fsac.ac.ma/photo/xyzzy",
-      "id_rapport": 2,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 67890,
-      "nom": "Fassi",
-      "prénom": "Nawal",
-      "numéro-exam": 3,
-      "CNE": "987654",
-      "photo": "http://www.fsac.ac.ma/photo/pqrst",
-      "id_rapport": 3,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 45678,
-      "nom": "El Harrak",
-      "prénom": "Youssef",
-      "numéro-exam": 4,
-      "CNE": "456789",
-      "photo": "http://www.fsac.ac.ma/photo/lmnop",
+      "CNE": "100022",
+      "photo": "http://www.fsac.ac.ma/photo/abcde2",
       "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 98765,
-      "nom": "Benchekroun",
-      "prénom": "Khadija",
-      "numéro-exam": 5,
-      "CNE": "987654",
-      "photo": "http://www.fsac.ac.ma/photo/defgh",
-      "id_rapport": 5,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 23456,
-      "nom": "El Khattabi",
-      "prénom": "Ahmed",
-      "numéro-exam": 6,
-      "CNE": "234567",
-      "photo": "http://www.fsac.ac.ma/photo/ghijk",
-      "id_rapport": 6,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 34567,
+      "code-apogée": 10003,
       "nom": "Chraibi",
-      "prénom": "Amina",
-      "numéro-exam": 7,
-      "CNE": "345678",
-      "photo": "http://www.fsac.ac.ma/photo/abcde",
-      "id_rapport": 7,
+      "prénom": "Amal",
+      "numéro-exam": 3,
+      "CNE": "100023",
+      "photo": "http://www.fsac.ac.ma/photo/abcde3",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 87654,
-      "nom": "El Amine",
+      "code-apogée": 10004,
+      "nom": "Doukkali",
+      "prénom": "Yassine",
+      "numéro-exam": 4,
+      "CNE": "100024",
+      "photo": "http://www.fsac.ac.ma/photo/abcde4",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10005,
+      "nom": "Essaadi",
+      "prénom": "Fatima",
+      "numéro-exam": 5,
+      "CNE": "100025",
+      "photo": "http://www.fsac.ac.ma/photo/abcde5",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10006,
+      "nom": "Fassi",
+      "prénom": "Sofia",
+      "numéro-exam": 6,
+      "CNE": "100026",
+      "photo": "http://www.fsac.ac.ma/photo/abcde6",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10007,
+      "nom": "Guennoun",
+      "prénom": "Mohamed",
+      "numéro-exam": 7,
+      "CNE": "100027",
+      "photo": "http://www.fsac.ac.ma/photo/abcde7",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10008,
+      "nom": "Haddad",
       "prénom": "Omar",
       "numéro-exam": 8,
-      "CNE": "876543",
-      "photo": "http://www.fsac.ac.ma/photo/jklmn",
-      "id_rapport": 8,
+      "CNE": "100028",
+      "photo": "http://www.fsac.ac.ma/photo/abcde8",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 98764,
-      "nom": "Tazi",
-      "prénom": "Salma",
+      "code-apogée": 10009,
+      "nom": "Ihssane",
+      "prénom": "Imane",
       "numéro-exam": 9,
-      "CNE": "987655",
-      "photo": "http://www.fsac.ac.ma/photo/mnopq",
-      "id_rapport": 9,
+      "CNE": "100029",
+      "photo": "http://www.fsac.ac.ma/photo/abcde9",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 76543,
-      "nom": "El Khadir",
-      "prénom": "Mohamed",
+      "code-apogée": 10010,
+      "nom": "Jabri",
+      "prénom": "Ali",
       "numéro-exam": 10,
-      "CNE": "765432",
-      "photo": "http://www.fsac.ac.ma/photo/qrsuv",
-      "id_rapport": 10,
+      "CNE": "100030",
+      "photo": "http://www.fsac.ac.ma/photo/abcde10",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 23456,
-      "nom": "Lahlou",
-      "prénom": "Fadwa",
-      "numéro-exam": 11,
-      "CNE": "654321",
-      "photo": "http://www.fsac.ac.ma/photo/tuvwx",
-      "id_rapport": 11,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 54321,
-      "nom": "Bounou",
-      "prénom": "Houda",
-      "numéro-exam": 12,
-      "CNE": "543219",
-      "photo": "http://www.fsac.ac.ma/photo/efghi",
-      "id_rapport": 12,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 23456,
-      "nom": "Hassani",
-      "prénom": "Othmane",
-      "numéro-exam": 13,
-      "CNE": "234567",
-      "photo": "http://www.fsac.ac.ma/photo/ijklm",
-      "id_rapport": 13,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 43219,
-      "nom": "Ezzahraoui",
-      "prénom": "Sanaa",
-      "numéro-exam": 14,
-      "CNE": "432198",
-      "photo": "http://www.fsac.ac.ma/photo/mnopq",
-      "id_rapport": 14,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 98765,
-      "nom": "El Hadri",
-      "prénom": "Fatima Zahra",
-      "numéro-exam": 15,
-      "CNE": "321987",
-      "photo": "http://www.fsac.ac.ma/photo/xyzzy",
-      "id_rapport": 15,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 87654,
-      "nom": "El Ghazi",
-      "prénom": "Yasmine",
-      "numéro-exam": 16,
-      "CNE": "876543",
-      "photo": "http://www.fsac.ac.ma/photo/uvwxy",
-      "id_rapport": 16,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 98769,
-      "nom": "Essaadi",
-      "prénom": "Youssef",
-      "numéro-exam": 17,
-      "CNE": "987656",
-      "photo": "http://www.fsac.ac.ma/photo/qrsuv",
-      "id_rapport": 17,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 87654,
-      "nom": "El Mekki",
+      "code-apogée": 10011,
+      "nom": "Kabbaj",
       "prénom": "Sara",
+      "numéro-exam": 11,
+      "CNE": "100031",
+      "photo": "http://www.fsac.ac.ma/photo/abcde11",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10012,
+      "nom": "Lahmadi",
+      "prénom": "Jamal",
+      "numéro-exam": 12,
+      "CNE": "100032",
+      "photo": "http://www.fsac.ac.ma/photo/abcde12",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10013,
+      "nom": "Maaroufi",
+      "prénom": "Khalid",
+      "numéro-exam": 13,
+      "CNE": "100033",
+      "photo": "http://www.fsac.ac.ma/photo/abcde13",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10014,
+      "nom": "Naciri",
+      "prénom": "Loubna",
+      "numéro-exam": 14,
+      "CNE": "100034",
+      "photo": "http://www.fsac.ac.ma/photo/abcde14",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10015,
+      "nom": "Ouazzani",
+      "prénom": "Hassan",
+      "numéro-exam": 15,
+      "CNE": "100035",
+      "photo": "http://www.fsac.ac.ma/photo/abcde15",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10016,
+      "nom": "Qotbi",
+      "prénom": "Rachid",
+      "numéro-exam": 16,
+      "CNE": "100036",
+      "photo": "http://www.fsac.ac.ma/photo/abcde16",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10017,
+      "nom": "Rahmouni",
+      "prénom": "Ilham",
+      "numéro-exam": 17,
+      "CNE": "100037",
+      "photo": "http://www.fsac.ac.ma/photo/abcde17",
+      "id_rapport": null,
+      "estPerson": false
+    },
+    {
+      "code-apogée": 10018,
+      "nom": "Saadi",
+      "prénom": "Youssef",
       "numéro-exam": 18,
-      "CNE": "876543",
-      "photo": "http://www.fsac.ac.ma/photo/ghijk",
-      "id_rapport": 18,
+      "CNE": "100038",
+      "photo": "http://www.fsac.ac.ma/photo/abcde18",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 12345,
-      "nom": "El Jazouli",
-      "prénom": "Mehdi",
+      "code-apogée": 10019,
+      "nom": "Tazi",
+      "prénom": "Nora",
       "numéro-exam": 19,
-      "CNE": "987649",
-      "photo": "http://www.fsac.ac.ma/photo/abcde",
-      "id_rapport": 19,
+      "CNE": "100039",
+      "photo": "http://www.fsac.ac.ma/photo/abcde19",
+      "id_rapport": null,
       "estPerson": false
     },
     {
-      "code-apogée": 98765,
-      "nom": "El Fassi",
-      "prénom": "Nada",
+      "code-apogée": 10020,
+      "nom": "Uzziel",
+      "prénom": "Imane",
       "numéro-exam": 20,
-      "CNE": "876543",
-      "photo": "http://www.fsac.ac.ma/photo/fghij",
-      "id_rapport": 20,
+      "CNE": "100040",
+      "photo": "http://www.fsac.ac.ma/photo/abcde20",
+      "id_rapport": null,
       "estPerson": false
     }
-  ]);
-    const navigation=useNavigation();
-  return (<View style={styles.page}>
-        <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.buttons1}
-          onPress={()=>navigation.navigate("Seance1")} 
-        >
-          <Text style={styles.buttonTexts1}>Seance 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttons2}
-          onPress={()=>navigation.navigate("Seance2")}
-        >
-          <Text style={styles.buttonTexts2}>Seance 2</Text>
-        </TouchableOpacity>
-         </View>
-         <Tab.Navigator screenOptions={({root}) => ({
-            tabBarShowLabel:false,
-            headerShown:false,
-            tabBarStyle:{
-                position:'absolute',
-                height:68,
-                bottom:0,
-                right:0,
-                left:0,
-                elevation:0,
-                borderRadius:5,
-                backgroundColor:'#f5f5f5',
-                borderTopWidth:1,
-                borderColor:'#78909c'
-       }})
-     }
-    initialRouteName='Acceuil'
-    data={'seance1'}
-    >
-         <Tab.Screen name='Rapport' component={Rapp} options={{
-            tabBarIcon:({focused})=>{
-                return(
-                    
-                    <View style={[focused ? styles.focused : styles.nonfocused]}>
-                     <FontAwesome name={focused ? "file-text" : "file-text-o"} size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
-                     {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>}
-                </View>
-                )
-            }
-        }}/>
-        <Tab.Screen name='Scanner' component={Scanner}
-        initialParams={{listeEtudiants,setListeEtudiants}}
-        options={{
-            tabBarIcon:({focused})=>{
-              return(
-
-                <View style={[focused ? styles.focused : styles.nonfocused]} >
-                   <MaterialCommunityIcons name="qrcode-scan" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
-                </View>
-                )
-            }
-        }}/>
-        <Tab.Screen name='Acceuil'
-       component={Acceuil}
-       initialParams={{seance}}
-       options={{
-           tabBarIcon:({focused})=>{
-             return(
-
-               <View style={[focused ? styles.focused : styles.nonfocused]} >
-                   <Ionicons name={focused ? "home": "home-outline"} size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>}
-               </View>
-               )
-           }
-       }}
-        />
-             <Tab.Screen name='Etudiants' 
-             component={Etudiants}
-             initialParams={{listeEtudiants,setListeEtudiants}}
-             options={{
-                  tabBarIcon:({focused})=>{
-                      return(
-                          
-                          <View style={[focused ? styles.focused : styles.nonfocused]} >
-                        <Fontisto name="persons" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                        {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
-                     </View>
-                     )
-                 }
-             }}
-             />
-         <Tab.Screen name='Signature' component={Signature} options={{
-            tabBarIcon:({focused})=>{
-              return(
-
-                <View style={[focused ? styles.focused : styles.nonfocused]} >
-                    
-                    <FontAwesome5 name="signature" size={focused ? 30 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
-                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
-                </View>
-                )
-            }
-        }}/>
-         
-      
-
-     </Tab.Navigator> 
-    </View>
-    
+  ]
   );
+    const navigation=useNavigation();
+    return (<View style={styles.page}>
+      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.buttons1}
+        onPress={()=>navigation.navigate("Seance1")} 
+      >
+        <Text style={styles.buttonTexts1}>Seance 1</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttons2}
+        onPress={()=>navigation.navigate("Seance2")}
+      >
+        <Text style={styles.buttonTexts2}>Seance 2</Text>
+      </TouchableOpacity>
+       </View>
+       <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants}>
+       <Tab.Navigator screenOptions={({root}) => ({
+          tabBarShowLabel:false,
+          headerShown:false,
+          tabBarStyle:{
+              position:'absolute',
+              height:68,
+              bottom:0,
+              right:0,
+              left:0,
+              elevation:0,
+              borderRadius:5,
+              backgroundColor:'#f5f5f5',
+              borderTopWidth:1,
+              borderColor:'#78909c'
+     }})
+   }
+  initialRouteName='Acceuil'
+  data={'seance1'}
+  >
+       <Tab.Screen name='Rapport' component={Rapp} initialParams={{seance}} options={{
+          tabBarIcon:({focused})=>{
+              return(
+                  
+                  <View style={[focused ? styles.focused : styles.nonfocused]}>
+                   <FontAwesome name={focused ? "file-text" : "file-text-o"} size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>}
+              </View>
+              )
+          }
+      }}/>
+      <Tab.Screen name='Scanner' component={Scanner} initialParams={{seance}}
+      options={{
+          tabBarIcon:({focused})=>{
+            return(
+
+              <View style={[focused ? styles.focused : styles.nonfocused]} >
+                 <MaterialCommunityIcons name="qrcode-scan" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                 {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
+              </View>
+              )
+          }
+      }}/>
+      <Tab.Screen name='Acceuil'
+     component={Acceuil}
+     initialParams={{seance}}
+     options={{
+         tabBarIcon:({focused})=>{
+           return(
+
+             <View style={[focused ? styles.focused : styles.nonfocused]} >
+                 <Ionicons name={focused ? "home": "home-outline"} size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                 {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>}
+             </View>
+             )
+         }
+     }}
+      />
+           <Tab.Screen name='Etudiants' 
+           component={Etudiants}
+           initialParams={{seance}}
+           options={{
+                tabBarIcon:({focused})=>{
+                    return(
+                        
+                        <View style={[focused ? styles.focused : styles.nonfocused]} >
+                      <Fontisto name="persons" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                      {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
+                   </View>
+                   )
+               }
+           }}
+           />
+       <Tab.Screen name='Signature' component={Signature} 
+           initialParams={{seance}} options={{
+          tabBarIcon:({focused})=>{
+            return(
+
+              <View style={[focused ? styles.focused : styles.nonfocused]} >
+                  
+                  <FontAwesome5 name="signature" size={focused ? 30 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
+                  {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
+              </View>
+              )
+          }
+      }}/>
+       
+    
+
+   </Tab.Navigator> 
+   </EtudiantsProvider>
+  </View>
+  
+);
 }
 
 const styles=StyleSheet.create({
