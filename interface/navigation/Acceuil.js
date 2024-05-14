@@ -1,4 +1,4 @@
-import { View,Text, StyleSheet,Image } from 'react-native';
+import { View,Text, StyleSheet,Image, ScrollView } from 'react-native';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -6,7 +6,8 @@ const Head = () => (
     </View>
   );
 
-export default function Acceuil() {
+export default function Acceuil({route}) {
+  const {seance}=route.params;
     return(
         <View style={styles.container}>
        
@@ -15,7 +16,7 @@ export default function Acceuil() {
                  <Head />
                  <Text >Année universitaire ____-____</Text>
                 <Text>module :</Text>
-                <Text>seance :</Text>
+                <Text>seance :{seance}</Text>
                 <Text>demi_journée:</Text>
                 <Text> durée:</Text>
                 <Text> local:</Text>
