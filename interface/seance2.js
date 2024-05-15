@@ -217,8 +217,112 @@ export default function Seance2() {
     }
   ]
   );
+  const [listeRapport,setListeRapport]=useState([
+    {
+      "id": 1,
+      "titre": "qwertzuiop",
+      "nom": "Alice Johnson"
+    },
+    {
+      "id": 2,
+      "titre": "Étude de la fraude en sciences informatiques",
+      "nom": "Maxime Dubois"
+    },
+    {
+      "id": 3,
+      "titre": "Examen des tactiques de tricherie en physique",
+      "nom": "Sophie Martin"
+    },
+    {
+      "id": 4,
+      "titre": "Analyse des incidents de fraude en biologie",
+      "nom": "Thomas Leroy"
+    },
+    {
+      "id": 5,
+      "titre": "Étude des stratégies de tricherie en chimie",
+      "nom": "Eva Garcia"
+    },
+    {
+      "id": 6,
+      "titre": "Analyse des fraudes en sciences sociales",
+      "nom": "Lucas Bernard"
+    },
+    {
+      "id": 7,
+      "titre": "Examen des tactiques de tricherie en langues étrangères",
+      "nom": "Léa Petit"
+    },
+    {
+      "id": 8,
+      "titre": "Analyse des incidents de fraude en histoire",
+      "nom": "Hugo Dupont"
+    },
+    {
+      "id": 9,
+      "titre": "Étude des stratégies de tricherie en géographie",
+      "nom": "Camille Lambert"
+    },
+    {
+      "id": 10,
+      "titre": "Examen des tactiques de tricherie en philosophie",
+      "nom": "Louis Moreau"
+    },
+    {
+      "id": 11,
+      "titre": "Analyse des fraudes en littérature",
+      "nom": "Amélie Rousseau"
+    },
+    {
+      "id": 12,
+      "titre": "Étude des incidents de fraude en économie",
+      "nom": "David Martin"
+    },
+    {
+      "id": 13,
+      "titre": "Examen des tactiques de tricherie en psychologie",
+      "nom": "Juliette Lefèvre"
+    },
+    {
+      "id": 14,
+      "titre": "Analyse des fraudes en arts visuels",
+      "nom": "Gabriel Duval"
+    },
+    {
+      "id": 15,
+      "titre": "Étude des stratégies de tricherie en musique",
+      "nom": "Manon Girard"
+    },
+    {
+      "id": 16,
+      "titre": "Examen des tactiques de tricherie en éducation physique",
+      "nom": "Théo Laurent"
+    },
+    {
+      "id": 17,
+      "titre": "Analyse des incidents de fraude en éducation civique",
+      "nom": "Clara Bonnet"
+    },
+    {
+      "id": 18,
+      "titre": "Étude des stratégies de tricherie en technologie",
+      "nom": "Antoine Lefebvre"
+    },
+    {
+      "id": 19,
+      "titre": "Examen des tactiques de tricherie en études religieuses",
+      "nom": "Emma Rousseau"
+    },
+    {
+      "id": 20,
+      "titre": "Analyse des fraudes en sciences de l'environnement",
+      "nom": "Noémie Garcia"
+    }
+  ]
+  );
     const navigation=useNavigation();
     return (<View style={styles.page}>
+      <StatusBar />
       <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttons1}
@@ -233,8 +337,8 @@ export default function Seance2() {
         <Text style={styles.buttonTexts2}>Seance 2</Text>
       </TouchableOpacity>
        </View>
-       <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants}>
-       <Tab.Navigator screenOptions={({root}) => ({
+       <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} listeRapport={listeRapport} setListeRapport={setListeRapport}>
+          <Tab.Navigator screenOptions={({root}) => ({
           tabBarShowLabel:false,
           headerShown:false,
           tabBarStyle:{

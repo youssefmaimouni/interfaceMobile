@@ -10,7 +10,7 @@ const Stack=createNativeStackNavigator();
 export default function PV() {
   return (
     <NavigationContainer>
-         <Stack.Navigator initialRouteName='Seance1'>
+         <Stack.Navigator initialRouteName='Seance1' screenOptions={{headerShown:false}}>
             <Stack.Screen name="Seance1" component={Seance1} />
             <Stack.Screen name="Seance2" component={Seance2} />
          </Stack.Navigator>

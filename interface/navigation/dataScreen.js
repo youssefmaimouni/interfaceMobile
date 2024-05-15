@@ -2,11 +2,11 @@ import React, { createContext, useState, useContext } from 'react';
 
 const EtudiantsContext = createContext();
 
-export const EtudiantsProvider = ({ children,listeEtudiants,setListeEtudiants }) => {
+export const EtudiantsProvider = ({ children,listeEtudiants,setListeEtudiants ,listeRapport ,setListeRapport }) => {
  
 
     return (
-        <EtudiantsContext.Provider value={{ listeEtudiants, setListeEtudiants }}>
+        <EtudiantsContext.Provider value={{ listeEtudiants, setListeEtudiants ,listeRapport,setListeRapport }}>
             {children}
         </EtudiantsContext.Provider>
     );
