@@ -1,16 +1,18 @@
 import React from 'react';
 import { View,Text, StyleSheet, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import surveillants from './data/surveillant.json';  
+import surveillants from '../data/surveillant.json'; 
+import { useNavigation } from '@react-navigation/native'; 
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../logofsac.jpeg')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
 
-export default function Signature() {
+export default function Sign() {
+  const navigation = useNavigation();
     return(
         <View style={styles.container}>
             
@@ -24,7 +26,7 @@ export default function Signature() {
                   <Text style={styles.cardText}>{item.numero_immatriculation}</Text>
                   <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.nom_complet}</Text>
-                  <TouchableOpacity style={styles.button} >
+                  <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('SignatureScreen')} >
                     <Text style={styles.buttonText}>signer</Text>
                   </TouchableOpacity>
                   </View>

@@ -1,5 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Rapp, Scanner, Signature ,Acceuil,Etudiants} from './navigation';
+import { Scanner,Acceuil,Etudiants} from './navigation';
+import RapportStack from './navigation/rapport/RapportStack';
+import SignatureStack from './navigation/signaturerep/signatureStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, Button,StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -44,7 +46,7 @@ export default function Seance2() {
        }})
      }
     initialRouteName='Acceuil'>
-         <Tab.Screen name='Rapport' component={Rapp} options={{
+         <Tab.Screen name='Rapport' component={RapportStack} options={{
             tabBarIcon:({focused})=>{
                 return(
                     
@@ -92,7 +94,7 @@ export default function Seance2() {
                  }
              }}
              />
-         <Tab.Screen name='Signature' component={Signature} options={{
+         <Tab.Screen name='Signature' component={SignatureStack} options={{
             tabBarIcon:({focused})=>{
               return(
 
