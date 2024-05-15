@@ -1,28 +1,46 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, Button, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Button, Image, StyleSheet, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+
 import Signature from 'react-native-signature-canvas';
+
+const Head = () => (
+    <View style={styles.headContainer}>
+      <Image source={require('../logofsac.jpeg')} style={styles.logo} />
+      <Text style={styles.year}>Année universitaire ____-____</Text>
+    </View>
+  );
 
 const SignatureScreen = () => {
     const [signature, setSignature] = useState(null);
     const signatureRef = useRef();
 
-    // Fonction appelée lorsque l'utilisateur confirme la signature
+   
     const handleConfirm = (signatureBase64) => {
+        alert('Signature received');
         setSignature(signatureBase64);
         console.log('Signature saved:', signatureBase64);
     };
 
-    // Fonction pour nettoyer la zone de signature
+    
     const handleClear = () => {
         signatureRef.current.clearSignature();
         setSignature(null);
     };
 
-    // Style CSS pour le canvas de signature
+    const handleSave = () => {
+        console.log('Current signature state:', signature);
+        if (signature) {
+          console.log('Signature confirmed:', signature);
+          Alert.alert('Confirmation', 'Signature confirmed and saved!');
+        } else {
+          Alert.alert('Error', 'Please sign before saving.');
+        }
+      };
     const style = `.m-signature-pad--footer { display: none; margin: 0px; }`;
 
     return (
         <SafeAreaView style={styles.container}>
+            <Head/>
             <Text style={styles.title}>Signature Example</Text>
             <Signature
                 ref={signatureRef}
@@ -35,7 +53,8 @@ const SignatureScreen = () => {
                 imageType="image/png"
             />
             <View style={styles.buttons}>
-                <Button title="Clear" onPress={handleClear} />
+                <TouchableOpacity style={styles.button} onPress={handleClear}><Text style={styles.textbuton}>clear</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleSave}><Text style={styles.textbuton}>comfirmer</Text></TouchableOpacity>
             </View>
             {signature && (
                 <View style={styles.preview}>
@@ -52,21 +71,47 @@ const SignatureScreen = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:1,
         padding: 10,
-        marginTop:200,
-        alignItems: 'center'
+        marginTop:5,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
+    headContainer: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 5, 
+      },
+      logo: {
+        height: 50,
+        width: 120,
+      },
+      year: {
+        fontSize:13,
+        marginLeft:110,
+        marginTop:20,
+      },
     title: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 15
+        marginBottom: 15,
+        marginTop:30,
     },
     buttons: {
+        flex:1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '100%',
-        marginTop: 15
+        },
+    button: {
+        flex:1,
+        backgroundColor: '#01579b', 
+        padding: 5,
+        borderRadius: 5,
+        marginRight:120, 
+        marginBottom:175, 
+        
+    },
+    textbuton:{
+        alignContent:'center'
     },
     preview: {
         marginTop: 20,
