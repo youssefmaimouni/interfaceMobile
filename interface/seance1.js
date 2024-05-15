@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Rapp, Scanner, Signature ,Acceuil,Etudiants} from './navigation';
+import { Scanner,SignatureStack,RapportStack ,Acceuil,Etudiants} from './navigation';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
-import { View,Text, Button,StyleSheet, TouchableOpacity } from 'react-native';
+import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { createContext, useState, useContext } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -13,7 +13,6 @@ import { EtudiantsProvider } from './navigation/dataScreen';
 
 const Tab = createBottomTabNavigator();
 const seance='seance 1';
-
 
 
 
@@ -359,10 +358,8 @@ const [listeRapport,setListeRapport]=useState([
                 borderColor:'#78909c'
        }})
      }
-    initialRouteName='Acceuil'
-    data={'seance1'}
-    >
-         <Tab.Screen name='Rapport' component={Rapp} initialParams={{seance}} options={{
+    initialRouteName='Acceuil'>
+         <Tab.Screen name='RapportStack' component={RapportStack} options={{
             tabBarIcon:({focused})=>{
                 return(
                     
@@ -415,8 +412,7 @@ const [listeRapport,setListeRapport]=useState([
                  }
              }}
              />
-         <Tab.Screen name='Signature' component={Signature} 
-             initialParams={{seance}} options={{
+         <Tab.Screen name='SignatureStack' component={SignatureStack} options={{
             tabBarIcon:({focused})=>{
               return(
 

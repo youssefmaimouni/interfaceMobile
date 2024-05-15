@@ -1,14 +1,13 @@
 import Acceuil from "./Acceuil"
 import Etudiants from "./Etudiants"
 import Scanner from "./Scanner"
-import Signature from "./Signature"
-import Rapp from "./Rapp"
-
+import SignatureStack from "./signaturerep/signatureStack"
+import RapportStack from "./rapport/RapportStack"
 export{
     Acceuil,
     Etudiants,
-    Rapp,
+    RapportStack,
     Scanner,
-    Signature,
+    SignatureStack,
     
 }

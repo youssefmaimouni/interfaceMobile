@@ -4,7 +4,7 @@ import { GestureHandlerRootView, ScrollView, TextInput } from 'react-native-gest
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../logofsac.jpeg')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );

@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
 import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import rapportList from './data/rapport.json';
+import rapportList from '../data/rap.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-import AddRapp from './AjoutRapport.js';
-import { createStackNavigator } from 'react-navigation-stack';
+
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../logofsac.jpeg')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
 
     
 
-export default function Rapp() {
+export default function Rapp({ navigation }) {
     const [rapports, setRapports] = useState(rapportList);
     
    
     
     const handleDelete = async (id) => {
         try {
-            const updatedRapports = rapports.filter((rapport) => rapport.id !== id);
+            const updatedRapports = rapports.filter((item) => item.id !== id);
             setRapports(updatedRapports);
         } catch (error) {
             console.error('Error deleting report:', error);
@@ -38,7 +35,7 @@ export default function Rapp() {
         <ScrollView style={styles.scrollView}>
         <Head/>
         <Text style={styles.title}>Rapport</Text>
-        <TouchableOpacity style={styles.buttonAjout}>
+        <TouchableOpacity style={styles.buttonAjout} onPress={() => navigation.navigate('AddRapport')}>
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
          {rapports.map( (item)  => (
