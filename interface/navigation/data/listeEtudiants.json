@@ -6,7 +6,7 @@
     "numéro-exam": 1,
     "CNE": "123456",
     "photo": "http://www.fsac.ac.ma/photo/abcde",
-    "id_rapport": 1,
+    "id_rapport": null,
     "estPerson": false
   },
   {
@@ -36,7 +36,7 @@
     "numéro-exam": 4,
     "CNE": "456789",
     "photo": "http://www.fsac.ac.ma/photo/lmnop",
-    "id_rapport": 4,
+    "id_rapport": null,
     "estPerson": false
   },
   {

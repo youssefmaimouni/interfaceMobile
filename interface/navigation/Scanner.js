@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, TouchableOpacity,Image } from "react-native";
+import { Text, View, StyleSheet, Button, TouchableOpacity,Image, ScrollView, Modal } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
-import listeEtudiants from  '../donnee/listeEtudiants.json'
-import { StatusBar } from "expo-status-bar";
+import { useEtudiants } from "./dataScreen";
 const Head = () => (
   <View style={styles.headContainer}>
     <Image source={require('./logofsac.jpeg')} style={styles.logo} />
@@ -10,6 +9,21 @@ const Head = () => (
   </View>
 );
 export default function Scanner() {
+  const { listeEtudiants, setListeEtudiants } = useEtudiants();
+  const [modalVisible, setModalVisible] =useState(false);
+  const [scannedData, setScannedData] = useState({});
+
+  const updateObject = (updatedValues) => {
+    const updatedArray = listeEtudiants.map((item) => {
+      if (isEqual(updatedValues, item)) {
+        return { ...item, ...updatedValues };
+      }
+      return item;
+    });
+
+    // Update state using the setter prop (triggers re-render)
+    setListeEtudiants(updatedArray);
+  };
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -21,35 +35,33 @@ export default function Scanner() {
   }, []);
 
   function isEqual(obj1, obj2) {
-    const keys1 = Object.keys(obj1);
-    const keys2 = Object.keys(obj2);
-
-    if (keys1.length !== keys2.length) {
-        return false;
-    }
-
-    for (let key of keys1) {
-        if (obj1[key] !== obj2[key]) {
+if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom'] ||obj1['prénom'] !== obj2['prénom'] ||obj1['numéro-exam'] !== obj2['numéro-exam'] ||obj1['CNE'] !== obj2['CNE'] ) {
             return false;
         }
-    }
-
     return true;
 }
   const recherchEtuadiant = (data)=>{
     return listeEtudiants.some(element => isEqual(element, data));
   }
+  const verificationEtudiant=()=>{  
+        updateObject(scannedData);
+        setModalVisible(false);
+}
+  
 
   const handleBarCodeScanned = ({  data }) => {
     setScanned(true);
-    try {
+    try{
         if (recherchEtuadiant(JSON.parse(data) )) {
-        alert("Etudiant trouvé"+ data);
+          data=JSON.parse(data);
+          data.estPerson = true;
+          setScannedData(data);
+          setModalVisible(true);
     }else{
         alert("Etudiant non trouvé");
     }
     } catch (error) {
-        alert('qr non valide')
+        alert('qr non valide' + error);
     }
     
   };
@@ -65,7 +77,7 @@ export default function Scanner() {
       </View>
     );
   }
-
+  
   return (
     <View style={styles.container}>
        <Head/>
@@ -75,16 +87,45 @@ export default function Scanner() {
      
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
-        <CameraView
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr"],
-          }}
-          style={StyleSheet.absoluteFillObject}
+      {!modalVisible &&  <CameraView
+  onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+  barcodeScannerSettings={{
+    barcodeTypes: ["qr"],
+  }}
+  style={StyleSheet.absoluteFillObject}
+  // Pass updateObject as a prop
+  updateObject={updateObject}
+/> }
+        
+       {modalVisible && <View style={styles.card}>
+        <Image
+          source={require('../acceuil.png')}
+          style={styles.image}
         />
+        <View style={styles.cardContent}>
+        <Text style={styles.name}>{scannedData.nom && scannedData.prénom ? `${scannedData.nom} ${scannedData.prénom}` : ''}</Text>
+      <Text>Code Apogée: {scannedData['code-apogée'] || ''}</Text>
+      <Text>CNE: {scannedData.CNE || ''}</Text>
+      <Text>Numéro exam: {scannedData['numéro-exam'] || ''}</Text>
+          </View>
+          <View style={{flexDirection:'row'}}>
+          <TouchableOpacity
+            style={styles.buttonRapp}
+            onPress={()=>setModalVisible(false)}
+          >
+            <Text style={styles.buttonText}>rapport</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonVer}
+            onPress={verificationEtudiant}
+          >
+            <Text style={styles.buttonText}>verifier</Text>
+          </TouchableOpacity>
+      </View>
+      </View>}
       </View>
 
-      {scanned && (
+      {(scanned && !modalVisible) && (
         <TouchableOpacity
         style={styles.button}
         onPress={() => setScanned(false)}
@@ -92,7 +133,8 @@ export default function Scanner() {
         <Text style={styles.buttonText}>Cliquer pour scanner une autre fois</Text>
       </TouchableOpacity>
       )}
-    </View></View>
+    </View>
+    </View>
   );
 }
 
@@ -132,7 +174,7 @@ const styles = StyleSheet.create({
   },
   maintext: {
     fontSize: 16,
-    marginBottom:10,
+    marginBottom:15,
     marginTop:60,
     alignSelf:'center',
     fontWeight:'bold'
@@ -146,5 +188,41 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 10,
         borderRadius:10
+  },card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 350,
+    width: 350,
+    borderRadius: 30,
+    borderColor: '#000',
+    borderWidth: 1,
+    backgroundColor: '#fff',
+    alignSelf:'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+  },buttonVer: {
+    alignSelf: 'flex-end',
+    backgroundColor:'#1b5e20',
+    padding: 10,
+    margin: 20,
+    borderRadius:10
+},buttonRapp: {
+    alignSelf: 'flex-start',
+    backgroundColor:'#01579b',
+    padding: 10,
+    margin: 20,
+    borderRadius:10
+},name: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 5,
+}
 });

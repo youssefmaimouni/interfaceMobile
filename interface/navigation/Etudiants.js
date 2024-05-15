@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import listeEtudiants from '../donnee/listeEtudiants.json'; // Importing the listeEtudiants from the JSON file
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useEtudiants } from './dataScreen';
+
 const Head = () => (
     <View style={styles.headContainer}>
       <Image source={require('./logofsac.jpeg')} style={styles.logo} />
@@ -9,50 +9,71 @@ const Head = () => (
     </View>
   );
 
-  
-const Card = ({ item }) => {
-  const [isPresent, setIsPresent] = useState(item.estPerson);
-  const [isReppored, setIsReppored] = useState(item.estPerson);
-
-  const togglePresence = () => {
-    setIsPresent(!isPresent);
-  };
-  const togglePresenceR = () => {
-    setIsReppored(!isReppored);
-  };
-
-  
-
-  return (
-    <View style={styles.card}>
-      <Image
-        source={require('../acceuil.png')}
-        style={styles.image}
-      />
-      <View style={styles.cardContent}>
-        <Text style={styles.name}>{item.nom} {item.prénom}</Text>
-        <Text>Code Apogée: {item['code-apogée']}</Text>
-        <Text>CNE: {item.CNE}</Text>
-        <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
-        <TouchableOpacity
-          style={[styles.button, isPresent ? styles.presentButton : styles.absentButton]}
-          onPress={togglePresence}
-        >
-          <Text style={styles.buttonText}>{isPresent ? 'Présent' : 'Absent'}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, isReppored ?  styles.nonRepporedButton: styles.reppordButton]}
-          onPress={togglePresenceR}
-        >
-          <Text style={styles.buttonText}>{isReppored ? 'modifier Rapport' :'fait Rapport' }</Text>
-        </TouchableOpacity>
-      </View></View>
-    </View>
-  );
-};
-
-
 export default function Etudiants(){
+  const { listeEtudiants, setListeEtudiants } = useEtudiants();
+  const updateObject = (updatedValues) => {
+    const updatedArray = listeEtudiants.map((item) => {
+      if (updatedValues===item) {
+        return { ...item, ...updatedValues };
+      }
+      return item;
+    });
+    setListeEtudiants(updatedArray);
+  };
+
+  const Card = ({ item }) => {
+    const [isPresent, setIsPresent] = useState(item.estPerson);
+    const [isReppored, setIsReppored] = useState(item.id_rapport!=null);
+
+       
+  
+    const togglePresence = () => {
+      item.estPerson = !isPresent;
+      updateObject(item);
+      setIsPresent(item.estPerson);
+    };
+    const togglePresenceR = () => {
+      if (isReppored) {
+        item.id_rapport=null;
+        updateObject(item);
+        setIsReppored(item.id_rapport!=null);
+      } else {
+        setIsReppored(!isReppored);
+      }
+    };
+   
+  
+    
+  
+    return (
+      <View style={styles.card}>
+        <Image
+          source={require('../acceuil.png')}
+          style={styles.image}
+        />
+        <View style={styles.cardContent}>
+          <Text style={styles.name}>{item.nom} {item.prénom}</Text>
+          <Text>Code Apogée: {item['code-apogée']}</Text>
+          <Text>CNE: {item.CNE}</Text>
+          <Text>numéro exam: {item['numéro-exam']}</Text>
+          <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
+          <TouchableOpacity
+            style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
+            onPress={togglePresence}
+          >
+            <Text style={styles.buttonText}>{item.estPerson ? 'Présent' : 'Absent'}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, item.id_rapport!=null ?  styles.nonRepporedButton: styles.reppordButton]}
+            onPress={togglePresenceR}
+          >
+            <Text style={styles.buttonText}>{item.id_rapport!=null ? 'supprimer Rapport' :'fait Rapport' }</Text>
+          </TouchableOpacity>
+        </View></View>
+      </View>
+    );
+  };
+ 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}> 
