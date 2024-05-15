@@ -322,6 +322,7 @@ export default function Seance2() {
   );
     const navigation=useNavigation();
     return (<View style={styles.page}>
+      <StatusBar />
       <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttons1}
@@ -455,7 +456,6 @@ const styles=StyleSheet.create({
       },
     container:{
         flexDirection:'row',
-        marginTop:30,
     },
     focused:{
       alignItems:"center" ,
