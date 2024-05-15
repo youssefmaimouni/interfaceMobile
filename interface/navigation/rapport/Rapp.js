@@ -3,6 +3,7 @@ import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from
 import rapportList from '../data/rap.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useEtudiants } from '../dataScreen';
 
 
 const Head = () => (
@@ -15,14 +16,14 @@ const Head = () => (
     
 
 export default function Rapp({ navigation }) {
-    const [rapports, setRapports] = useState(rapportList);
+    const {listeRapport ,setListeRapport}=useEtudiants();
     
    
     
     const handleDelete = async (id) => {
         try {
-            const updatedRapports = rapports.filter((item) => item.id !== id);
-            setRapports(updatedRapports);
+            const updatedRapports = listeRapport.filter((item) => item.id !== id);
+            setListeRapport(updatedRapports);
         } catch (error) {
             console.error('Error deleting report:', error);
         }
@@ -38,7 +39,7 @@ export default function Rapp({ navigation }) {
         <TouchableOpacity style={styles.buttonAjout} onPress={() => navigation.navigate('AddRapport')}>
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
-         {rapports.map( (item)  => (
+         {listeRapport.map( (item)  => (
                 <View style={styles.card} key={item.id}>
                   <Text style={styles.cardText}>{item.titre}</Text>
                   <View style={styles.contenu}>
