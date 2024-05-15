@@ -32,7 +32,7 @@ export default function Etudiants(){
       updateObject(item);
       setIsPresent(item.estPerson);
     };
-    const togglePresenceR = () => {
+    const togglePresenceR = ({navigation}) => {
       if (isReppored) {
         item.id_rapport=null;
         updateObject(item);
@@ -40,6 +40,7 @@ export default function Etudiants(){
       } else {
         setIsReppored(!isReppored);
       }
+      navigation.navigate('AddRapp');
     };
    
   

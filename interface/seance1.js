@@ -250,7 +250,7 @@ export default function Seance1() {
                 left:0,
                 elevation:0,
                 borderRadius:5,
-                backgroundColor:'#f5f5f5',
+                backgroundColor:'#5790ab',
                 borderTopWidth:1,
                 borderColor:'#78909c'
        }})
@@ -261,7 +261,7 @@ export default function Seance1() {
                 return(
                     
                     <View style={[focused ? styles.focused : styles.nonfocused]}>
-                     <FontAwesome name={focused ? "file-text" : "file-text-o"} size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
+                     <FontAwesome name={focused ? "file-text" : "file-text-o"} size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />               
                      {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Rapp</Text>}
                 </View>
                 )
@@ -273,7 +273,7 @@ export default function Seance1() {
               return(
 
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
-                   <MaterialCommunityIcons name="qrcode-scan" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                   <MaterialCommunityIcons name="qrcode-scan" size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
                 </View>
                 )
@@ -302,7 +302,7 @@ export default function Seance1() {
                       return(
                           
                           <View style={[focused ? styles.focused : styles.nonfocused]} >
-                        <Fontisto name="persons" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                        <Fontisto name="persons" size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
                         {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
                      </View>
                      )
@@ -315,7 +315,7 @@ export default function Seance1() {
 
                 <View style={[focused ? styles.focused : styles.nonfocused]} >
                     
-                    <FontAwesome5 name="signature" size={focused ? 30 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
+                    <FontAwesome5 name="signature" size={focused ? 35 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
                     {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
                 </View>
                 )
@@ -360,13 +360,13 @@ const styles=StyleSheet.create({
         flexDirection:'row',
     },
     focused:{
-        alignItems:"center" ,
-        justifyContent:"center",
-        height :64,
-        width :64,
-        backgroundColor:'#8AABF7',
-        borderRadius:40 ,
-        marginBottom:3,
+        // alignItems:"center" ,
+        // justifyContent:"center",
+        // height :64,
+        // width :64,
+        // backgroundColor:'#8AABF7',
+        // borderRadius:40 ,
+        // marginBottom:3,
     },
     nonfocused:{
         alignItems:"center" ,
