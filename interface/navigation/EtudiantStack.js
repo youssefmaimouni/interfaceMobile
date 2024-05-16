@@ -11,8 +11,8 @@ function EtudiantStack() {
     return (
         
             <Stack.Navigator initialRouteName="Etudiants" screenOptions={{headerShown:false}}>
-                <Stack.Screen name="Etudiants" component={Etudiants} options={{ title: 'Etudiants' }} />
-                <Stack.Screen name="AddRapp" component={AddRapp} options={{ title: 'AddRapp' }} />
+                <Stack.Screen name="Etudiant" component={Etudiants} options={{ title: 'Etudiants' }} />
+                <Stack.Screen name="AddRap" component={AddRapp} options={{ title: 'AddRapp' }} />
             </Stack.Navigator>
        
     );

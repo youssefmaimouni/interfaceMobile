@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
 
 const Head = () => (
@@ -8,8 +9,9 @@ const Head = () => (
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
-
-export default function Etudiants(){
+  
+  export default function Etudiants(){
+  const navigation=useNavigation();
   const { listeEtudiants, setListeEtudiants } = useEtudiants();
   const updateObject = (updatedValues) => {
     const updatedArray = listeEtudiants.map((item) => {
@@ -32,15 +34,16 @@ export default function Etudiants(){
       updateObject(item);
       setIsPresent(item.estPerson);
     };
-    const togglePresenceR = ({navigation}) => {
+    const togglePresenceR = () => {
       if (isReppored) {
         item.id_rapport=null;
         updateObject(item);
         setIsReppored(item.id_rapport!=null);
       } else {
         setIsReppored(!isReppored);
+        navigation.navigate('AddRap');
       }
-      navigation.navigate('AddRapp');
+      
     };
    
   

@@ -1,7 +1,7 @@
 // App.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import axios from 'axios';
+//import axios from 'axios';
 import PV from './interface/PV';
 
 const COUCHDB_URL = 'http://127.0.0.1:5984/pfe-mobile';

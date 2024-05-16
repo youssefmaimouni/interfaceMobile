@@ -349,7 +349,7 @@ export default function Seance2() {
               left:0,
               elevation:0,
               borderRadius:5,
-              backgroundColor:'#f5f5f5',
+              backgroundColor:'#5790ab',
               borderTopWidth:1,
               borderColor:'#78909c'
      }})

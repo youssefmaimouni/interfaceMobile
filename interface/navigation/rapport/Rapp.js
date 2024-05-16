@@ -105,7 +105,7 @@ export default function Rapp({ navigation }) {
           },
           buttonAjout:{
           flexDirection: 'row',
-          backgroundColor: '#1b5e20', // Change to your desired button color
+          backgroundColor: '#f7ad19', // Change to your desired button color
           borderRadius: 5,
           marginTop: 14,
           marginLeft:300,
@@ -135,7 +135,7 @@ export default function Rapp({ navigation }) {
     },
     button1: {
       flexDirection: 'row',
-      backgroundColor: '#b71c1c', // Change to your desired button color
+      backgroundColor: '#fc8500', 
       padding: 5,
       borderRadius: 5,
       marginTop: 14,
@@ -143,7 +143,7 @@ export default function Rapp({ navigation }) {
     },
     button: {
       flexDirection: 'row',
-      backgroundColor: '#01579b', // Change to your desired button color
+      backgroundColor: '#fc8500', // Change to your desired button color
       padding: 5,
       borderRadius: 5,
       marginTop: 14,
