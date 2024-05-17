@@ -1,44 +1,30 @@
-// App.js
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-//import axios from 'axios';
-import PV from './interface/PV';
+import { View, Button, StyleSheet } from 'react-native';
+import axios from 'axios';
+import Fetch from './Fetch';
+import base64 from 'base-64';
 
-const COUCHDB_URL = 'http://127.0.0.1:5984/pfe-mobile';
+const username = 'admin';
+const password = 'admin';
+const encodedCredentials = base64.encode(`${username}:${password}`);
+
+// Remplacez par vos propres informations d'identification et l'URL de votre base de données CouchDB
+const COUCHDB_URL = 'http://admin:admin@192.168.71.241:5984//pfe-mobile';
 
 const App = () => {
-  // const [data, setData] = useState([]);
-
-  // useEffect(() => {
-  //   // Fetch all documents
-  //   axios.get(`${COUCHDB_URL}/_all_docs?include_docs=true`)
-  //     .then(response => {
-  //       setData(response.data.rows.map(row => row.doc));
-  //     })
-  //     .catch(err => console.error(err));
-  // }, []);
-
-  // const addDocument = () => {
-  //   const doc = {
-  //     _id: new Date().toISOString(),
-  //     name: 'New Document',
-  //   };
-
-  //   axios.put(`${COUCHDB_URL}/${doc._id}`, doc)
-  //     .then(() => axios.get(`${COUCHDB_URL}/_all_docs?include_docs=true`))
-  //     .then(response => setData(response.data.rows.map(row => row.doc)))
-  //     .catch(err => console.error(err));
-  // };
-
+  const [data,setData]=useState();
+    const axiosTest = ()=>{
+      axios.get(COUCHDB_URL).then((response)=>response.data).then((responseJson)=>{
+        console.log('hello');
+        console.log(responseJson);
+        setData(responseJson);
+        //alert(data.map((item)=>item.prenom));
+      }).catch((error)=>{console.log(error);})
+    }
   return (
-    // <View style={styles.container}>
-    //   <Text style={styles.title}>CouchDB with React Native</Text>
-    //   {data.map(doc => (
-    //     <Text key={doc._id} style={styles.docText}>{doc.name}</Text>
-    //   ))}
-    //   <Button title="Add Document" onPress={addDocument} />
-    // </View>
-    <PV />
+    <View style={styles.container}>
+       <Button title='press me' onPress={()=>{console.log('----------');axiosTest();}} />
+    </View>
   );
 };
 
@@ -47,16 +33,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 16,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
-  docText: {
-    fontSize: 18,
-    marginVertical: 5,
+  documentContainer: {
+    marginTop: 20,
   },
 });
 
