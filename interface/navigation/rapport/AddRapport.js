@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     multilinetext: {
-        minHeight: 200,
+        minHeight: 30,
         borderWidth: 1,
         padding: 10,
         margin: 12,
