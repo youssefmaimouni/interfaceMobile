@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Scanner,SignatureStack,RapportStack ,Acceuil,Etudiants} from './navigation';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
-import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent } from 'react-native';
+import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent, StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { createContext, useState, useContext } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -322,7 +322,7 @@ export default function Seance2() {
   );
     const navigation=useNavigation();
     return (<View style={styles.page}>
-      <StatusBar />
+      <StatusBar/>
       <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttons1}

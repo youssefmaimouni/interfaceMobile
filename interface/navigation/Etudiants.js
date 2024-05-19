@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
 
@@ -9,7 +9,7 @@ const Head = () => (
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
-  
+  const image = require('./backflou.png');
   export default function Etudiants(){
   const navigation=useNavigation();
   const { listeEtudiants, setListeEtudiants } = useEtudiants();
@@ -50,9 +50,10 @@ const Head = () => (
     
   
     return (
+      
       <View style={styles.card}>
         <Image
-          source={require('../acceuil.png')}
+          source={require('./etu.jpeg')}
           style={styles.image}
         />
         <View style={styles.cardContent}>
@@ -60,7 +61,7 @@ const Head = () => (
           <Text>Code Apogée: {item['code-apogée']}</Text>
           <Text>CNE: {item.CNE}</Text>
           <Text>numéro exam: {item['numéro-exam']}</Text>
-          <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
+          </View>
           <TouchableOpacity
             style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
             onPress={togglePresence}
@@ -73,13 +74,15 @@ const Head = () => (
           >
             <Text style={styles.buttonText}>{item.id_rapport!=null ? 'supprimer Rapport' :'fait Rapport' }</Text>
           </TouchableOpacity>
-        </View></View>
+        
       </View>
+      
     );
   };
  
   return (
-    <View style={styles.container}>
+  <ImageBackground source={image} resizeMode="cover" style={styles.container}>
+    
       <ScrollView style={styles.scrollView}> 
       <Head />
 
@@ -89,7 +92,7 @@ const Head = () => (
       ))}
     
       </ScrollView>
-    </View>
+    </ImageBackground>
   );
 }
 
@@ -130,11 +133,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    margin:20,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 80,
+    height: 80,
     borderRadius: 10,
+    margin:10,
   },
   cardContent: {
     flex: 1,
@@ -146,22 +151,23 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
-    alignSelf: 'center',
     padding: 8,
     borderRadius: 5,
-    margin: 10,
+   marginTop:80,
+   margin:5,
+   height:35,
   },
   presentButton: {
-    backgroundColor: '#1b5e20',
+    backgroundColor: '#476f95',
   },
   absentButton: {
-    backgroundColor: '#b71c1c',
+    backgroundColor: '#0070ad',
   },
   reppordButton: {
-    backgroundColor: '#b71c1c',
+    backgroundColor: '#0070ad',
   },
   nonRepporedButton: {
-    backgroundColor: '#01579b',
+    backgroundColor: '#476f95',
   },
   buttonText: {
     color: '#fff',

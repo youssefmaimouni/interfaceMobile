@@ -256,9 +256,9 @@ const [listeRapport,setListeRapport]=useState([
                 left:0,
                 elevation:0,
                 borderRadius:5,
-                backgroundColor:'#209ebb',
+                backgroundColor:'#d1dbe4',
                 borderTopWidth:1,
-                borderColor:'#78909c'
+                borderColor:'#a3b7ca'
        }})
      }
     initialRouteName='Acceuil'>
@@ -345,15 +345,19 @@ const styles=StyleSheet.create({
     },
     buttons1: {
         alignSelf: 'flex-start',
-        backgroundColor:'#b0bec5',
+        backgroundColor:'#d1dbe4',
         padding: 10,
-        flex:2
+        flex:2,
+        
       },
       buttons2: {
         alignSelf: 'flex-start',
-        backgroundColor:'#5790ab',
+        backgroundColor:'#7593af',
         padding: 10,
-        flex:2
+        flex:2,
+        borderRadius:20,
+        margin:2,
+        
       },
       buttonTexts1: {
         color: '#90a4ae',
@@ -365,6 +369,7 @@ const styles=StyleSheet.create({
       },
     container:{
         flexDirection:'row',
+        backgroundColor:'#d1dbe4',
     },
     focused:{
         alignItems:"center" ,
@@ -385,6 +390,6 @@ const styles=StyleSheet.create({
         color:'#546e7a',
     },
     colorIconNonFocus:{
-        color:'#B6DEF6',
+        color:'#a3b7ca',
     }
 })

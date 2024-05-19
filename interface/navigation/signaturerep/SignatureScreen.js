@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Image } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Image, ImageBackground } from 'react-native';
 import Signature from 'react-native-signature-canvas';
 
 const Head = () => (
@@ -17,6 +17,7 @@ const SignatureScreen = ({navigation}) => {
     setSignature(signatureBase64);
     Alert.alert('Success', 'Signature captured successfully!');
     navigation.navigate('Signature');
+    
   };
 
   const handleClear = () => {
@@ -29,11 +30,12 @@ const SignatureScreen = ({navigation}) => {
   };
 
   const style = `.m-signature-pad--footer { display: none; margin: 0px; }`;
-
+  const image = require('./backsign.png');
   return (
-    <SafeAreaView style={styles.container}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.container}>
       <Head />
-      <Text style={styles.title}>Signature Example</Text>
+      
+      <Text style={styles.title}>Signer ici</Text>
       <Signature
         ref={signatureRef}
         onOK={handleOK}
@@ -42,15 +44,17 @@ const SignatureScreen = ({navigation}) => {
         autoClear={true}
         imageType="image/png"
       />
+      
       <View style={styles.buttons}>
-        <TouchableOpacity style={styles.button} onPress={handleClear}>
-          <Text style={styles.textButton}>Clear</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handleSave}>
-          <Text style={styles.textButton}>Save</Text>
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleClear}>
+         <Text style={styles.textButton}>Clear</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleSave}>
+        <Text style={styles.textButton}>Save</Text>
+      </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      
+    </ImageBackground>
   );
 };
 
@@ -61,6 +65,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  con:{
+    
   },
   headContainer: {
     flexDirection: 'row',
@@ -82,6 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     marginTop: 30,
   },
+ 
   buttons: {
     flexDirection: 'row',
     justifyContent: 'space-around',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView} from 'react-native';
+import { View,Text ,StyleSheet,Image, Button, TouchableOpacity, ScrollView, ImageBackground} from 'react-native';
 import rapportList from '../data/rap.json';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -8,7 +8,7 @@ import { useEtudiants } from '../dataScreen';
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('../logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../logot.jpg')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
@@ -27,11 +27,12 @@ export default function Rapp({ navigation }) {
         } catch (error) {
             console.error('Error deleting report:', error);
         }
-        
-};
+       
+}; const image = require('../backflou.png'); 
     return (
-    <View style={styles.container}>
-        
+      
+
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
        <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
         <Head/>
@@ -56,7 +57,7 @@ export default function Rapp({ navigation }) {
             }
         </ScrollView>
        </GestureHandlerRootView> 
-       </View>
+       </ImageBackground>
     );
   }
   
@@ -98,19 +99,18 @@ export default function Rapp({ navigation }) {
           },
           title:{
             fontSize: 30,
-            fontWeight: 'bold', // Police en gras
-            color: 'black', // Couleur bleu clair
-            textAlign: 'center', // Alignement au centre
+            fontWeight: 'bold', 
+            color: 'black',
+            textAlign: 'center', 
             padding:30,
           },
           buttonAjout:{
-          flexDirection: 'row',
-          backgroundColor: '#f7ad19', // Change to your desired button color
+          backgroundColor: '#194a7a', 
           borderRadius: 5,
           marginTop: 14,
           marginLeft:300,
           marginRight:50,
-          padding:5,
+          padding:2,
           },
     scrollView: {
       marginBottom:60,
@@ -135,7 +135,7 @@ export default function Rapp({ navigation }) {
     },
     button1: {
       flexDirection: 'row',
-      backgroundColor: '#fc8500', 
+      backgroundColor: '#607e96', 
       padding: 5,
       borderRadius: 5,
       marginTop: 14,
@@ -143,7 +143,8 @@ export default function Rapp({ navigation }) {
     },
     button: {
       flexDirection: 'row',
-      backgroundColor: '#fc8500', // Change to your desired button color
+      backgroundColor: '#607e96', 
+      textAlign:'center',
       padding: 5,
       borderRadius: 5,
       marginTop: 14,
@@ -152,5 +153,6 @@ export default function Rapp({ navigation }) {
     buttonText: {
       color: 'white',
       textAlign: 'center',
+      padding:2,
     },
   });

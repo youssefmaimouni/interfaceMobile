@@ -1,4 +1,4 @@
-import { View,Text, StyleSheet,Image, ScrollView } from 'react-native';
+import { View,Text, StyleSheet,Image, ScrollView, ImageBackground } from 'react-native';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -7,29 +7,35 @@ const Head = () => (
   );
 
 export default function Acceuil({route}) {
+  const image = require('./back2.jpeg'); 
   const {seance}=route.params;
     return(
-        <View style={styles.container}>
-       
-            <Text style={styles.text}>Acceuil</Text>
+      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <View style={styles.card}>
                  <Head />
-                 <Text >Année universitaire ____-____</Text>
+                 <View style={styles.con}>
+                <Text >Année universitaire ____-____</Text>
                 <Text>module :</Text>
                 <Text>seance :{seance}</Text>
                 <Text>demi_journée:</Text>
                 <Text> durée:</Text>
                 <Text> local:</Text>
+                </View>
             </View>
-        </View>
+      </ImageBackground>
+
     )
 }
 
 const  styles=StyleSheet.create({
-    container:{
+    image:{
         flex:1,
         justifyContent:'center',
-    },  card: {
+    }, 
+    con:{
+       marginTop:100,
+    },
+     card: {
         margin: 10,
         alignSelf:'center',
         padding: 10,
@@ -41,10 +47,10 @@ const  styles=StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        height:300,
-        width:300
+        height:500,
+        width:400
       },text:{
-        marginTop:10,
+        marginTop:100,
         alignSelf:'center',
         fontSize: 20,
         fontWeight: 'bold',

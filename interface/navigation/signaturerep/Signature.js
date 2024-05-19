@@ -1,5 +1,5 @@
 import React, { useState } from 'react'; // Ajout de useState
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import surveillants from '../data/surveillant.json';
 import { useNavigation } from '@react-navigation/native';
@@ -15,9 +15,18 @@ const Head = () => (
 export default function Sign() {
   const navigation = useNavigation();
   const [afficher, setAfficher] = useState(false);
+  const [signatures, setSignatures] = useState(new Set());
 
+  const handleSign = (id) => {
+    setSignatures(new Set([...signatures, id]));
+    navigation.navigate('SignatureScreen'); // Supposons que l'enregistrement se fasse ici
+  };
+  const handleSignReserviste = (reserviste) => {
+    handleSign(reserviste.id_surveillant);
+  };
+  const image = require('../backflou.png');
   return (
-    <View style={styles.container}>
+    <ImageBackground source={image} resizeMode="cover" style={styles.container}>
       <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
           <Head />
@@ -26,9 +35,10 @@ export default function Sign() {
             <View style={styles.card} key={item.id_surveillant}>
               <View style={styles.contenu}>
                 <Text style={styles.cardText}>{item.nom_complet}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignatureScreen')}>
-                  <Text style={styles.buttonText}>Signer</Text>
+                <TouchableOpacity style={styles.button} onPress={() => handleSign(item.id_surveillant)}>
+                     <Text style={styles.buttonText}>{signatures.has(item.id_surveillant) ? 'Signé' : 'Signer'}</Text>
                 </TouchableOpacity>
+
               </View>
             </View>
           ))}
@@ -42,8 +52,8 @@ export default function Sign() {
               <View style={styles.card} key={item.id_surveillant}>
                 <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.nom_complet}</Text>
-                  <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>Signer</Text>
+                  <TouchableOpacity style={styles.button} onPress={() => handleSignReserviste(item)} >
+                    <Text style={styles.buttonText} >{signatures.has(item.id_surveillant) ? 'Signé' : 'Signer'}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -51,7 +61,8 @@ export default function Sign() {
           )}
         </ScrollView>
       </GestureHandlerRootView>
-    </View>
+      </ImageBackground>
+    
   );
 }
 
@@ -59,8 +70,8 @@ export default function Sign() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'center',
+    
+    
   },
       scrollView: {
         marginBottom: 60,
