@@ -47,10 +47,10 @@ const Head = () => (
           style={styles.image}
         />
         <View style={styles.cardContent}>
-          <Text style={styles.name}>{item.nom} {item.prénom}</Text>
-          <Text>Code Apogée: {item['code-apogée']}</Text>
+          <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
+          <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
-          <Text>numéro exam: {item['numéro-exam']}</Text>
+          <Text>numéro exam: {item.numeroExam}</Text>
           <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
           <TouchableOpacity
             style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
@@ -76,7 +76,7 @@ const Head = () => (
 
         <Text style={styles.title}>Liste des étudiants</Text>
       {listeEtudiants.map((item)=>(
-        <Card item={item} key={item['numéro-exam']}/>
+        <Card item={item} key={item.numeroExam}/>
       ))}
     
       </ScrollView>

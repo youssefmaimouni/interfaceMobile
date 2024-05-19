@@ -17,16 +17,17 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 
 
 const Tab = createBottomTabNavigator();
-const seance='seance 1';
+const seance='seance 2';
 
 
 
 
 
 
-export default function Seance1() {
+export default function Seance2() {
   const navigation=useNavigation();
   const [listeEtudiants,setListeEtudiants]=useState([]);
+  const [listeRapport,setListeRapport]=useState([]);
   const fetchStudents = async () => {
     try {
       const response = await axios.get('http://192.168.248.241:5984/etudiantsdeux/_all_docs?include_docs=true', {
@@ -77,11 +78,96 @@ export default function Seance1() {
       console.error('Error updating student:', error);
     }
 };
+const updatRapport = async (docId, updatedFields) => {
+  try {
+    // Fetching the student by code-apogée
+    const fetchUrl = `http://192.168.248.241:5984/rapportdeuxiemeseance/${docId}`;
+    let response = await axios.get(fetchUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+
+    const rapport = response.data;
+
+    // Updating the rapport fields
+    Object.assign(rapport, updatedFields);
+
+    // Saving the updated student
+    const saveUrl = `http://192.168.248.241:5984/rapportdeuxiemeseance/${rapport._id}`;
+    response = await axios.put(saveUrl, student, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+
+    console.log('Student updated successfully:', response.data);
+    // Fetch students to update local state after successful update
+    await fetchRapports();
+  } catch (error) {
+    console.error('Error updating student:', error);
+  }
+};
+const fetchRapports = async () => {
+  try {
+    const response = await axios.get('http://192.168.248.241:5984/rapportdeuxiemeseance/_all_docs?include_docs=true', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    
+    // Extracting documents from the response
+    const rapports = response.data.rows.map(row=>row.doc);
+    console.log('+++++++++++++');
+    
+   setListeRapport(rapports);
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+  }
+};
   
+  
+  
+const addRapport = async (rapport) => {
+  const url = 'http://192.168.248.241:5984/rapportdeuxiemeseance'; // Your CouchDB URL
+
+  try {
+    const response = await axios.post(url, rapport, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    await fetchRapports();
+    console.log('Document added:', response.data);
+  } catch (error) {
+    console.error('Error posting document:', error);
+  }
+};
+const deleteStudent = async (docId, docRev) => {
+  const url = `http://192.168.248.241:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    await fetchRapports();
+    console.log('Document deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting document:', error);
+  }
+};
   
   
   useEffect(() => {
     fetchStudents();
+    fetchRapports();
 }, []);
   
   return (<View style={styles.page}>
@@ -100,7 +186,7 @@ export default function Seance1() {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-        <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} >
+         <EtudiantsProvider deleteStudent={deleteStudent} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updatRapport={updatRapport} addRapport={addRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,

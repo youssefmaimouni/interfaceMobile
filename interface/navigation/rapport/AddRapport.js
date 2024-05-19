@@ -10,12 +10,23 @@ const Head = () => (
     </View>
 );
 
-export default function AddRapp() {
+export default function AddRapp({navigation}) {
     const [titre, setTitre] = useState('');
+    const [contenu, setContenu] = useState('');
     const [search, setSearch] = useState('');
     const [selectedEtudiant, setSelectedEtudiant] = useState(null);
 
-    const { listeEtudiants } = useEtudiants();
+    const { listeEtudiants,addRapport } = useEtudiants();
+
+    const soumettreRapport = ()=>{
+        const repport ={ 
+            "titre_rapport": titre,
+            "contenu": contenu,
+            "etudiant": selectedEtudiant,
+        }
+        addRapport(repport);
+        navigation.navigate('Rapport')
+    }
     
     const Card = ({ item }) => {
         
@@ -26,10 +37,10 @@ export default function AddRapp() {
             style={styles.image}
           />
           <View style={styles.cardContent}>
-            <Text style={styles.name}>{item.nom} {item.prénom}</Text>
-            <Text>Code Apogée: {item['code-apogée']}</Text>
+            <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
+            <Text>Code Apogée: {item['codeApogee']}</Text>
             <Text>CNE: {item.CNE}</Text>
-            <Text>numéro exam: {item['numéro-exam']}</Text>
+            <Text>numéro exam: {item['numeroExam']}</Text>
             </View>
         </View>
       );
@@ -37,20 +48,23 @@ export default function AddRapp() {
 
     const filteredEtudiants = listeEtudiants.filter(etudiant => {
         const searchLower = search.toLowerCase();
-        const fullName = `${etudiant.nom.toLowerCase()} ${etudiant.prénom.toLowerCase()}`;
-        const reversedFullName = `${etudiant.prénom.toLowerCase()} ${etudiant.nom.toLowerCase()}`;
+        const fullName = `${etudiant.nom_etudiant.toLowerCase()} ${etudiant.prenom_etudiant.toLowerCase()}`;
+        const reversedFullName = `${etudiant.prenom_etudiant.toLowerCase()} ${etudiant.nom_etudiant.toLowerCase()}`;
         
         return fullName.includes(searchLower) || reversedFullName.includes(searchLower) ||
             searchLower.split(' ').every(word => fullName.includes(word) || reversedFullName.includes(word));
     });
 
-    const changeHandler = (val) => {
+    const changeTitre = (val) => {
         setTitre(val);
+    };
+    const changeContenu = (val) => {
+        setContenu(val);
     };
 
     const handleSelectEtudiant = (etudiant) => {
         setSelectedEtudiant(etudiant);
-        setSearch(`${etudiant.nom} ${etudiant.prénom}`);
+        setSearch(`${etudiant.nom_etudiant} ${etudiant.prenom_etudiant}`);
     };
 
     const handleSearchChange = (val) => {
@@ -74,8 +88,8 @@ export default function AddRapp() {
             {search.length > 0 && filteredEtudiants.length > 0 && (
                 <View style={styles.list}>
                     {filteredEtudiants.map((item) => (
-                        <TouchableOpacity key={item['code-apogée']} onPress={() => handleSelectEtudiant(item)}>
-                            <Card item={item} key={item['numéro-exam']}/>
+                        <TouchableOpacity key={item['codeApogee']} onPress={() => handleSelectEtudiant(item)}>
+                            <Card item={item} key={item['numeroExam']}/>
                         </TouchableOpacity>
                     ))}
                 </View>
@@ -84,14 +98,15 @@ export default function AddRapp() {
                 style={styles.input}
                 placeholder='Titre du rapport'
                 value={titre}
-                onChangeText={(val) => changeHandler(val)}
+                onChangeText={(val) => changeTitre(val)}
             />
             <TextInput
                 style={styles.multilinetext}
                 placeholder='Contenu'
+                onChangeText={(val) => changeContenu(val)}
                 multiline
             />
-            <TouchableOpacity style={styles.button1}>
+            <TouchableOpacity style={styles.button1} onPress={soumettreRapport}>
                 <Text style={styles.textbutton}>Soumettre</Text>
             </TouchableOpacity>
             </ScrollView>

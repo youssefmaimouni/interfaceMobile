@@ -36,7 +36,7 @@ export default function Scanner() {
   }, []);
 
   function isEqual(obj1, obj2) {
-if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom'] ||obj1['prénom'] !== obj2['prénom'] ||obj1['numéro-exam'] !== obj2['numéro-exam'] ||obj1['CNE'] !== obj2['CNE'] ) {
+if (obj1['codeApogee'] !== obj2['codeApogee'] || obj1['nom_etudiant'] !== obj2['nom_etudiant'] ||obj1['prenom_etudiant'] !== obj2['prenom_etudiant'] ||obj1['numeroExam'] !== obj2['numeroExam'] ||obj1['CNE'] !== obj2['CNE'] ) {
             return false;
         }
     return true;
@@ -62,7 +62,7 @@ const verificationEtudiant=()=>{
         alert("Etudiant non trouvé");
     }
     } catch (error) {
-        alert('qr non valide' + error);
+        alert('qr non valide');
     }
     
   };
@@ -104,10 +104,10 @@ const verificationEtudiant=()=>{
           style={styles.image}
         />
         <View style={styles.cardContent}>
-        <Text style={styles.name}>{scannedData.nom && scannedData.prénom ? `${scannedData.nom} ${scannedData.prénom}` : ''}</Text>
-      <Text>Code Apogée: {scannedData['code-apogée'] || ''}</Text>
+        <Text style={styles.name}>{scannedData.nom_etudiant && scannedData.prenom_etudiant ? `${scannedData.nom_etudiant} ${scannedData.prenom_etudiant}` : ''}</Text>
+      <Text>Code Apogée: {scannedData['codeApogee'] || ''}</Text>
       <Text>CNE: {scannedData.CNE || ''}</Text>
-      <Text>Numéro exam: {scannedData['numéro-exam'] || ''}</Text>
+      <Text>Numéro exam: {scannedData['numeroExam'] || ''}</Text> 
           </View>
           <View style={{flexDirection:'row'}}>
           <TouchableOpacity
