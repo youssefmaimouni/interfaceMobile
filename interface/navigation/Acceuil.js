@@ -1,11 +1,11 @@
-import { View,Text, StyleSheet,Image, ScrollView } from 'react-native';
+import { View,Text, StyleSheet,Image, ScrollView, Button } from 'react-native';
+import { useEtudiants } from './dataScreen';
 
 const Head = () => (
     <View style={styles.headContainer}>
       <Image source={require('./logofsac.jpeg')} style={styles.logo} />
     </View>
   );
-
 export default function Acceuil({route}) {
   const {seance}=route.params;
     return(

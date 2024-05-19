@@ -9,20 +9,21 @@ const Head = () => (
   </View>
 );
 export default function Scanner() {
-  const { listeEtudiants, setListeEtudiants } = useEtudiants();
+  const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
   const [modalVisible, setModalVisible] =useState(false);
   const [scannedData, setScannedData] = useState({});
 
   const updateObject = (updatedValues) => {
-    const updatedArray = listeEtudiants.map((item) => {
-      if (isEqual(updatedValues, item)) {
-        return { ...item, ...updatedValues };
-      }
-      return item;
-    });
-
-    // Update state using the setter prop (triggers re-render)
-    setListeEtudiants(updatedArray);
+    const foundItem = listeEtudiants.find(item => isEqual(updatedValues, item));
+    if (foundItem) {
+      console.log(foundItem);
+    console.log(updatedValues);
+    
+    updateStudent(foundItem._id,updatedValues)
+    } else {
+      console.log("not found");
+    }
+    ;
   };
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -43,7 +44,7 @@ if (obj1['code-apogée'] !== obj2['code-apogée'] || obj1['nom'] !== obj2['nom']
   const recherchEtuadiant = (data)=>{
     return listeEtudiants.some(element => isEqual(element, data));
   }
-  const verificationEtudiant=()=>{  
+const verificationEtudiant=()=>{  
         updateObject(scannedData);
         setModalVisible(false);
 }

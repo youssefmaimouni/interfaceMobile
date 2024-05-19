@@ -2,13 +2,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Scanner,SignatureStack,RapportStack ,Acceuil} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
-import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent, StatusBar } from 'react-native';
+import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { createContext, useState, useContext } from 'react';
+import React, {  useEffect, useState} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EtudiantsProvider } from './navigation/dataScreen';
+import axios from 'axios';
+import base64 from 'base-64';
 
-
+const username = 'admin';
+const password = 'admin';
+const encodedCredentials = base64.encode(`${username}:${password}`);
 
 
 
@@ -21,213 +25,65 @@ const seance='seance 1';
 
 
 export default function Seance1() {
-  const [listeEtudiants,setListeEtudiants]=useState( [
-    {
-      "code-apogée": 12345,
-      "nom": "El Amrani",
-      "prénom": "Fatima",
-      "numéro-exam": 1,
-      "CNE": "123456",
-      "photo": "http://www.fsac.ac.ma/photo/abcde",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12346,
-      "nom": "Ben Salah",
-      "prénom": "Ahmed",
-      "numéro-exam": 2,
-      "CNE": "654321",
-      "photo": "http://www.fsac.ac.ma/photo/ahmed",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12347,
-      "nom": "Haddad",
-      "prénom": "Sara",
-      "numéro-exam": 3,
-      "CNE": "789012",
-      "photo": "http://www.fsac.ac.ma/photo/sara",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12348,
-      "nom": "Omar",
-      "prénom": "Mehdi",
-      "numéro-exam": 4,
-      "CNE": "345678",
-      "photo": "http://www.fsac.ac.ma/photo/mehdi",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12349,
-      "nom": "El Bouzidi",
-      "prénom": "Nour",
-      "numéro-exam": 5,
-      "CNE": "901234",
-      "photo": "http://www.fsac.ac.ma/photo/nour",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12350,
-      "nom": "Mouhssine",
-      "prénom": "Ali",
-      "numéro-exam": 6,
-      "CNE": "567890",
-      "photo": "http://www.fsac.ac.ma/photo/ali",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12351,
-      "nom": "Lamrani",
-      "prénom": "Leila",
-      "numéro-exam": 7,
-      "CNE": "234567",
-      "photo": "http://www.fsac.ac.ma/photo/leila",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12352,
-      "nom": "Saidi",
-      "prénom": "Khalid",
-      "numéro-exam": 8,
-      "CNE": "876543",
-      "photo": "http://www.fsac.ac.ma/photo/khalid",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12353,
-      "nom": "Zahraoui",
-      "prénom": "Yasmina",
-      "numéro-exam": 9,
-      "CNE": "345678",
-      "photo": "http://www.fsac.ac.ma/photo/yasmina",
-      "id_rapport": null,
-      "estPerson": false
-    },
-    {
-      "code-apogée": 12354,
-      "nom": "El Idrissi",
-      "prénom": "Mohammed",
-      "numéro-exam": 10,
-      "CNE": "112233",
-      "photo": "http://www.fsac.ac.ma/photo/mohammed",
-      "id_rapport": null,
-      "estPerson": false
+  const navigation=useNavigation();
+  const [listeEtudiants,setListeEtudiants]=useState([]);
+  const fetchStudents = async () => {
+    try {
+      const response = await axios.get('http://192.168.248.241:5984/etudiants/_all_docs?include_docs=true', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      
+      // Extracting documents from the response
+      const students = response.data.rows.map(row=>row.doc);
+      console.log('---------------------');
+      
+     setListeEtudiants(students);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
     }
-  ]);
-const [listeRapport,setListeRapport]=useState([
-  {
-    "id": 1,
-    "titre": "Analyse des cas de fraude en mathématiques",
-    "nom": "Alice Johnson"
-  },
-  {
-    "id": 2,
-    "titre": "Étude de la fraude en sciences informatiques",
-    "nom": "Maxime Dubois"
-  },
-  {
-    "id": 3,
-    "titre": "Examen des tactiques de tricherie en physique",
-    "nom": "Sophie Martin"
-  },
-  {
-    "id": 4,
-    "titre": "Analyse des incidents de fraude en biologie",
-    "nom": "Thomas Leroy"
-  },
-  {
-    "id": 5,
-    "titre": "Étude des stratégies de tricherie en chimie",
-    "nom": "Eva Garcia"
-  },
-  {
-    "id": 6,
-    "titre": "Analyse des fraudes en sciences sociales",
-    "nom": "Lucas Bernard"
-  },
-  {
-    "id": 7,
-    "titre": "Examen des tactiques de tricherie en langues étrangères",
-    "nom": "Léa Petit"
-  },
-  {
-    "id": 8,
-    "titre": "Analyse des incidents de fraude en histoire",
-    "nom": "Hugo Dupont"
-  },
-  {
-    "id": 9,
-    "titre": "Étude des stratégies de tricherie en géographie",
-    "nom": "Camille Lambert"
-  },
-  {
-    "id": 10,
-    "titre": "Examen des tactiques de tricherie en philosophie",
-    "nom": "Louis Moreau"
-  },
-  {
-    "id": 11,
-    "titre": "Analyse des fraudes en littérature",
-    "nom": "Amélie Rousseau"
-  },
-  {
-    "id": 12,
-    "titre": "Étude des incidents de fraude en économie",
-    "nom": "David Martin"
-  },
-  {
-    "id": 13,
-    "titre": "Examen des tactiques de tricherie en psychologie",
-    "nom": "Juliette Lefèvre"
-  },
-  {
-    "id": 14,
-    "titre": "Analyse des fraudes en arts visuels",
-    "nom": "Gabriel Duval"
-  },
-  {
-    "id": 15,
-    "titre": "Étude des stratégies de tricherie en musique",
-    "nom": "Manon Girard"
-  },
-  {
-    "id": 16,
-    "titre": "Examen des tactiques de tricherie en éducation physique",
-    "nom": "Théo Laurent"
-  },
-  {
-    "id": 17,
-    "titre": "Analyse des incidents de fraude en éducation civique",
-    "nom": "Clara Bonnet"
-  },
-  {
-    "id": 18,
-    "titre": "Étude des stratégies de tricherie en technologie",
-    "nom": "Antoine Lefebvre"
-  },
-  {
-    "id": 19,
-    "titre": "Examen des tactiques de tricherie en études religieuses",
-    "nom": "Emma Rousseau"
-  },
-  {
-    "id": 20,
-    "titre": "Analyse des fraudes en sciences de l'environnement",
-    "nom": "Noémie Garcia"
-  }
-]
-);
-    const navigation=useNavigation();
-    
+  };
+  const updateStudent = async (docId, updatedFields) => {
+    try {
+      // Fetching the student by code-apogée
+      const fetchUrl = `http://192.168.248.241:5984/etudiants/${docId}`;
+      let response = await axios.get(fetchUrl, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+
+      const student = response.data;
+
+      // Updating the student fields
+      Object.assign(student, updatedFields);
+
+      // Saving the updated student
+      const saveUrl = `http://192.168.248.241:5984/etudiants/${student._id}`;
+      response = await axios.put(saveUrl, student, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+
+      console.log('Student updated successfully:', response.data);
+      // Fetch students to update local state after successful update
+      await fetchStudents();
+    } catch (error) {
+      console.error('Error updating student:', error);
+    }
+};
+  
+  
+  
+  useEffect(() => {
+    fetchStudents();
+}, []);
+  
   return (<View style={styles.page}>
     <StatusBar />
         <View style={styles.container}>
@@ -244,7 +100,7 @@ const [listeRapport,setListeRapport]=useState([
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-         <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} listeRapport={listeRapport} setListeRapport={setListeRapport}>
+        <EtudiantsProvider listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} >
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
@@ -327,9 +183,6 @@ const [listeRapport,setListeRapport]=useState([
                 )
             }
         }}/>
-         
-      
-
      </Tab.Navigator> 
      </EtudiantsProvider>
     </View>

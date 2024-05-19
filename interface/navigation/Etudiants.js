@@ -5,23 +5,14 @@ import { useEtudiants } from './dataScreen';
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../fsacLogo-removebg-preview.png')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
   
   export default function Etudiants(){
   const navigation=useNavigation();
-  const { listeEtudiants, setListeEtudiants } = useEtudiants();
-  const updateObject = (updatedValues) => {
-    const updatedArray = listeEtudiants.map((item) => {
-      if (updatedValues===item) {
-        return { ...item, ...updatedValues };
-      }
-      return item;
-    });
-    setListeEtudiants(updatedArray);
-  };
+  const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
 
   const Card = ({ item }) => {
     const [isPresent, setIsPresent] = useState(item.estPerson);
@@ -30,14 +21,14 @@ const Head = () => (
        
   
     const togglePresence = () => {
-      item.estPerson = !isPresent;
-      updateObject(item);
+      item.estPerson = !item.estPerson;
+      updateStudent(item._id,item);
       setIsPresent(item.estPerson);
     };
     const togglePresenceR = () => {
       if (isReppored) {
         item.id_rapport=null;
-        updateObject(item);
+        updateStudent(item._id,item);
         setIsReppored(item.id_rapport!=null);
       } else {
         setIsReppored(!isReppored);
@@ -75,7 +66,7 @@ const Head = () => (
           </TouchableOpacity>
         </View></View>
       </View>
-    );
+    ); 
   };
  
   return (
@@ -96,6 +87,7 @@ const Head = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   title:{
     fontSize: 20,
