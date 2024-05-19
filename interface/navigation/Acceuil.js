@@ -1,4 +1,4 @@
-import { View,Text, StyleSheet,Image, ScrollView, Button } from 'react-native';
+import { View,Text, StyleSheet,Image, ScrollView, Button, ImageBackground } from 'react-native';
 import { useEtudiants } from './dataScreen';
 
 const Head = () => (
@@ -10,7 +10,7 @@ export default function Acceuil({route}) {
   const image = require('./back2.jpeg'); 
   const {seance}=route.params;
     return(
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground   source={image} resizeMode="cover" style={styles.image}>
             <View style={styles.card}>
                  <Head />
                  <View style={styles.con}>

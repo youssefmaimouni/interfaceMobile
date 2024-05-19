@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
 import PV from './interface/PV';
 import Example from './tailwindtest';
+import Insert from './insertIntoCouchDB';
 
 const App = () => {
   return (
     <PV/>
+    
     
   );
 };

@@ -37,14 +37,13 @@ const Head = () => (
       
     };
    
-  
-    
+
+      
   
     return (
-      
       <View style={styles.card}>
         <Image
-          source={require('./etu.jpeg')}
+          source={require('../acceuil.png')}
           style={styles.image}
         />
         <View style={styles.cardContent}>
@@ -65,10 +64,11 @@ const Head = () => (
           >
             <Text style={styles.buttonText}>{item.id_rapport!=null ? 'supprimer Rapport' :'fait Rapport' }</Text>
           </TouchableOpacity>
-        
+        </View></View>
       </View>
-    );
+    ); 
   };
+
  
   return (
   <ImageBackground source={image} resizeMode="cover" style={styles.container}>
@@ -86,33 +86,34 @@ const Head = () => (
   );
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  title:{
+  title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
     marginBottom: 10,
-    alignSelf:'center',
+    alignSelf: 'center',
   },
   headContainer: {
+    flex: 1,
     flexDirection: 'row',
     marginTop: 10,
-    marginLeft: 5, 
+    marginLeft: 5,
   },
   logo: {
     height: 50,
     width: 120,
-    marginLeft:10,
+    marginLeft: 10,
   },
   year: {
     fontSize: 13,
-    marginLeft: 10, 
     marginTop: 20,
-    marginLeft:120,
+    marginLeft: 120,
   },
   card: {
     flexDirection: 'row',
@@ -124,13 +125,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    margin:20,
+    margin: 20,
   },
   image: {
     width: 80,
     height: 80,
     borderRadius: 10,
-    margin:10,
+    margin: 10,
   },
   cardContent: {
     flex: 1,
@@ -144,9 +145,9 @@ const styles = StyleSheet.create({
   button: {
     padding: 8,
     borderRadius: 5,
-   marginTop:80,
-   margin:5,
-   height:35,
+    marginTop: 80,
+    margin: 5,
+    height: 35,
   },
   presentButton: {
     backgroundColor: '#476f95',
@@ -162,26 +163,9 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-  },headContainer: {
-            flex: 1,
-            flexDirection:'row',
-            marginTop:10,
-          },
-          logo: {
-            marginLeft:5,
-            height:50,
-            width:120,
-           
-          },
-          year: {
-            fontSize:13,
-            marginLeft:110,
-            marginTop:20,
-          },scrollView: {
-            marginBottom:60,
-            marginTop:10,
-          }
-  
+  },
+  scrollView: {
+    marginBottom: 60,
+    marginTop: 10,
+  }
 });
-
-

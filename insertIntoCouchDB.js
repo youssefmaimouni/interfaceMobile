@@ -43,12 +43,13 @@ const Insert = () => {
       ;
 
     try {
-      const response = await axios.post('http://192.168.248.241:5984/reserviste/_bulk_docs', data, {
+      const response = await axios.post('http://192.168.11.102:5984/reserviste/_bulk_docs', data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Basic ${encodedCredentials}`
           }
       });
+      console.log('++++++');
       setResponseMessage('Data inserted successfully!');
       console.log(response.data); // Log the response from the server
     } catch (error) {

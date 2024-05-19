@@ -32,7 +32,7 @@ export default function Seance1() {
   const [listeReserviste,setListeReserviste]=useState([]);
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://192.168.248.241:5984/etudiantsun/_all_docs?include_docs=true', {
+      const response = await axios.get('http://192.168.11.102:5984/etudiantsun/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -51,7 +51,7 @@ export default function Seance1() {
   const updatRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.248.241:5984/rapportpremierseance/${docId}`;
+      const fetchUrl = `http://192.168.11.102:5984/rapportpremierseance/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ export default function Seance1() {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.248.241:5984/rapportpremierseance/${rapport._id}`;
+      const saveUrl = `http://192.168.11.102:5984/rapportpremierseance/${rapport._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export default function Seance1() {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://192.168.248.241:5984/rapportpremierseance/_all_docs?include_docs=true', {
+      const response = await axios.get('http://192.168.11.102:5984/rapportpremierseance/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -101,7 +101,7 @@ export default function Seance1() {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.248.241:5984/etudiantsun/${docId}`;
+      const fetchUrl = `http://192.168.11.102:5984/etudiantsun/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export default function Seance1() {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.248.241:5984/etudiantsun/${student._id}`;
+      const saveUrl = `http://192.168.11.102:5984/etudiantsun/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export default function Seance1() {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://192.168.248.241:5984/rapportpremierseance'; // Your CouchDB URL
+  const url = 'http://192.168.11.102:5984/rapportpremierseance'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -147,7 +147,7 @@ const addRapport = async (rapport) => {
   }
 };
 const deleteStudent = async (docId, docRev) => {
-  const url = `http://192.168.248.241:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://192.168.11.102:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -163,7 +163,7 @@ const deleteStudent = async (docId, docRev) => {
   }
 };
 const addSurveillants = async (rapport) => {
-  const url = 'http://192.168.248.241:5984/surveillants'; // Your CouchDB URL
+  const url = 'http://192.168.11.102:5984/surveillants'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -180,7 +180,7 @@ const addSurveillants = async (rapport) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get('http://192.168.248.241:5984/surveillants/_all_docs?include_docs=true', {
+    const response = await axios.get('http://192.168.11.102:5984/surveillants/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -198,7 +198,7 @@ const fetchSurveillants = async () => {
 };
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://192.168.248.241:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get('http://192.168.11.102:5984/reserviste/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
