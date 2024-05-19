@@ -16,7 +16,7 @@ const Head = () => (
     
 
 export default function Rapp({ navigation }) {
-    const {listeRapport ,setListeRapport}=useEtudiants();
+    const {listeRapport ,setListeRapport ,deleteStudent}=useEtudiants();
     
    
     
@@ -41,14 +41,14 @@ export default function Rapp({ navigation }) {
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
          {listeRapport.map( (item)  => (
-                <View style={styles.card} key={item.id}>
-                  <Text style={styles.cardText}>{item.titre}</Text>
+                <View style={styles.card} key={item.etudiant.codeApogee}>
+                  <Text style={styles.cardText}>{item.titre_rapport}</Text>
                   <View style={styles.contenu}>
-                  <Text style={styles.cardText}>{item.nom}</Text>
-                  <TouchableOpacity style={styles.button} >
+                  <Text style={styles.cardText}>{item.etudiant.nom_etudiant}</Text>
+                  <TouchableOpacity style={styles.button} onPress={editRapport}>
                     <Text style={styles.buttonText}>Modifier</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.button1} onPress={()=> handleDelete(item.id)}>
+                  <TouchableOpacity style={styles.button1} onPress={()=> handleDelete(item)}>
                     <Text style={styles.buttonText} >Supprimer</Text>
                   </TouchableOpacity>
                   </View>

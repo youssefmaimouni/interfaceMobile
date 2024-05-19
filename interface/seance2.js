@@ -1,15 +1,26 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Scanner,SignatureStack,RapportStack ,Acceuil,Etudiants} from './navigation';
+import { Scanner,SignatureStack,RapportStack ,Acceuil} from './navigation';
+import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
-import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent, StatusBar } from 'react-native';
+import { View,Text, Button,StyleSheet, TouchableOpacity, ImageComponent } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React, { createContext, useState, useContext } from 'react';
+import React, {  useEffect, useState} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EtudiantsProvider } from './navigation/dataScreen';
+import axios from 'axios';
+import base64 from 'base-64';
+
+const username = 'admin';
+const password = 'admin';
+const encodedCredentials = base64.encode(`${username}:${password}`);
+
 
 
 const Tab = createBottomTabNavigator();
 const seance='seance 2';
+
+
+
 
 
 
@@ -322,7 +333,7 @@ export default function Seance2() {
   );
     const navigation=useNavigation();
     return (<View style={styles.page}>
-      <StatusBar/>
+      <StatusBar />
       <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttons1}
@@ -373,34 +384,37 @@ export default function Seance2() {
           tabBarIcon:({focused})=>{
             return(
 
-              <View style={[focused ? styles.focused : styles.nonfocused]} >
-                 <MaterialCommunityIcons name="qrcode-scan" size={focused ? 30 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
-                 {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
-              </View>
-              )
-          }
-      }}/>
-      <Tab.Screen name='Acceuil'
-     component={Acceuil}
-     initialParams={{seance}}
-     options={{
-         tabBarIcon:({focused})=>{
-           return(
+                <View style={[focused ? styles.focused : styles.nonfocused]} >
+                   <MaterialCommunityIcons name="qrcode-scan" size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                   {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Scanner</Text>}
+                </View>
+                )
+            }
+        }}/>
+        <Tab.Screen name='Acceuil'
+       component={Acceuil}
+       initialParams={{seance}}
+       options={{
+           tabBarIcon:({focused})=>{
+             return(
 
                <View style={[focused ? styles.focused : styles.nonfocused]} >
-                   <Entypo name='home' size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                   <Ionicons name={focused ? "home": "home-outline"} size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Acceuil</Text>}
                </View>
                )
            }
        }}
         />
-             <Tab.Screen name='Etudiants' component={Etudiants} options={{
+             <Tab.Screen name='Etudiants' 
+             component={EtudiantStack}
+             initialParams={{seance}}
+             options={{
                   tabBarIcon:({focused})=>{
                       return(
                           
                           <View style={[focused ? styles.focused : styles.nonfocused]} >
-                        <Fontisto name="persons" size={24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
+                        <Fontisto name="persons" size={focused ? 35 : 24} style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]} />
                         {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Etudiants</Text>}
                      </View>
                      )
@@ -411,22 +425,19 @@ export default function Seance2() {
             tabBarIcon:({focused})=>{
               return(
 
-              <View style={[focused ? styles.focused : styles.nonfocused]} >
-                  
-                  <FontAwesome5 name="signature" size={focused ? 30 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
-                  {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
-              </View>
-              )
-          }
-      }}/>
-       
+                <View style={[focused ? styles.focused : styles.nonfocused]} >
+                    
+                    <FontAwesome5 name="signature" size={focused ? 35 : 24}  style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}/>
+                    {!focused && <Text style={[focused ? styles.colorIconFocus : styles.colorIconNonFocus]}>Signature</Text>}
+                </View>
+                )
+            }
+        }}/>
+     </Tab.Navigator> 
+     </EtudiantsProvider>
+    </View>
     
-
-   </Tab.Navigator> 
-   </EtudiantsProvider>
-  </View>
-  
-);
+  );
 }
 
 const styles=StyleSheet.create({

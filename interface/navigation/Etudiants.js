@@ -5,23 +5,14 @@ import { useEtudiants } from './dataScreen';
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+      <Image source={require('../fsacLogo-removebg-preview.png')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
   const image = require('./backflou.png');
   export default function Etudiants(){
   const navigation=useNavigation();
-  const { listeEtudiants, setListeEtudiants } = useEtudiants();
-  const updateObject = (updatedValues) => {
-    const updatedArray = listeEtudiants.map((item) => {
-      if (updatedValues===item) {
-        return { ...item, ...updatedValues };
-      }
-      return item;
-    });
-    setListeEtudiants(updatedArray);
-  };
+  const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
 
   const Card = ({ item }) => {
     const [isPresent, setIsPresent] = useState(item.estPerson);
@@ -30,14 +21,14 @@ const Head = () => (
        
   
     const togglePresence = () => {
-      item.estPerson = !isPresent;
-      updateObject(item);
+      item.estPerson = !item.estPerson;
+      updateStudent(item._id,item);
       setIsPresent(item.estPerson);
     };
     const togglePresenceR = () => {
       if (isReppored) {
         item.id_rapport=null;
-        updateObject(item);
+        updateStudent(item._id,item);
         setIsReppored(item.id_rapport!=null);
       } else {
         setIsReppored(!isReppored);
@@ -57,11 +48,11 @@ const Head = () => (
           style={styles.image}
         />
         <View style={styles.cardContent}>
-          <Text style={styles.name}>{item.nom} {item.prénom}</Text>
-          <Text>Code Apogée: {item['code-apogée']}</Text>
+          <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
+          <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
-          <Text>numéro exam: {item['numéro-exam']}</Text>
-          </View>
+          <Text>numéro exam: {item.numeroExam}</Text>
+          <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
           <TouchableOpacity
             style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
             onPress={togglePresence}
@@ -76,7 +67,6 @@ const Head = () => (
           </TouchableOpacity>
         
       </View>
-      
     );
   };
  
@@ -88,7 +78,7 @@ const Head = () => (
 
         <Text style={styles.title}>Liste des étudiants</Text>
       {listeEtudiants.map((item)=>(
-        <Card item={item} key={item['numéro-exam']}/>
+        <Card item={item} key={item.numeroExam}/>
       ))}
     
       </ScrollView>
@@ -99,6 +89,7 @@ const Head = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
   title:{
     fontSize: 20,

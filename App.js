@@ -1,4 +1,3 @@
-// App.js
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
 import PV from './interface/PV';

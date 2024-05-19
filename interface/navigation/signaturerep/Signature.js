@@ -1,10 +1,8 @@
 import React, { useState } from 'react'; // Ajout de useState
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import surveillants from '../data/surveillant.json';
 import { useNavigation } from '@react-navigation/native';
-import reservistes from '../data/reserviste.json'; // Assurez-vous que le chemin est correct et les données sont chargées
-
+import { useEtudiants } from '../dataScreen';
 const Head = () => (
   <View style={styles.headContainer}>
     <Image source={require('../logofsac.jpeg')} style={styles.logo} />
@@ -15,7 +13,7 @@ const Head = () => (
 export default function Sign() {
   const navigation = useNavigation();
   const [afficher, setAfficher] = useState(false);
-  const [signatures, setSignatures] = useState(new Set());
+  const {listeReserviste,listeSurveillants}=useEtudiants();
 
   const handleSign = (id) => {
     setSignatures(new Set([...signatures, id]));
@@ -31,7 +29,7 @@ export default function Sign() {
         <ScrollView style={styles.scrollView}>
           <Head />
           <Text style={styles.title}>Liste des surveillants</Text>
-          {surveillants.map((item) => (
+          {listeSurveillants.map((item) => (
             <View style={styles.card} key={item.id_surveillant}>
               <View style={styles.contenu}>
                 <Text style={styles.cardText}>{item.nom_complet}</Text>
@@ -48,7 +46,7 @@ export default function Sign() {
           </TouchableOpacity>
 
           {afficher && (
-            reservistes.map((item) => (
+            listeReserviste.map((item) => (
               <View style={styles.card} key={item.id_surveillant}>
                 <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.nom_complet}</Text>
