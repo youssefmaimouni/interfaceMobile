@@ -16,7 +16,7 @@ const Head = () => (
     
 
 export default function Rapp({ navigation }) {
-    const {listeRapport ,setListeRapport ,deleteStudent}=useEtudiants();
+    const {listeRapport ,setListeRapport ,deleteStudent,editRapport}=useEtudiants();
     
    
     
@@ -154,5 +154,8 @@ export default function Rapp({ navigation }) {
       color: 'white',
       textAlign: 'center',
       padding:2,
-    },
+    },image:{
+      flex:1,
+      justifyContent:'center',
+  }, 
   });
