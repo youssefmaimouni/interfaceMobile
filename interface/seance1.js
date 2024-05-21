@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Scanner,SignatureStack,RapportStack ,Acceuil} from './navigation';
+import { SignatureStack,RapportStack ,Acceuil,ScannerStack} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
@@ -268,7 +268,7 @@ const fetchReserviste = async () => {
                 )
             }
         }}/>
-        <Tab.Screen name='Scanner' component={Scanner} initialParams={{seance}}
+        <Tab.Screen name='Scanne' component={ScannerStack} initialParams={{seance}}
         options={{
             tabBarIcon:({focused})=>{
               return(

@@ -12,38 +12,63 @@ const Insert = () => {
 
   const insertStudentData = async () => {
     const data = {
-        "docs": [
-            {
-              "id_surveillant": "1",
-              "id_departement": "101",
-              "nom_complet": "Jean Dupont"
-            },
-            {
-              "id_surveillant": "2",
-              "id_departement": "102",
-              "nom_complet": "Marie Curie"
-            },
-            {
-              "id_surveillant": "3",
-              "id_departement": "103",
-              "nom_complet": "Émile Durkheim"
-            },
-            {
-              "id_surveillant": "4",
-              "id_departement": "104",
-              "nom_complet": "Claude Monet"
-            },
-            {
-              "id_surveillant": "5",
-              "id_departement": "105",
-              "nom_complet": "Simone de Beauvoir"
-            }
-          ]      
-      }
-      ;
+        "docs":  [
+          
+          {
+            "codeApogee": 20001,
+            "nom_etudiant": "El Kaddouri",
+            "prenom_etudiant": "Jamila",
+            "numeroExam": 1,
+            "CNE": "200021",
+            "photo": "http://www.fsac.ac.ma/photo/jamila1",
+            "id_rapport": null,
+            "estPerson": true
+        },
+        {
+            "codeApogee": 20002,
+            "nom_etudiant": "Ben Salah",
+            "prenom_etudiant": "Khalid",
+            "numeroExam": 2,
+            "CNE": "200022",
+            "photo": "http://www.fsac.ac.ma/photo/khalid2",
+            "id_rapport": null,
+            "estPerson": true
+        },
+        {
+            "codeApogee": 20003,
+            "nom_etudiant": "Ait Bouali",
+            "prenom_etudiant": "Sofia",
+            "numeroExam": 3,
+            "CNE": "200023",
+            "photo": "http://www.fsac.ac.ma/photo/sofia3",
+            "id_rapport": null,
+            "estPerson": true
+        },
+        {
+            "codeApogee": 20004,
+            "nom_etudiant": "El Mansouri",
+            "prenom_etudiant": "Amir",
+            "numeroExam": 4,
+            "CNE": "200024",
+            "photo": "http://www.fsac.ac.ma/photo/amir4",
+            "id_rapport": null,
+            "estPerson": true
+        },
+        {
+            "codeApogee": 20005,
+            "nom_etudiant": "Rahmani",
+            "prenom_etudiant": "Loubna",
+            "numeroExam": 5,
+            "CNE": "200025",
+            "photo": "http://www.fsac.ac.ma/photo/loubna5",
+            "id_rapport": null,
+            "estPerson": true
+        }
+    ]
+    };
 
     try {
-      const response = await axios.post('http://192.168.11.102:5984/reserviste/_bulk_docs', data, {
+      const response = await axios.post('http://192.168.11.102:5984/etudiantsdeux/_bulk_docs', data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Basic ${encodedCredentials}`

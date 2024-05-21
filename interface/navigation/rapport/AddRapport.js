@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
+import { useNavigation } from '@react-navigation/native';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -10,13 +11,31 @@ const Head = () => (
     </View>
 );
 
-export default function AddRapp({navigation}) {
+export default function AddRapp({ route}) {
+    const etudiant = route.params?.etudiant;
     const [titre, setTitre] = useState('');
     const [contenu, setContenu] = useState('');
     const [search, setSearch] = useState('');
     const [selectedEtudiant, setSelectedEtudiant] = useState(null);
-
+    const navigation = useNavigation();
     const { listeEtudiants,addRapport } = useEtudiants();
+     
+    useEffect(() => {
+        if (etudiant) {
+            const fullName = `${etudiant.nom_etudiant} ${etudiant.prenom_etudiant}`;
+            setSearch(fullName);
+            setSelectedEtudiant(etudiant);
+        }
+    }, [etudiant]);
+
+    const handleSearchChange = (text) => {
+        setSearch(text);
+    };
+
+    const handleSelectEtudiant = (item) => {
+        setSelectedEtudiant(item);
+        setSearch(`${item.nom_etudiant} ${item.prenom_etudiant}`);
+    };
 
     const soumettreRapport = ()=>{
         const repport ={ 
@@ -62,17 +81,7 @@ export default function AddRapp({navigation}) {
         setContenu(val);
     };
 
-    const handleSelectEtudiant = (etudiant) => {
-        setSelectedEtudiant(etudiant);
-        setSearch(`${etudiant.nom_etudiant} ${etudiant.prenom_etudiant}`);
-    };
-
-    const handleSearchChange = (val) => {
-        setSearch(val);
-        if (!val) {
-            setSelectedEtudiant(null);
-        }
-    };
+    
 
     return (
         <GestureHandlerRootView style={styles.container}>

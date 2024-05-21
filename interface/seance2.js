@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Scanner,SignatureStack,RapportStack ,Acceuil} from './navigation';
+import { ScannerStack,SignatureStack,RapportStack ,Acceuil} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
@@ -24,7 +24,7 @@ const seance='seance 1';
 
 
 
-export default function Seance1() {
+export default function Seance2() {
   const navigation=useNavigation();
   const [listeEtudiants,setListeEtudiants]=useState([]);
   const [listeSurveillants,setListeSurveillants]=useState([]);
@@ -268,7 +268,7 @@ const fetchReserviste = async () => {
                 )
             }
         }}/>
-        <Tab.Screen name='Scanner' component={Scanner} initialParams={{seance}}
+        <Tab.Screen name='Scanne' component={ScannerStack} initialParams={{seance}}
         options={{
             tabBarIcon:({focused})=>{
               return(
@@ -336,19 +336,15 @@ const styles=StyleSheet.create({
     },
     buttons2: {
       alignSelf: 'flex-start',
-        backgroundColor:'#d1dbe4',
-        padding: 10,
-        flex:2,
-        
+      backgroundColor:'#b0bec5',
+      padding: 10,
+      flex:2
       },
       buttons1: {
         alignSelf: 'flex-start',
         backgroundColor:'#7593af',
         padding: 10,
-        flex:2,
-        borderRadius:20,
-        margin:2,
-        
+        flex:2
       },
       buttonTexts2: {
         color: '#90a4ae',
@@ -367,6 +363,8 @@ const styles=StyleSheet.create({
         justifyContent:"center",
         height :64,
         width :64,
+        backgroundColor:'#8AABF7',
+        borderRadius:40 ,
         marginBottom:3,
   },
   nonfocused:{
@@ -377,9 +375,10 @@ const styles=StyleSheet.create({
       
   },
   colorIconFocus:{
-    color:'#546e7a',
+      color:'#546e7a',
+
   },
   colorIconNonFocus:{
-    color:'#a3b7ca',
+      color:'#B6DEF6',
   }
 })

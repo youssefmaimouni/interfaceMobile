@@ -2,6 +2,7 @@ import React, { useState } from 'react'; // Ajout de useState
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+
 import { useEtudiants } from '../dataScreen';
 const Head = () => (
   <View style={styles.headContainer}>
@@ -13,7 +14,7 @@ const Head = () => (
 export default function Sign() {
   const navigation = useNavigation();
   const [afficher, setAfficher] = useState(false);
-  const {listeReserviste,listeSurveillants}=useEtudiants();
+   const {listeReserviste,listeSurveillants}=useEtudiants();
 
   return (
     <View style={styles.container}>
