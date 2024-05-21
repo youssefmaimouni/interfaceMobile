@@ -8,7 +8,7 @@ import { useEtudiants } from '../dataScreen';
 
 const Head = () => (
     <View style={styles.headContainer}>
-      <Image source={require('../logot.jpg')} style={styles.logo} />
+      <Image source={require('../../fsacLogo-removebg-preview.png')} style={styles.logo} />
       <Text style={styles.year}>Année universitaire ____-____</Text>
     </View>
   );
@@ -62,10 +62,9 @@ export default function Rapp({ navigation }) {
   }
   
   const styles = StyleSheet.create({
-    container: {
+    image: {
       flex: 1,
       backgroundColor: '#f5f5f5',
-      justifyContent: 'center',
       paddingTop: StatusBar.currentHeight,
     },
 

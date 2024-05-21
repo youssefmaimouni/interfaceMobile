@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button, TouchableOpacity,Image, ScrollView, Modal } from "react-native";
 import { CameraView, Camera } from "expo-camera/next";
 import { useEtudiants } from "./dataScreen";
+import { useNavigation } from '@react-navigation/native';
+
 const Head = () => (
   <View style={styles.headContainer}>
-    <Image source={require('./logofsac.jpeg')} style={styles.logo} />
+    <Image source={require('../fsacLogo-removebg-preview.png')} style={styles.logo} />
     <Text style={styles.year}>Année universitaire ____-____</Text>
   </View>
 );
@@ -12,6 +14,7 @@ export default function Scanner() {
   const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
   const [modalVisible, setModalVisible] =useState(false);
   const [scannedData, setScannedData] = useState({});
+  const navigation = useNavigation();
 
   const updateObject = (updatedValues) => {
     const foundItem = listeEtudiants.find(item => isEqual(updatedValues, item));
@@ -82,16 +85,13 @@ const verificationEtudiant=()=>{
   return (
     <View style={styles.container}>
        <Head/>
-      <View >
-
-      
-     
+      <View >  
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
       {!modalVisible &&  <CameraView
-  onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-  barcodeScannerSettings={{
-    barcodeTypes: ["qr"],
+      onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+      barcodeScannerSettings={{
+      barcodeTypes: ["qr"],
   }}
   style={StyleSheet.absoluteFillObject}
   // Pass updateObject as a prop
@@ -112,7 +112,10 @@ const verificationEtudiant=()=>{
           <View style={{flexDirection:'row'}}>
           <TouchableOpacity
             style={styles.buttonRapp}
-            onPress={()=>setModalVisible(false)}
+            onPress={()=>{
+              setModalVisible(false); 
+              navigation.navigate('AddRapport', { etudiant: scannedData });
+            }}
           >
             <Text style={styles.buttonText}>rapport</Text>
           </TouchableOpacity>

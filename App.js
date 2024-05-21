@@ -7,8 +7,7 @@ import Insert from './insertIntoCouchDB';
 const App = () => {
   return (
     <PV/>
-    
-    
+    //<Insert/>
   );
 };
 

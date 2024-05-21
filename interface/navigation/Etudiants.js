@@ -32,7 +32,7 @@ const Head = () => (
         setIsReppored(item.id_rapport!=null);
       } else {
         setIsReppored(!isReppored);
-        navigation.navigate('AddRap');
+        navigation.navigate('AddRap', { etudiant: item });
       }
       
     };
