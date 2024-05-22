@@ -354,31 +354,29 @@ const styles=StyleSheet.create({
       color: '#455a64',
       fontWeight:'bold'
       },
-    container:{
-      flexDirection:'row',
-      backgroundColor:'#d1dbe4',
+      container:{
+        flexDirection:'row',
+        backgroundColor:'#d1dbe4',
     },
     focused:{
-      alignItems:"center" ,
+        alignItems:"center" ,
         justifyContent:"center",
         height :64,
         width :64,
-        backgroundColor:'#8AABF7',
-        borderRadius:40 ,
         marginBottom:3,
-  },
-  nonfocused:{
-    alignItems:"center" ,
-    justifyContent:"center",
-    height :60,
-    width :60,
-      
-  },
-  colorIconFocus:{
-      color:'#546e7a',
-
-  },
-  colorIconNonFocus:{
-      color:'#B6DEF6',
-  }
+        
+    },
+    nonfocused:{
+        alignItems:"center" ,
+        justifyContent:"center",
+        height :60,
+        width :60,
+        
+    },
+    colorIconFocus:{
+        color:'#546e7a',
+    },
+    colorIconNonFocus:{
+        color:'#a3b7ca',
+    }
 })
