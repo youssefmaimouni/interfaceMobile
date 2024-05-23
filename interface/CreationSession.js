@@ -14,15 +14,12 @@ export default function CreationSession({route}) {
   const ipAdress = route.params.ipAdress;
 
   useEffect(() => {
-    setDeviceId(Device.osBuildId); // Using OS Build ID as a unique identifier for demo purposes
-    console.log(ipAdress);
+    setDeviceId(Device.osBuildId);
   }, []);
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId, // Previously "adresse_mac"
-      "statut": "non associer",
-      "code_association": null
+      "adresse_mac": deviceId,
     };
     try {
       setModalIsOpen(true);

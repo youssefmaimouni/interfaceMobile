@@ -20,9 +20,7 @@ export default function DemandeRefuser({route}) {
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId, // Previously "adresse_mac"
-      "statut": "non associer",
-      "code_association": null
+      "adresse_mac": deviceId,
     };
     try {
       setModalIsOpen(true);
