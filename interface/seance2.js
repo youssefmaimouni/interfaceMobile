@@ -24,15 +24,16 @@ const seance='seance 1';
 
 
 
-export default function Seance2() {
+export default function Seance2({route}) {
   const navigation=useNavigation();
   const [listeEtudiants,setListeEtudiants]=useState([]);
   const [listeSurveillants,setListeSurveillants]=useState([]);
   const [listeRapport,setListeRapport]=useState([]);
   const [listeReserviste,setListeReserviste]=useState([]);
+  const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/etudiantsdeux/_all_docs?include_docs=true', {
+      const response = await axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?include_docs=true`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -51,7 +52,7 @@ export default function Seance2() {
   const updatRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/rapportdeuxiemeseance/${docId}`;
+      const fetchUrl = `http://${ipAdress}:5984/rapportdeuxiemeseance/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ export default function Seance2() {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/rapportdeuxiemeseance/${rapport._id}`;
+      const saveUrl = `http://${ipAdress}:5984/rapportdeuxiemeseance/${rapport._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +83,7 @@ export default function Seance2() {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/rapportdeuxiemeseance/_all_docs?include_docs=true', {
+      const response = await axios.get(`http://${ipAdress}:5984/rapportdeuxiemeseance/_all_docs?include_docs=true`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -101,7 +102,7 @@ export default function Seance2() {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/etudiantsdeux/${docId}`;
+      const fetchUrl = `http://${ipAdress}:5984/etudiantsdeux/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +116,7 @@ export default function Seance2() {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/etudiantsdeux/${student._id}`;
+      const saveUrl = `http://${ipAdress}:5984/etudiantsdeux/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ export default function Seance2() {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/rapportdeuxiemeseance'; // Your CouchDB URL
+  const url = `http://${ipAdress}:5984/rapportdeuxiemeseance`; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -147,7 +148,7 @@ const addRapport = async (rapport) => {
   }
 };
 const deleteStudent = async (docId, docRev) => {
-  const url = `http://192.168.245.241:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://${ipAdress}:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -163,7 +164,7 @@ const deleteStudent = async (docId, docRev) => {
   }
 };
 const addSurveillants = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/surveillants'; // Your CouchDB URL
+  const url = `http://${ipAdress}:5984/surveillants`; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -180,7 +181,7 @@ const addSurveillants = async (rapport) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/surveillants/_all_docs?include_docs=true', {
+    const response = await axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -198,7 +199,7 @@ const fetchSurveillants = async () => {
 };
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
