@@ -1,7 +1,12 @@
-import { Button, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {  Image, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 export default function DemandeAccepter() {
-  const image = require('./navigation/backflou.png');
+
+const image = require('./navigation/backflou.png');
+const navigation=useNavigation();
+
 
   return (
     <ImageBackground source={image} style={styles.container}>
@@ -10,7 +15,7 @@ export default function DemandeAccepter() {
       <Text style={styles.text2}>votre code d'association est: xxxxx </Text>
       <TouchableOpacity 
         style={styles.button}
-        
+        onPress={()=>{navigation.navigate('PV')}}
        >
         <Text style={styles.buttonText} >ouvre le PV</Text>
        </TouchableOpacity>
