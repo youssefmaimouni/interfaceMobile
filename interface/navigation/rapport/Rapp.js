@@ -17,7 +17,7 @@ const Head = () => (
 
 export default function Rapp({ navigation }) {
 
-    const {listeRapport ,setListeRapport ,deleteRapport}=useEtudiants();
+    const {listeRapport ,deleteRapport}=useEtudiants();
     
    
     

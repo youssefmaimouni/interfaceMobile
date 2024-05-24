@@ -4,6 +4,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import { useEtudiants } from '../dataScreen';
+
 const Head = () => (
   <View style={styles.headContainer}>
     <Image source={require('../logofsac.jpeg')} style={styles.logo} />
@@ -11,11 +12,60 @@ const Head = () => (
   </View>
 );
 
-export default function Sign() {
+const Card = ({ item }) => {
   const navigation = useNavigation();
-  const [afficher, setAfficher] = useState(false);
-   const {listeReserviste,listeSurveillants}=useEtudiants();
+    const [signed,setSigned] = useState(true);
+  const signa = () => {
+    if(signed){
+      setSigned(false);
+      navigation.navigate('SignatureScreen'); 
+      
+    }
+  };
+  return (
+    <View style={styles.card} >
+              <View style={styles.contenu}>
+                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <TouchableOpacity style={styles.button} onPress={signa}><Text>{signed?'signer':'signé'}</Text></TouchableOpacity>
+              </View>
+            </View>
+  );
+ 
+}
 
+const Cardr = ({ item }) => {
+  const navigation = useNavigation();
+  const [signed,setSigned] = useState(true);
+  const {addSurveillants,deleteReserviste}=useEtudiants();
+  const signa = () => {
+    if(signed){
+      const reserviste = {
+        id_surveillant: item.id_surveillant,
+        id_departement: item.id_departement,
+        nom_complet: item.nom_complet,
+    };
+      addSurveillants(reserviste);
+      
+      deleteReserviste(item._id,item._rev);
+    }
+  };
+  return (
+    <View style={styles.card} >
+              <View style={styles.contenu}>
+                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <TouchableOpacity style={styles.button} onPress={signa}><Text>surveiller</Text></TouchableOpacity>
+              </View>
+    </View>
+  );
+ 
+}
+ 
+
+export default function Sign() {
+  
+  const [afficher, setAfficher] = useState(false);
+  const {listeReserviste,listeSurveillants}=useEtudiants();
+  
   return (
     <View style={styles.container}>
       <GestureHandlerRootView>
@@ -23,14 +73,7 @@ export default function Sign() {
           <Head />
           <Text style={styles.title}>Liste des surveillants</Text>
           {listeSurveillants.map((item) => (
-            <View style={styles.card} key={item.id_surveillant}>
-              <View style={styles.contenu}>
-                <Text style={styles.cardText}>{item.nom_complet}</Text>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('SignatureScreen')}>
-                  <Text style={styles.buttonText}>Signer</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <Card item={item} key={item.id_surveillant}/>
           ))}
 
           <TouchableOpacity style={styles.button1} onPress={() => setAfficher(!afficher)}>
@@ -39,14 +82,7 @@ export default function Sign() {
 
           {afficher && (
             listeReserviste.map((item) => (
-              <View style={styles.card} key={item.id_surveillant}>
-                <View style={styles.contenu}>
-                  <Text style={styles.cardText}>{item.nom_complet}</Text>
-                  <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>Signer</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
+              <Cardr item={item} key={item.id_surveillant}/>
             ))
           )}
         </ScrollView>

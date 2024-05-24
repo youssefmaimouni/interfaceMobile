@@ -33,7 +33,7 @@ export default function Seance1({route}) {
   const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/etudiantsun/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/etudiantsun/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -52,7 +52,7 @@ export default function Seance1({route}) {
   const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/rapportpremierseance/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/rapportpremierseance/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -66,8 +66,8 @@ export default function Seance1({route}) {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/rapportpremierseance/${rapport._id}`;
-      response = await axios.put(saveUrl, student, {
+      const saveUrl = `http://10.115.251.236:5984/rapportpremierseance/${rapport._id}`;
+      response = await axios.put(saveUrl, rapport, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -83,7 +83,7 @@ export default function Seance1({route}) {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/rapportpremierseance/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/rapportpremierseance/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -102,7 +102,7 @@ export default function Seance1({route}) {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/etudiantsun/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/etudiantsun/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export default function Seance1({route}) {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/etudiantsun/${student._id}`;
+      const saveUrl = `http://10.115.251.236:5984/etudiantsun/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export default function Seance1({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/rapportpremierseance'; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/rapportpremierseance'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -147,8 +147,8 @@ const addRapport = async (rapport) => {
     console.error('Error posting document:', error);
   }
 };
-const deleteStudent = async (docId, docRev) => {
-  const url = `http://192.168.245.241:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+const deleteRapport = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -164,11 +164,11 @@ const deleteStudent = async (docId, docRev) => {
   }
 };
 
-const addSurveillants = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/surveillants'; // Your CouchDB URL
+const addSurveillants = async (surveillant) => {
+  const url = 'http://10.115.251.236:5984/surveillants'; // Your CouchDB URL
 
   try {
-    const response = await axios.post(url, rapport, {
+    const response = await axios.post(url, surveillant, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -182,7 +182,7 @@ const addSurveillants = async (rapport) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/surveillants/_all_docs?include_docs=true', {
+    const response = await axios.get('http://10.115.251.236:5984/surveillants/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -198,9 +198,25 @@ const fetchSurveillants = async () => {
     console.error('Error fetching documents:', error);
   }
 };
+const deleteReserviste = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/reserviste/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    await fetchReserviste();
+    console.log('Document deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting document:', error);
+  }
+};
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get('http://10.115.251.236:5984/reserviste/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -208,10 +224,10 @@ const fetchReserviste = async () => {
     });
     
     // Extracting documents from the response
-    const surveillants = response.data.rows.map(row=>row.doc);
+    const reservistes = response.data.rows.map(row=>row.doc);
     console.log('+++++++++++++');
     
-   setListeReserviste(surveillants);
+   setListeReserviste(reservistes);
   } catch (error) {
     console.error('Error fetching documents:', error);
   }
@@ -241,7 +257,7 @@ const fetchReserviste = async () => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-        <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants} deleteStudent={deleteStudent} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
+        <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,

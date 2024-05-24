@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { KeyboardAvoidingView,Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
 import { useNavigation } from '@react-navigation/native';
@@ -129,8 +129,14 @@ const Head = () => (
 
     return (
         <GestureHandlerRootView style={styles.container}>
+        <KeyboardAvoidingView
+        behavior="height" // Comportement pour Android
+        style={styles.container}
+        keyboardVerticalOffset={20} // Ajustez selon le besoin pour éviter que le clavier ne recouvre des éléments
+      >
           <ScrollView style={styles.scrollView}>
             <Head />
+            
             <Text style={styles.title}>Rapport</Text>
             <TextInput
                 style={styles.input}
@@ -164,7 +170,9 @@ const Head = () => (
             <TouchableOpacity style={styles.button1} onPress={soumettreRapport}>
                 <Text style={styles.textbutton}>Soumettre</Text>
             </TouchableOpacity>
+            
             </ScrollView>
+            </KeyboardAvoidingView>
         </GestureHandlerRootView>
     );
 }

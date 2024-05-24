@@ -33,7 +33,7 @@ export default function Seance2({route}) {
   const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/etudiantsdeux/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/etudiantsdeux/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -52,7 +52,7 @@ export default function Seance2({route}) {
   const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/rapportdeuxiemeseance/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/rapportdeuxiemeseance/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export default function Seance2({route}) {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/rapportdeuxiemeseance/${rapport._id}`;
+      const saveUrl = `http://10.115.251.236:5984/rapportdeuxiemeseance/${rapport._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function Seance2({route}) {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://192.168.245.241:5984/rapportdeuxiemeseance/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/rapportdeuxiemeseance/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -102,7 +102,7 @@ export default function Seance2({route}) {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://192.168.245.241:5984/etudiantsdeux/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/etudiantsdeux/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +116,7 @@ export default function Seance2({route}) {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://192.168.245.241:5984/etudiantsdeux/${student._id}`;
+      const saveUrl = `http://10.115.251.236:5984/etudiantsdeux/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export default function Seance2({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/rapportdeuxiemeseance'; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/rapportdeuxiemeseance'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -147,8 +147,10 @@ const addRapport = async (rapport) => {
     console.error('Error posting document:', error);
   }
 };
-const deleteStudent = async (docId, docRev) => {
-  const url = `http://192.168.245.241:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+
+
+const deleteRapport = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -165,7 +167,7 @@ const deleteStudent = async (docId, docRev) => {
 };
 
 const addSurveillants = async (rapport) => {
-  const url = 'http://192.168.245.241:5984/surveillants'; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/surveillants'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -182,7 +184,7 @@ const addSurveillants = async (rapport) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/surveillants/_all_docs?include_docs=true', {
+    const response = await axios.get('http://10.115.251.236:5984/surveillants/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -200,7 +202,7 @@ const fetchSurveillants = async () => {
 };
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://192.168.245.241:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get('http://10.115.251.236:5984/reserviste/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -241,7 +243,7 @@ const fetchReserviste = async () => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants} deleteStudent={deleteStudent} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
+         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
