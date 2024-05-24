@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, Image, ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ActivityIndicator,  ImageBackground, Modal, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Device from 'expo-device';
 import axios from 'axios';

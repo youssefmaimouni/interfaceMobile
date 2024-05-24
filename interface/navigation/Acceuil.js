@@ -18,7 +18,6 @@ export default function Acceuil({route}) {
                 <Text>module :</Text>
                 <Text>seance :{seance}</Text>
                 <Text>demi_journée:</Text>
-                <Text> durée:</Text>
                 <Text> local:</Text>
                 </View>
             </View>

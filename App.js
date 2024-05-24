@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
+import { View,  StyleSheet,  ActivityIndicator } from 'react-native';
 import PV from './interface/PV';
-import Example from './tailwindtest';
-import Insert from './insertIntoCouchDB';
 import CreationSession from './interface/CreationSession';
 import ErrorConnection from './interface/ErrorConnection';
 import { NavigationContainer } from '@react-navigation/native';
@@ -42,7 +40,7 @@ const App = () => {
         },
         timeout: 10000
       });
-      console.log(response.data['statut']);  // Log the response status
+      console.log(response.data['statut']);  
       const newScreen = response.data['statut'] === 'non associer' ? 'DemandeEnvoye' :
                         response.data['statut'] === 'associer' ? 'DemandeAccepter' :
                         response.data['statut'] === 'refuser' ? 'DemandeRefuser' : 'CreationSession';
@@ -53,13 +51,11 @@ const App = () => {
     }
   }
   
-  // Use useEffect to log screen state when it changes
   useEffect(() => {
     console.log('Current screen:', screen);
-  }, [screen]);  // This will log every time screen changes
+  }, [screen]);  
 
   if (!screen) {
-    // Render a loading spinner or similar while determining the initial screen
     return <View style={styles.container}><ActivityIndicator size="large" /></View>;
   }
   
