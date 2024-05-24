@@ -6,27 +6,35 @@ import React, { useEffect, useState } from 'react';
 import * as Device from 'expo-device';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
+
 
 export default function CreationSession({route}) {
-  const [deviceId, setDeviceId] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const navigation=useNavigation();
   const ipAdress = route.params.ipAdress;
 
-  useEffect(() => {
-    setDeviceId(Device.osBuildId); // Using OS Build ID as a unique identifier for demo purposes
-    console.log(ipAdress);
-  }, []);
 
   const associer = async () => {
+
+    async function getDeviceUUID() {
+      let deviceId = await AsyncStorage.getItem('deviceUUID');
+      if (!deviceId) {
+        deviceId = uuid.v4();  // Générer un nouvel UUID
+        await AsyncStorage.setItem('deviceUUID', deviceId);
+      }
+      return deviceId;
+    } 
+    
     const data = {
-      "adresse_mac": deviceId, // Previously "adresse_mac"
+      "uuid": getDeviceUUID(),
       "statut": "non associer",
       "code_association": null
     };
     try {
       setModalIsOpen(true);
-      const response = await axios.post(`http://${ipAdress}:8000/api/tablette/create`, data, {
+      const response = await axios.post(`http://10.115.251.236:8000/api/tablette/create`, data, {
             headers: {
                 'Content-Type': 'application/json'
             },

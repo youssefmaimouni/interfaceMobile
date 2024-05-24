@@ -12,11 +12,11 @@ import DemandeAccepter from './interface/DemandeAccepter';
 
 
 const Stack=createNativeStackNavigator();
-const ipAdress='10.115.249.239';
+const ipAdress='10.115.251.236';
 const App = () => {
   return (
     <NavigationContainer>
-         <Stack.Navigator initialRouteName='PV' screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName='CreationSession' screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>
