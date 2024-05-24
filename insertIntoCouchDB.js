@@ -15,60 +15,35 @@ const Insert = () => {
         "docs":  [
           
           {
-            "codeApogee": 20001,
-            "nom_etudiant": "El Kaddouri",
-            "prenom_etudiant": "Jamila",
-            "numeroExam": 1,
-            "CNE": "200021",
-            "photo": "http://www.fsac.ac.ma/photo/jamila1",
-            "id_rapport": null,
-            "estPerson": true
-        },
-        {
-            "codeApogee": 20002,
-            "nom_etudiant": "Ben Salah",
-            "prenom_etudiant": "Khalid",
-            "numeroExam": 2,
-            "CNE": "200022",
-            "photo": "http://www.fsac.ac.ma/photo/khalid2",
-            "id_rapport": null,
-            "estPerson": true
-        },
-        {
-            "codeApogee": 20003,
-            "nom_etudiant": "Ait Bouali",
-            "prenom_etudiant": "Sofia",
-            "numeroExam": 3,
-            "CNE": "200023",
-            "photo": "http://www.fsac.ac.ma/photo/sofia3",
-            "id_rapport": null,
-            "estPerson": true
-        },
-        {
-            "codeApogee": 20004,
-            "nom_etudiant": "El Mansouri",
-            "prenom_etudiant": "Amir",
-            "numeroExam": 4,
-            "CNE": "200024",
-            "photo": "http://www.fsac.ac.ma/photo/amir4",
-            "id_rapport": null,
-            "estPerson": true
-        },
-        {
-            "codeApogee": 20005,
-            "nom_etudiant": "Rahmani",
-            "prenom_etudiant": "Loubna",
-            "numeroExam": 5,
-            "CNE": "200025",
-            "photo": "http://www.fsac.ac.ma/photo/loubna5",
-            "id_rapport": null,
-            "estPerson": true
-        }
+            "id_surveillant": "40",
+            "id_departement": "100",
+            "nom_complet": "Alice Martin"
+          },
+          {
+            "id_surveillant": "41",
+            "id_departement": "101",
+            "nom_complet": "Bob Dupont"
+          },
+          {
+            "id_surveillant": "43",
+            "id_departement": "102",
+            "nom_complet": "Claire Dubois"
+          },
+          {
+            "id_surveillant": "44",
+            "id_departement": "103",
+            "nom_complet": "David Leroy"
+          },
+          {
+            "id_surveillant": "45",
+            "id_departement": "101",
+            "nom_complet": "Eva Petit"
+          }
     ]
     };
 
     try {
-      const response = await axios.post('http://192.168.11.102:5984/etudiantsdeux/_bulk_docs', data, {
+      const response = await axios.post('http://10.115.251.236:5984/reserviste/_bulk_docs', data, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Basic ${encodedCredentials}`

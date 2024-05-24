@@ -16,19 +16,12 @@ const Head = () => (
     
 
 export default function Rapp({ navigation }) {
-    const {listeRapport ,setListeRapport ,deleteStudent,editRapport}=useEtudiants();
+
+    const {listeRapport ,deleteRapport}=useEtudiants();
     
    
     
-    const handleDelete = async (id) => {
-        try {
-            const updatedRapports = listeRapport.filter((item) => item.id !== id);
-            setListeRapport(updatedRapports);
-        } catch (error) {
-            console.error('Error deleting report:', error);
-        }
-       
-}; const image = require('../backflou.png'); 
+     const image = require('../backflou.png'); 
     return (
       
 
@@ -41,17 +34,17 @@ export default function Rapp({ navigation }) {
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
          {listeRapport.map( (item)  => (
+                
                 <View style={styles.card} key={item.etudiant.codeApogee}>
+                  <TouchableOpacity onPress={() => navigation.navigate('AddRapport', { rapport: item, modif: true })}>
                   <Text style={styles.cardText}>{item.titre_rapport}</Text>
                   <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.etudiant.nom_etudiant}</Text>
-                  <TouchableOpacity style={styles.button} onPress={editRapport}>
-                    <Text style={styles.buttonText}>Modifier</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.button1} onPress={()=> handleDelete(item)}>
+                  <TouchableOpacity style={styles.button1} onPress={()=>deleteRapport(item._id,item._rev)} >
                     <Text style={styles.buttonText} >Supprimer</Text>
                   </TouchableOpacity>
                   </View>
+                  </TouchableOpacity>
                 </View>
               ))
             }
@@ -112,8 +105,7 @@ export default function Rapp({ navigation }) {
           padding:2,
           },
     scrollView: {
-      marginBottom:60,
-      marginTop:10,
+         
     },
     card: {
       backgroundColor: 'white',

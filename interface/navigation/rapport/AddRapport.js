@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { KeyboardAvoidingView,Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
 import { useNavigation } from '@react-navigation/native';
@@ -11,22 +11,75 @@ const Head = () => (
     </View>
 );
 
-export default function AddRapp({ route}) {
+
+    export default function AddRapp({ route }) {
     const etudiant = route.params?.etudiant;
-    const [titre, setTitre] = useState('');
-    const [contenu, setContenu] = useState('');
+
+    const rapportInitial = route.params?.rapport;
+    const [isEditing, setIsEditing] = useState(route.params?.modif || false);
+   
+    const [titre, setTitre] = useState(rapportInitial?.titre_rapport ||'');
+    
+    const [contenu, setContenu] = useState(rapportInitial?.contenu ||'');
+    
+    const [selectedEtudiant, setSelectedEtudiant] = useState(rapportInitial?.etudiant|| null);
+    
     const [search, setSearch] = useState('');
-    const [selectedEtudiant, setSelectedEtudiant] = useState(null);
-    const navigation = useNavigation();
-    const { listeEtudiants,addRapport } = useEtudiants();
+   
      
+    const navigation = useNavigation();
+    const { listeEtudiants, addRapport,updateRapport, listeRapport } = useEtudiants();
+    
     useEffect(() => {
         if (etudiant) {
-            const fullName = `${etudiant.nom_etudiant} ${etudiant.prenom_etudiant}`;
-            setSearch(fullName);
             setSelectedEtudiant(etudiant);
+            setSearch(`${etudiant.nom_etudiant} ${etudiant.prenom_etudiant}`);
         }
-    }, [etudiant]);
+    }, [etudiant, listeEtudiants]);
+
+    useEffect(() => {
+        if (rapportInitial) {
+            setIsEditing(true);
+            
+            setSelectedEtudiant(rapportInitial.etudiant);
+           setSearch(`${rapportInitial.etudiant.nom_etudiant} ${rapportInitial.etudiant.prenom_etudiant}`);
+            setTitre(rapportInitial.titre_rapport);
+           
+            setContenu(rapportInitial.contenu);
+        }
+    }, [rapportInitial]);
+    console.log(rapportInitial);
+
+    const soumettreRapport = () => {
+        if (selectedEtudiant && titre && contenu) {
+            if (isEditing) {
+                const updatedRapport = {
+                    titre_rapport: titre,
+                    contenu: contenu,
+                    etudiant: selectedEtudiant,
+                };
+                updateRapport(rapportInitial._id,updatedRapport);
+                navigation.navigate('Rapport');
+            } else {
+                const exists = listeRapport.some(rapport => rapport.etudiant.codeApogee === selectedEtudiant.codeApogee);
+
+                if (!exists) {
+                    const rapport = {
+                        titre_rapport: titre,
+                        contenu: contenu,
+                        etudiant: selectedEtudiant,
+                    };
+                    addRapport(rapport);
+                    navigation.navigate('Rapport');
+                } else {
+                    alert("Un rapport pour cet étudiant existe déjà.");
+
+                }
+            }
+        } else {
+            alert("Veuillez remplir tous les champs");
+        }
+    };
 
     const handleSearchChange = (text) => {
         setSearch(text);
@@ -37,16 +90,7 @@ export default function AddRapp({ route}) {
         setSearch(`${item.nom_etudiant} ${item.prenom_etudiant}`);
     };
 
-    const soumettreRapport = ()=>{
-        const repport ={ 
-            "titre_rapport": titre,
-            "contenu": contenu,
-            "etudiant": selectedEtudiant,
-        }
-        addRapport(repport);
-        navigation.navigate('Rapport')
-    }
-    
+   
     const Card = ({ item }) => {
         
       return (
@@ -61,7 +105,7 @@ export default function AddRapp({ route}) {
             <Text>CNE: {item.CNE}</Text>
             <Text>numéro exam: {item['numeroExam']}</Text>
             </View>
-        </View>
+        </View> 
       );
     };
 
@@ -85,8 +129,14 @@ export default function AddRapp({ route}) {
 
     return (
         <GestureHandlerRootView style={styles.container}>
+        <KeyboardAvoidingView
+        behavior="height" // Comportement pour Android
+        style={styles.container}
+        keyboardVerticalOffset={20} // Ajustez selon le besoin pour éviter que le clavier ne recouvre des éléments
+      >
           <ScrollView style={styles.scrollView}>
             <Head />
+            
             <Text style={styles.title}>Rapport</Text>
             <TextInput
                 style={styles.input}
@@ -103,6 +153,7 @@ export default function AddRapp({ route}) {
                     ))}
                 </View>
             )}
+           
             <TextInput
                 style={styles.input}
                 placeholder='Titre du rapport'
@@ -112,13 +163,16 @@ export default function AddRapp({ route}) {
             <TextInput
                 style={styles.multilinetext}
                 placeholder='Contenu'
+                value={contenu}
                 onChangeText={(val) => changeContenu(val)}
                 multiline
             />
             <TouchableOpacity style={styles.button1} onPress={soumettreRapport}>
                 <Text style={styles.textbutton}>Soumettre</Text>
             </TouchableOpacity>
+            
             </ScrollView>
+            </KeyboardAvoidingView>
         </GestureHandlerRootView>
     );
 }

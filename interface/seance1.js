@@ -3,12 +3,13 @@ import { SignatureStack,RapportStack ,Acceuil,ScannerStack} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {  useIsFocused,useNavigation } from '@react-navigation/native';
 import React, {  useEffect, useState} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EtudiantsProvider } from './navigation/dataScreen';
 import axios from 'axios';
 import base64 from 'base-64';
+import { Keyboard } from 'react-native';
 
 const username = 'admin';
 const password = 'admin';
@@ -25,6 +26,12 @@ const seance='seance 1';
 
 
 export default function Seance1({route}) {
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    if (isFocused) {
+      fetchRapports();
+    }
+  }, [isFocused]);
   const navigation=useNavigation();
   const [listeEtudiants,setListeEtudiants]=useState([]);
   const [listeSurveillants,setListeSurveillants]=useState([]);
@@ -33,7 +40,7 @@ export default function Seance1({route}) {
   const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
-      const response = await axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?include_docs=true`, {
+      const response = await axios.get('http://10.115.251.236:5984/etudiantsun/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -49,10 +56,10 @@ export default function Seance1({route}) {
       console.error('Error fetching documents:', error);
     }
   };
-  const updatRapport = async (docId, updatedFields) => {
+  const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://${ipAdress}:5984/rapportpremierseance/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/rapport/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -62,28 +69,28 @@ export default function Seance1({route}) {
 
       const rapport = response.data;
 
-      // Updating the rapport fields
+      
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://${ipAdress}:5984/rapportpremierseance/${rapport._id}`;
-      response = await axios.put(saveUrl, student, {
+      const saveUrl = `http://10.115.251.236:5984/rapport/${rapport._id}`;
+      response = await axios.put(saveUrl, rapport, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
         }
       });
 
-      console.log('Student updated successfully:', response.data);
-      // Fetch students to update local state after successful update
+      console.log('rapport updated successfully:', response.data);
+      
       await fetchRapports();
     } catch (error) {
-      console.error('Error updating student:', error);
+      console.error('Error updating rapport:', error);
     }
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get(`http://${ipAdress}:5984/rapportpremierseance/_all_docs?include_docs=true`, {
+      const response = await axios.get('http://10.115.251.236:5984/rapport/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -102,7 +109,7 @@ export default function Seance1({route}) {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://${ipAdress}:5984/etudiantsun/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/etudiantsun/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +123,7 @@ export default function Seance1({route}) {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://${ipAdress}:5984/etudiantsun/${student._id}`;
+      const saveUrl = `http://10.115.251.236:5984/etudiantsun/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -132,7 +139,7 @@ export default function Seance1({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = `http://${ipAdress}:5984/rapportpremierseance`; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/rapport'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -147,8 +154,8 @@ const addRapport = async (rapport) => {
     console.error('Error posting document:', error);
   }
 };
-const deleteStudent = async (docId, docRev) => {
-  const url = `http://${ipAdress}:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+const deleteRapport = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/rapport/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -163,11 +170,12 @@ const deleteStudent = async (docId, docRev) => {
     console.error('Error deleting document:', error);
   }
 };
-const addSurveillants = async (rapport) => {
-  const url = `http://${ipAdress}:5984/surveillants`; // Your CouchDB URL
+
+const addSurveillants = async (surveillant) => {
+  const url = 'http://10.115.251.236:5984/surveillants'; // Your CouchDB URL
 
   try {
-    const response = await axios.post(url, rapport, {
+    const response = await axios.post(url, surveillant, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -181,7 +189,7 @@ const addSurveillants = async (rapport) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, {
+    const response = await axios.get('http://10.115.251.236:5984/surveillants/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -197,9 +205,25 @@ const fetchSurveillants = async () => {
     console.error('Error fetching documents:', error);
   }
 };
+const deleteReserviste = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/reserviste/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    await fetchReserviste();
+    console.log('Document deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting document:', error);
+  }
+};
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true`, {
+    const response = await axios.get('http://10.115.251.236:5984/reserviste/_all_docs?include_docs=true', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -207,10 +231,10 @@ const fetchReserviste = async () => {
     });
     
     // Extracting documents from the response
-    const surveillants = response.data.rows.map(row=>row.doc);
+    const reservistes = response.data.rows.map(row=>row.doc);
     console.log('+++++++++++++');
     
-   setListeReserviste(surveillants);
+   setListeReserviste(reservistes);
   } catch (error) {
     console.error('Error fetching documents:', error);
   }
@@ -223,7 +247,25 @@ const fetchReserviste = async () => {
     fetchSurveillants();
     fetchReserviste();
 }, []);
+
+const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+useEffect(() => {
+  const showSubscription = Keyboard.addListener("keyboardDidShow", (e) => {
+    setKeyboardHeight(e.endCoordinates.height);
+  });
+  const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+    setKeyboardHeight(0);
+  });
+
+  return () => {
+    showSubscription.remove();
+    hideSubscription.remove();
+  };
+}, []);
   
+
+
   return (<View style={styles.page}>
     <StatusBar />
         <View style={styles.container}>
@@ -240,21 +282,21 @@ const fetchReserviste = async () => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-        <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants} deleteStudent={deleteStudent} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updatRapport={updatRapport} addRapport={addRapport} >
+        <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
-            tabBarShowLabel:false,
-            headerShown:false,
-            tabBarStyle:{
-                position:'absolute',
-                height:68,
-                bottom:0,
-                right:0,
-                left:0,
-                elevation:0,
-                borderRadius:5,
-                backgroundColor:'#d1dbe4',
-                borderTopWidth:1,
-                borderColor:'#a3b7ca'
+           tabBarShowLabel: false,
+           headerShown: false,
+           tabBarStyle: {
+             position: 'absolute',
+             height: 68,
+             bottom: !keyboardHeight ?0 : -keyboardHeight , // Ajustez le bas en fonction de la hauteur du clavier
+             right: 0,
+             left: 0,
+             elevation: 0,
+             borderRadius: 5,
+             backgroundColor: '#d1dbe4',
+             borderTopWidth: 1,
+             borderColor: '#a3b7ca'
        }})
      }
     initialRouteName='Acceuil'>
