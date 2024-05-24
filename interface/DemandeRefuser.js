@@ -1,7 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, Button, Image, ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { ActivityIndicator,  ImageBackground, Modal, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Device from 'expo-device';
 import axios from 'axios';
@@ -20,9 +18,7 @@ export default function DemandeRefuser({route}) {
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId, // Previously "adresse_mac"
-      "statut": "non associer",
-      "code_association": null
+      "adresse_mac": deviceId,
     };
     try {
       setModalIsOpen(true);

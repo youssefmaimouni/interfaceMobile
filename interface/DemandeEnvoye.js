@@ -19,9 +19,7 @@ export default function DemandeEnvoye({route}) {
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId, // Previously "adresse_mac"
-      "statut": "non associer",
-      "code_association": null
+      "adresse_mac": deviceId,
     };
 
     try {
@@ -62,12 +60,6 @@ export default function DemandeEnvoye({route}) {
         contentLabel="Data Modal"
         style={{
           content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
             alignItems:'center',
             justifyContent:'center',
           },
