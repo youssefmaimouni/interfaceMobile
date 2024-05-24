@@ -9,6 +9,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { EtudiantsProvider } from './navigation/dataScreen';
 import axios from 'axios';
 import base64 from 'base-64';
+import { Keyboard } from 'react-native';
 
 const username = 'admin';
 const password = 'admin';
@@ -52,7 +53,7 @@ export default function Seance2({route}) {
   const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://10.115.251.236:5984/rapportdeuxiemeseance/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/rapport/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +67,7 @@ export default function Seance2({route}) {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://10.115.251.236:5984/rapportdeuxiemeseance/${rapport._id}`;
+      const saveUrl = `http://10.115.251.236:5984/rapport/${rapport._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ export default function Seance2({route}) {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://10.115.251.236:5984/rapportdeuxiemeseance/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/rapport/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -132,7 +133,7 @@ export default function Seance2({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://10.115.251.236:5984/rapportdeuxiemeseance'; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/rapport'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -150,7 +151,7 @@ const addRapport = async (rapport) => {
 
 
 const deleteRapport = async (docId, docRev) => {
-  const url = `http://10.115.251.236:5984/rapportdeuxiemeseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://10.115.251.236:5984/rapport/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -200,6 +201,22 @@ const fetchSurveillants = async () => {
     console.error('Error fetching documents:', error);
   }
 };
+const deleteReserviste = async (docId, docRev) => {
+  const url = `http://10.115.251.236:5984/reserviste/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    await fetchReserviste();
+    console.log('Document deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting document:', error);
+  }
+};
 const fetchReserviste = async () => {
   try {
     const response = await axios.get('http://10.115.251.236:5984/reserviste/_all_docs?include_docs=true', {
@@ -227,6 +244,22 @@ const fetchReserviste = async () => {
     fetchReserviste();
 }, []);
   
+const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+useEffect(() => {
+  const showSubscription = Keyboard.addListener("keyboardDidShow", (e) => {
+    setKeyboardHeight(e.endCoordinates.height);
+  });
+  const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+    setKeyboardHeight(0);
+  });
+
+  return () => {
+    showSubscription.remove();
+    hideSubscription.remove();
+  };
+}, []);
+  
   return (<View style={styles.page}>
     <StatusBar />
         <View style={styles.container}>
@@ -243,14 +276,14 @@ const fetchReserviste = async () => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
+         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
             tabBarStyle:{
                 position:'absolute',
                 height:68,
-                bottom:0,
+                bottom: !keyboardHeight ?0 : -keyboardHeight ,
                 right:0,
                 left:0,
                 elevation:0,
@@ -340,15 +373,17 @@ const styles=StyleSheet.create({
     },
     buttons2: {
       alignSelf: 'flex-start',
-      backgroundColor:'#b0bec5',
-      padding: 10,
-      flex:2
+        backgroundColor:'#d1dbe4',
+        padding: 10,
+        flex:2,
       },
       buttons1: {
         alignSelf: 'flex-start',
         backgroundColor:'#7593af',
         padding: 10,
-        flex:2
+        flex:2,
+        borderRadius:20,
+        margin:2,
       },
       buttonTexts2: {
         color: '#90a4ae',

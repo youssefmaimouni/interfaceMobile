@@ -3,12 +3,13 @@ import { SignatureStack,RapportStack ,Acceuil,ScannerStack} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {  useIsFocused,useNavigation } from '@react-navigation/native';
 import React, {  useEffect, useState} from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { EtudiantsProvider } from './navigation/dataScreen';
 import axios from 'axios';
 import base64 from 'base-64';
+import { Keyboard } from 'react-native';
 
 const username = 'admin';
 const password = 'admin';
@@ -25,6 +26,12 @@ const seance='seance 1';
 
 
 export default function Seance1({route}) {
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    if (isFocused) {
+      fetchRapports();
+    }
+  }, [isFocused]);
   const navigation=useNavigation();
   const [listeEtudiants,setListeEtudiants]=useState([]);
   const [listeSurveillants,setListeSurveillants]=useState([]);
@@ -52,7 +59,7 @@ export default function Seance1({route}) {
   const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://10.115.251.236:5984/rapportpremierseance/${docId}`;
+      const fetchUrl = `http://10.115.251.236:5984/rapport/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +73,7 @@ export default function Seance1({route}) {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://10.115.251.236:5984/rapportpremierseance/${rapport._id}`;
+      const saveUrl = `http://10.115.251.236:5984/rapport/${rapport._id}`;
       response = await axios.put(saveUrl, rapport, {
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +90,7 @@ export default function Seance1({route}) {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://10.115.251.236:5984/rapportpremierseance/_all_docs?include_docs=true', {
+      const response = await axios.get('http://10.115.251.236:5984/rapport/_all_docs?include_docs=true', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -132,7 +139,7 @@ export default function Seance1({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://10.115.251.236:5984/rapportpremierseance'; // Your CouchDB URL
+  const url = 'http://10.115.251.236:5984/rapport'; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -148,7 +155,7 @@ const addRapport = async (rapport) => {
   }
 };
 const deleteRapport = async (docId, docRev) => {
-  const url = `http://10.115.251.236:5984/rapportpremierseance/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://10.115.251.236:5984/rapport/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -240,7 +247,25 @@ const fetchReserviste = async () => {
     fetchSurveillants();
     fetchReserviste();
 }, []);
+
+const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+useEffect(() => {
+  const showSubscription = Keyboard.addListener("keyboardDidShow", (e) => {
+    setKeyboardHeight(e.endCoordinates.height);
+  });
+  const hideSubscription = Keyboard.addListener("keyboardDidHide", () => {
+    setKeyboardHeight(0);
+  });
+
+  return () => {
+    showSubscription.remove();
+    hideSubscription.remove();
+  };
+}, []);
   
+
+
   return (<View style={styles.page}>
     <StatusBar />
         <View style={styles.container}>
@@ -259,19 +284,19 @@ const fetchReserviste = async () => {
          </View>
         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
          <Tab.Navigator screenOptions={({root}) => ({
-            tabBarShowLabel:false,
-            headerShown:false,
-            tabBarStyle:{
-                position:'absolute',
-                height:68,
-                bottom:0,
-                right:0,
-                left:0,
-                elevation:0,
-                borderRadius:5,
-                backgroundColor:'#d1dbe4',
-                borderTopWidth:1,
-                borderColor:'#a3b7ca'
+           tabBarShowLabel: false,
+           headerShown: false,
+           tabBarStyle: {
+             position: 'absolute',
+             height: 68,
+             bottom: !keyboardHeight ?0 : -keyboardHeight , // Ajustez le bas en fonction de la hauteur du clavier
+             right: 0,
+             left: 0,
+             elevation: 0,
+             borderRadius: 5,
+             backgroundColor: '#d1dbe4',
+             borderTopWidth: 1,
+             borderColor: '#a3b7ca'
        }})
      }
     initialRouteName='Acceuil'>
