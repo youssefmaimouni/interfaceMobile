@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function DemandeRefuser({route}) {
   const [deviceId, setDeviceId] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigation=useNavigation();
+  const navigation=useNavigation(); 
   const ipAdress = route.params.ipAdress;
 
   useEffect(() => {
