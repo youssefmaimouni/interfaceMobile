@@ -26,7 +26,7 @@ export default function DemandeRefuser({route}) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            timeout: 60000
+            timeout: 10000
           });
       if (response.data.status_code==201) {
         setModalIsOpen(false);

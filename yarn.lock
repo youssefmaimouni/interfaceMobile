@@ -1242,10 +1242,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.17.11":
-  version "0.17.11"
-  resolved "https://registry.npmjs.org/@expo/cli/-/cli-0.17.11.tgz"
-  integrity sha512-EyAL/x9yyN9nA0iiZC0XZLvSBbKtl1GT38HNgrPmTb0KEzVlpbSJoWfw2vn9g/NnWPS1wMKRU2I5U42d/tvqvg==
+"@expo/cli@0.17.12":
+  version "0.17.12"
+  resolved "https://registry.npmjs.org/@expo/cli/-/cli-0.17.12.tgz"
+  integrity sha512-HIv55FSSRFk53hdwxt+JKGMSCCMABhpakm1BSxGm0ymWa7nIM6llV/0gUWbHNXGkvmRPNWJqMNqVlV/vcPa8oA==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/code-signing-certificates" "0.0.5"
@@ -1378,9 +1378,9 @@
     sucrase "3.34.0"
 
 "@expo/devcert@^1.0.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@expo/devcert/-/devcert-1.1.0.tgz"
-  integrity sha512-ghUVhNJQOCTdQckSGTHctNp/0jzvVoMMkVh+6SHn+TZj8sU15U/npXIDt8NtQp0HedlPaCgkVdMu8Sacne0aEA==
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/@expo/devcert/-/devcert-1.1.2.tgz"
+  integrity sha512-FyWghLu7rUaZEZSTLt/XNRukm0c9GFfwP0iFaswoDWpV6alvVg+zRAfCLdIVQEz1SVcQ3zo1hMZFDrnKGvkCuQ==
   dependencies:
     application-config-path "^0.1.0"
     command-exists "^1.2.4"
@@ -1388,7 +1388,7 @@
     eol "^0.9.1"
     get-port "^3.2.0"
     glob "^7.1.2"
-    lodash "^4.17.4"
+    lodash "^4.17.21"
     mkdirp "^0.5.1"
     password-prompt "^1.0.4"
     rimraf "^2.6.2"
@@ -3978,13 +3978,13 @@ expo-status-bar@~1.11.1:
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.11.1.tgz"
   integrity sha512-ddQEtCOgYHTLlFUe/yH67dDBIoct5VIULthyT3LRJbEwdpzAgueKsX2FYK02ldh440V87PWKCamh7R9evk1rrg==
 
-expo@*, expo@~50.0.14:
-  version "50.0.18"
-  resolved "https://registry.npmjs.org/expo/-/expo-50.0.18.tgz"
-  integrity sha512-es0rw+OkQNoaNQcPzv8CUpi5Qd0zipvflr6PgiXLDnv5D58R0GeAQZ7KEgYOlH+HocYrQeVm/zlpOhPPb0CEww==
+expo@*, expo@^50.0.19:
+  version "50.0.19"
+  resolved "https://registry.npmjs.org/expo/-/expo-50.0.19.tgz"
+  integrity sha512-9weIVMGylJhNVN41mId1c1Kog3VmGA28oY0RpJKdJNrKGt5NKQAXV26TIwxw/PyDG1J4q2T/wZZoK+F1C64aIw==
   dependencies:
     "@babel/runtime" "^7.20.0"
-    "@expo/cli" "0.17.11"
+    "@expo/cli" "0.17.12"
     "@expo/config" "8.5.6"
     "@expo/config-plugins" "7.9.2"
     "@expo/metro-config" "0.17.7"
@@ -5426,7 +5426,7 @@ lodash.topath@^4.5.2:
   resolved "https://registry.npmjs.org/lodash.topath/-/lodash.topath-4.5.2.tgz"
   integrity sha512-1/W4dM+35DwvE/iEd1M9ekewOSTlpFekhw9mhAtrwjVqUr83/ilQiyAvmg4tVX7Unkcfl1KC+i9WdaT4B6aQcg==
 
-lodash@^4.17.13, lodash@^4.17.21, lodash@^4.17.4:
+lodash@^4.17.13, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
