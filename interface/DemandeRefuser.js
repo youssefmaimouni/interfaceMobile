@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function DemandeRefuser({route}) {
   const [deviceId, setDeviceId] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigation=useNavigation();
+  const navigation=useNavigation(); 
   const ipAdress = route.params.ipAdress;
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function DemandeRefuser({route}) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            timeout: 60000
+            timeout: 10000
           });
       if (response.data.status_code==201) {
         setModalIsOpen(false);

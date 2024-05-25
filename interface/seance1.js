@@ -40,7 +40,7 @@ export default function Seance1({route}) {
   const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://10.115.251.236:5984/etudiantsun/_all_docs?include_docs=true', {
+      const response = await axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?include_docs=true`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -59,7 +59,7 @@ export default function Seance1({route}) {
   const updateRapport = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://10.115.251.236:5984/rapport/${docId}`;
+      const fetchUrl = `http://${ipAdress}:5984/rapport/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export default function Seance1({route}) {
       Object.assign(rapport, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://10.115.251.236:5984/rapport/${rapport._id}`;
+      const saveUrl = `http://${ipAdress}:5984/rapport/${rapport._id}`;
       response = await axios.put(saveUrl, rapport, {
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export default function Seance1({route}) {
 };
   const fetchRapports = async () => {
     try {
-      const response = await axios.get('http://10.115.251.236:5984/rapport/_all_docs?include_docs=true', {
+      const response = await axios.get(`http://${ipAdress}:5984/rapport/_all_docs?include_docs=true`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Basic ${encodedCredentials}`
@@ -109,7 +109,7 @@ export default function Seance1({route}) {
   const updateStudent = async (docId, updatedFields) => {
     try {
       // Fetching the student by code-apogée
-      const fetchUrl = `http://10.115.251.236:5984/etudiantsun/${docId}`;
+      const fetchUrl = `http://${ipAdress}:5984/etudiantsun/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ export default function Seance1({route}) {
       Object.assign(student, updatedFields);
 
       // Saving the updated student
-      const saveUrl = `http://10.115.251.236:5984/etudiantsun/${student._id}`;
+      const saveUrl = `http://${ipAdress}:5984/etudiantsun/${student._id}`;
       response = await axios.put(saveUrl, student, {
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export default function Seance1({route}) {
     }
 };
 const addRapport = async (rapport) => {
-  const url = 'http://10.115.251.236:5984/rapport'; // Your CouchDB URL
+  const url = `http://${ipAdress}:5984/rapport`; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, rapport, {
@@ -155,7 +155,7 @@ const addRapport = async (rapport) => {
   }
 };
 const deleteRapport = async (docId, docRev) => {
-  const url = `http://10.115.251.236:5984/rapport/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://${ipAdress}:5984/rapport/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -172,7 +172,7 @@ const deleteRapport = async (docId, docRev) => {
 };
 
 const addSurveillants = async (surveillant) => {
-  const url = 'http://10.115.251.236:5984/surveillants'; // Your CouchDB URL
+  const url = `http://${ipAdress}:5984/surveillants`; // Your CouchDB URL
 
   try {
     const response = await axios.post(url, surveillant, {
@@ -189,7 +189,7 @@ const addSurveillants = async (surveillant) => {
 };
 const fetchSurveillants = async () => {
   try {
-    const response = await axios.get('http://10.115.251.236:5984/surveillants/_all_docs?include_docs=true', {
+    const response = await axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -206,7 +206,7 @@ const fetchSurveillants = async () => {
   }
 };
 const deleteReserviste = async (docId, docRev) => {
-  const url = `http://10.115.251.236:5984/reserviste/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
+  const url = `http://${ipAdress}:5984/reserviste/${docId}?rev=${docRev}`; // Your CouchDB URL with the document ID and revision
 
   try {
     const response = await axios.delete(url, {
@@ -223,7 +223,7 @@ const deleteReserviste = async (docId, docRev) => {
 };
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://10.115.251.236:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
