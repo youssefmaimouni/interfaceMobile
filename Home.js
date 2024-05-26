@@ -104,7 +104,6 @@ const Home = () => {
   }
   
   return (
-    <NavigationContainer>
          <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
@@ -113,7 +112,6 @@ const Home = () => {
             <Stack.Screen name="DemandeAccepter" component={DemandeAccepter} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="DemandeRefuser" component={DemandeRefuser} initialParams={{ipAdress:ipAdress}}/>
          </Stack.Navigator>
-    </NavigationContainer>
     
     
   );
