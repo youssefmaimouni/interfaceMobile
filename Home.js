@@ -10,6 +10,11 @@ import DemandeAccepter from './interface/DemandeAccepter';
 import DemandeRefuser from './interface/DemandeRefuser';
 import axios from 'axios';
 import * as Device from 'expo-device';
+import base64 from 'base-64';
+
+const username = 'admin';
+const password = 'admin';
+const encodedCredentials = base64.encode(`${username}:${password}`);
 
 
 const Home = () => {
@@ -17,18 +22,60 @@ const Home = () => {
   const [deviceId, setDeviceId] = useState('');
   const ipAdress='192.168.245.241';
   const [screen,setScreen]=useState(null);
-  useEffect(() => {
-    const fetchDeviceId = () => {
-      setDeviceId(Device.osBuildId);
-    };
-    fetchDeviceId();
-  }, []);
-
-  useEffect(() => {
-    if (deviceId) {  
-       getEtat();
+  const [pvExiste,setPvExiste]=useState(null);
+  const checkDocuments = async () => {
+    try {
+      const responses = await Promise.all([
+        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
+      ]);
+      const documentExists = responses.some(response => response.data.total_rows > 0);
+      console.log('Documents exist:', documentExists);
+      return documentExists;
+    } catch (error) {
+      console.log('Error checking documents:', error);
+      return false;  // Ensure a boolean is returned even in case of an error
     }
-  }, [deviceId]); 
+  };
+  
+  
+  
+  useEffect(() => {
+    const performCheck = async () => {
+      const documentExists = await checkDocuments();
+      console.log('Received document existence:', documentExists);
+      setPvExiste(documentExists);  // Update your state here based on the existence of documents
+    };
+    performCheck();
+  }, []);
+  
+  
+    useEffect(() => {
+      console.log('Current screen:', screen);
+    }, [screen]);  
+    useEffect(() => {
+      console.log('PV:'+pvExiste);
+      if(pvExiste==true){
+        setScreen('PV');
+      }
+    }, [pvExiste]);  
+    useEffect(() => {
+      const fetchDeviceId = () => {
+        setDeviceId(Device.osBuildId);
+      };
+      fetchDeviceId();
+    }, []);
+    useEffect(() => {
+      if (deviceId && pvExiste==false) {  
+        getEtat();
+      }
+    }, [deviceId, pvExiste]);  
+    
+    
+  
+  
   const getEtat= async () => {
     const data = {
       "adresse_mac": deviceId
@@ -51,11 +98,8 @@ const Home = () => {
     }
   }
   
-  useEffect(() => {
-    console.log('Current screen:', screen);
-  }, [screen]);  
 
-  if (!screen) {
+  if (!screen ) {
     return <View style={styles.container}><ActivityIndicator size="large" /></View>;
   }
   

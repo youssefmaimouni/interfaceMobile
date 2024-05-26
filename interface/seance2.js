@@ -93,7 +93,7 @@ export default function Seance2({route}) {
       
       // Extracting documents from the response
       const rapports = response.data.rows.map(row=>row.doc);
-      console.log('+++++++++++++');
+      console.log('***********');
       
      setListeRapport(rapports);
     } catch (error) {
@@ -219,7 +219,7 @@ const deleteReserviste = async (docId, docRev) => {
 };
 const fetchReserviste = async () => {
   try {
-    const response = await axios.get('http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true', {
+    const response = await axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Basic ${encodedCredentials}`
@@ -228,7 +228,7 @@ const fetchReserviste = async () => {
     
     // Extracting documents from the response
     const surveillants = response.data.rows.map(row=>row.doc);
-    console.log('+++++++++++++');
+    console.log('////////////');
     
    setListeReserviste(surveillants);
   } catch (error) {

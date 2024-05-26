@@ -91,26 +91,7 @@ const TestGetPV = () => {
               'Authorization': `Basic ${encodedCredentials}`
             }
           });
-          if (response1.data.total_rows > 0) {
-            console.log('Documents exist in the database 1.');
-          } else {
-            console.log('No documents found in the database 1.');
-          }
-          if (response2.data.total_rows > 0) {
-            console.log('Documents exist in the database 2.');
-          } else {
-            console.log('No documents found in the database 2.');
-          }
-          if (response3.data.total_rows > 0) {
-            console.log('Documents exist in the database 3.');
-          } else {
-            console.log('No documents found in the database 3.');
-          }
-          if (response4.data.total_rows > 0) {
-            console.log('Documents exist in the database 4.');
-          } else {
-            console.log('No documents found in the database 4.');
-          }
+          return (response1.data.total_rows > 0) || (response2.data.total_rows > 0)|| (response3.data.total_rows > 0) ||(response4.data.total_rows > 0) ;
         } catch (error) {
           console.error('Error checking documents:', error);
         }
