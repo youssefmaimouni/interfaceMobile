@@ -15,7 +15,7 @@ import * as Device from 'expo-device';
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='192.168.245.241';
+  const ipAdress='192.168.11.104';
   const [screen,setScreen]=useState(null);
   useEffect(() => {
     const fetchDeviceId = () => {
@@ -60,7 +60,7 @@ const Home = () => {
   }
   
   return (
-    <NavigationContainer>
+    
          <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
@@ -69,7 +69,7 @@ const Home = () => {
             <Stack.Screen name="DemandeAccepter" component={DemandeAccepter} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="DemandeRefuser" component={DemandeRefuser} initialParams={{ipAdress:ipAdress}}/>
          </Stack.Navigator>
-    </NavigationContainer>
+ 
     
     
   );
