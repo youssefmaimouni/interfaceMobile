@@ -63,7 +63,7 @@ const Head = () => (
             style={[styles.button, item.id_rapport!=null ?  styles.nonRepporedButton: styles.reppordButton]}
             onPress={togglePresenceR}
           >
-            <Text style={styles.buttonText}>{item.id_rapport!=null ? 'supprimer Rapport' :'fait Rapport' }</Text>
+            <Text style={styles.buttonText}>{item.id_rapport!=null ? 'rapporté' :'fait Rapport' }</Text>
           </TouchableOpacity>
           
         </View>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flex: 1,
-    padding: 20,
+    padding: 15,
   },
   name: {
     fontSize: 18,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttons:{
-    margin: 30,
+    margin:20,
     marginTop:50
   },
   button: {

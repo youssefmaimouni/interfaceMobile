@@ -100,7 +100,7 @@ const verificationEtudiant=()=>{
         
        {modalVisible && <View style={styles.card}>
         <Image
-          source={require('../acceuil.png')}
+          source={require('./etu.jpeg')}
           style={styles.image}
         />
         <View style={styles.cardContent}>
@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     height: 350,
     width: 350,
     borderRadius: 30,
-    borderColor: '#000',
     borderWidth: 1,
     backgroundColor: '#fff',
     alignSelf:'center',
@@ -211,19 +210,24 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    borderRadius: 10,
+    marginTop:20,
+    borderRadius: 20,
   },buttonVer: {
     alignSelf: 'flex-end',
-    backgroundColor:'#1b5e20',
-    padding: 10,
-    margin: 20,
-    borderRadius:10
+    backgroundColor:'#01579b',
+    height:30,
+    padding:5,
+    width:100,
+    margin: 18,
+    borderRadius:15
 },buttonRapp: {
     alignSelf: 'flex-start',
     backgroundColor:'#01579b',
-    padding: 10,
-    margin: 20,
-    borderRadius:10
+    height:30,
+    width:100,
+    margin: 18,
+    padding:5,
+    borderRadius:15
 },name: {
   fontSize: 18,
   fontWeight: 'bold',
