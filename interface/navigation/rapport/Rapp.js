@@ -25,7 +25,7 @@ export default function Rapp({ navigation }) {
     return (
       
 
-      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground  resizeMode="cover" style={styles.image}>
        <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
         <Head/>
@@ -57,8 +57,8 @@ export default function Rapp({ navigation }) {
   const styles = StyleSheet.create({
     image: {
       flex: 1,
-      backgroundColor: '#f5f5f5',
-      paddingTop: StatusBar.currentHeight,
+      backgroundColor: '#E1E7E7',
+     
     },
 
     headContainer: {
@@ -105,7 +105,6 @@ export default function Rapp({ navigation }) {
           padding:2,
           },
     scrollView: {
-         
     },
     card: {
       backgroundColor: 'white',
@@ -147,6 +146,6 @@ export default function Rapp({ navigation }) {
       padding:2,
     },image:{
       flex:1,
-      justifyContent:'center',
+      alignItems:'center'
   }, 
   });

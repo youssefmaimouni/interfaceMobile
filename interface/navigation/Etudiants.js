@@ -71,7 +71,7 @@ const Head = () => (
 
  
   return (
-  <ImageBackground source={image} resizeMode="cover" style={styles.container}>
+  <ImageBackground  resizeMode="cover" style={styles.container}>
     
       <ScrollView style={styles.scrollView}> 
       <Head />
@@ -90,7 +90,7 @@ const Head = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#E1E7E7',
   },
   title: {
     fontSize: 20,

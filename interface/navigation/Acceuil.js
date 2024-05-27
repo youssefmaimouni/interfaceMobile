@@ -35,7 +35,7 @@ export default function Acceuil({route}) {
   };
   
     return(
-      <ImageBackground   source={image} resizeMode="cover" style={styles.image}>
+      <ImageBackground    resizeMode="cover" style={styles.image}>
             <View style={styles.card}>
                  <Head />
                  <View style={styles.con}>
@@ -61,6 +61,7 @@ const  styles=StyleSheet.create({
     image:{
         flex:1,
         justifyContent:'center',
+        backgroundColor:'#E1E7E7'
     }, 
     con:{
        marginTop:100,
