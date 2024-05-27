@@ -145,7 +145,7 @@ const verificationEtudiant=()=>{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:10,
+    backgroundColor:'#E1E7E7'
     
   },
   headContainer: {

@@ -1,5 +1,5 @@
 import React, { useState ,useEffect } from 'react';
-import { KeyboardAvoidingView,Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView } from 'react-native';
+import { KeyboardAvoidingView,Image, StyleSheet, Text, TouchableOpacity, View, TextInput, ScrollView, ImageBackground } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
 import { useNavigation } from '@react-navigation/native';
@@ -124,10 +124,11 @@ const Head = () => (
     const changeContenu = (val) => {
         setContenu(val);
     };
-
+    const image=require('../../bg0.jpg');
     
 
     return (
+        <ImageBackground source={image} resizeMode="cover" style={{flex:1}}>
         <GestureHandlerRootView style={styles.container}>
         <KeyboardAvoidingView
         behavior="height" // Comportement pour Android
@@ -174,13 +175,13 @@ const Head = () => (
             </ScrollView>
             </KeyboardAvoidingView>
         </GestureHandlerRootView>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
+       
     },image: {
       flex:2,
       width: 100,
@@ -244,13 +245,16 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     multilinetext: {
-        minHeight: 30,
-        borderWidth: 1,
+        minHeight: 65,
+        borderWidth: 0.5,
         padding: 10,
         margin: 12,
+        backgroundColor:'#F5F5F5',
+        borderColor:'#B0B0B0',
+        borderRadius:8
     },
     button1: {
-        backgroundColor: 'blue',
+        backgroundColor: '#839DAF',
         paddingVertical: 8,
         paddingHorizontal: 20,
         borderRadius: 5,
