@@ -1,11 +1,12 @@
 import react from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Initial() {
    const navigation = useNavigation();
+   const image = require('./bg.jpg');
      return(
-      <View style={styles.container}>
+      <ImageBackground source={image} style={styles.container}>
          
        <Text style={styles.textprin}>Bienvenue sur notre Application de Gestion des Présences!</Text>
        <Text style={styles.text}>
@@ -23,13 +24,13 @@ export default function Initial() {
          <Text style={styles.textbutton}>commencer</Text>
        </TouchableOpacity>
 
-      </View>
+      </ImageBackground>
      );}
      const styles = StyleSheet.create({
      container : {
         flex:1,
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
      },
      textprin:{
         fontSize: 30,
@@ -42,20 +43,23 @@ export default function Initial() {
      text:{
         
         marginLeft:20,
-          fontSize: 13,
+          fontSize: 15,
           marginRight:20,
           marginTop:50,
      },
      button:{
-      marginTop:50,
+        marginTop:50,
         backgroundColor: '#194a7a', 
-        borderRadius: 5,
-        padding:2,
+        borderRadius: 8,
+        padding:5,
+        width: 200,
      },
      textbutton:{
         color: 'white',
         textAlign: 'center',
         padding:2,
+        fontSize:15,
+        fontWeight:'bold'
      }
 }
   )

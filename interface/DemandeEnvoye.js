@@ -42,7 +42,7 @@ export default function DemandeEnvoye({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./navigation/backflou.png');
+  const image = require('./bg2.jpg');
   return (
     <ImageBackground source={image} style={styles.container}>
         <AntDesign name="checkcircleo" size={120} color="#43bc90" />

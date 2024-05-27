@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function DemandeAccepter() {
 
-const image = require('./navigation/backflou.png');
+const image = require('./bg2.jpg');
 const navigation=useNavigation();
 
 

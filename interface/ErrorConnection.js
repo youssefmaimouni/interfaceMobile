@@ -43,7 +43,7 @@ export default function ErrorConnection({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./navigation/backflou.png');
+  const image = require('./bg2.jpg');
   return (
     <ImageBackground source={image} style={styles.container}>
         <MaterialIcons name="error" style={{marginBottom:20}}  size={120} color="#ce3231" />
