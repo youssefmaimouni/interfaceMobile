@@ -18,7 +18,7 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 
 
 const Tab = createBottomTabNavigator();
-const seance='seance 1';
+const seance='seance1';
 
 
 

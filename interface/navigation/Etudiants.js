@@ -41,9 +41,9 @@ const Head = () => (
       
   
     return (
-      <View style={styles.card}>
+      <View style={styles.card}><View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
         <Image
-          source={require('../acceuil.png')}
+          source={require('./etu.jpeg')}
           style={styles.image}
         />
         <View style={styles.cardContent}>
@@ -51,7 +51,8 @@ const Head = () => (
           <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
           <Text>numéro exam: {item.numeroExam}</Text>
-          <View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
+        </View>
+        <View style={styles.buttons}>
           <TouchableOpacity
             style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
             onPress={togglePresence}
@@ -64,7 +65,9 @@ const Head = () => (
           >
             <Text style={styles.buttonText}>{item.id_rapport!=null ? 'supprimer Rapport' :'fait Rapport' }</Text>
           </TouchableOpacity>
-        </View></View>
+          
+        </View>
+        </View>
       </View>
     ); 
   };
@@ -131,21 +134,26 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 10,
-    margin: 10,
+    margin: 15,
+    marginTop:40,
   },
   cardContent: {
     flex: 1,
-    padding: 10,
+    padding: 20,
   },
   name: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
   },
+  buttons:{
+    margin: 30,
+    marginTop:50
+  },
   button: {
     padding: 8,
-    borderRadius: 5,
-    marginTop: 80,
+    borderRadius: 8,
+    
     margin: 5,
     height: 35,
   },
@@ -163,6 +171,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    alignSelf:'center'
   },
   scrollView: {
     marginBottom: 60,

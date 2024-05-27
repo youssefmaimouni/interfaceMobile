@@ -61,20 +61,9 @@ export default function Rapp({ navigation }) {
       paddingTop: StatusBar.currentHeight,
     },
 
-    headContainer: {
-        flex: 1,
-        flexDirection:'row',
-        marginTop:10,
-      },
-      logo: {
-        marginRight:0,
-        marginLeft:5,
-        height:50,
-        width:120,
-            
-      },
+  
       headContainer: {
-            flex: 1,
+            
             flexDirection:'row',
             marginTop:10,
           },
@@ -105,7 +94,7 @@ export default function Rapp({ navigation }) {
           padding:2,
           },
     scrollView: {
-         
+         marginTop:10,
     },
     card: {
       backgroundColor: 'white',
@@ -147,6 +136,6 @@ export default function Rapp({ navigation }) {
       padding:2,
     },image:{
       flex:1,
-      justifyContent:'center',
+      alignItems:'center'
   }, 
   });
