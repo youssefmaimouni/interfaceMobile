@@ -14,6 +14,8 @@ const Head = () => (
 
     export default function AddRapp({ route }) {
     const etudiant = route.params?.etudiant;
+    const screen = route.params?.screen;
+
 
     const rapportInitial = route.params?.rapport;
     const [isEditing, setIsEditing] = useState(route.params?.modif || false);
@@ -59,21 +61,21 @@ const Head = () => (
                     etudiant: selectedEtudiant,
                 };
                 updateRapport(rapportInitial._id,updatedRapport);
-                navigation.navigate('Rapport');
+                navigation.navigate(screen);
             } else {
                 const exists = listeRapport.some(rapport => rapport.etudiant.codeApogee === selectedEtudiant.codeApogee);
 
                 if (!exists) {
+                    selectedEtudiant.id_rapport=1;
                     const rapport = {
                         titre_rapport: titre,
                         contenu: contenu,
                         etudiant: selectedEtudiant,
                     };
                     addRapport(rapport);
-                    selectedEtudiant.id_rapport=1;
                     console.log(selectedEtudiant);
                     updateStudent(selectedEtudiant._id,selectedEtudiant);
-                    navigation.navigate('Rapport');
+                    navigation.navigate(screen);
                 } else {
                     alert("Un rapport pour cet étudiant existe déjà.");
 

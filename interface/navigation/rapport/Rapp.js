@@ -30,7 +30,7 @@ export default function Rapp({ navigation }) {
         <ScrollView style={styles.scrollView}>
         <Head/>
         <Text style={styles.title}>Rapport</Text>
-        <TouchableOpacity style={styles.buttonAjout} onPress={() => navigation.navigate('AddRapport')}>
+        <TouchableOpacity style={styles.buttonAjout} onPress={() => navigation.navigate('AddRapport',{screen:'Rapport'})}>
         <Text style={styles.buttonText}>Ajouter</Text>
         </TouchableOpacity>
          {listeRapport.map( (item)  => (
@@ -40,7 +40,7 @@ export default function Rapp({ navigation }) {
                   <Text style={styles.cardText}>{item.titre_rapport}</Text>
                   <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.etudiant.nom_etudiant}</Text>
-                  <TouchableOpacity style={styles.button1} onPress={()=>deleteRapport(item._id,item._rev)} >
+                  <TouchableOpacity style={styles.button1} onPress={()=>{deleteRapport(item._id,item._rev)}} >
                     <Text style={styles.buttonText} >Supprimer</Text>
                   </TouchableOpacity>
                   </View>

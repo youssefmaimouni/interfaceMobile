@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 function EtudiantStack() {
     return (
         
-            <Stack.Navigator initialRouteName="Etudiants" screenOptions={{headerShown:false}}>
+            <Stack.Navigator initialRouteName="Etudiant" screenOptions={{headerShown:false}}>
                 <Stack.Screen name="Etudiant" component={Etudiants} options={{ title: 'Etudiants' }} />
                 <Stack.Screen name="AddRap" component={AddRapp} options={{ title: 'AddRapp' }} />
             </Stack.Navigator>

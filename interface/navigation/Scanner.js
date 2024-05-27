@@ -114,7 +114,7 @@ const verificationEtudiant=()=>{
             style={styles.buttonRapp}
             onPress={()=>{
               setModalVisible(false); 
-              navigation.navigate('AddRapport', { etudiant: scannedData });
+              navigation.navigate('AddRapport', { etudiant: scannedData,screen:'Scanner' });
             }}
           >
             <Text style={styles.buttonText}>rapport</Text>
