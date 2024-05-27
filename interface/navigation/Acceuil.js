@@ -45,10 +45,10 @@ export default function Acceuil({route}) {
                 <Text>demi_journée:</Text>
                 <Text> local:</Text>
                 {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
-                  <Text>Seance 2</Text>
+                  <Text style={{color:'#fff'}}>Seance 2</Text>
                 </TouchableOpacity>}
                 {seance=='seance2'&&<TouchableOpacity onPress={()=>console.log('fin seance')} style={styles.button}>
-                  <Text>fin d'examen</Text>
+                  <Text style={{color:'#fff'}}>fin d'examen</Text>
                 </TouchableOpacity>}
                 </View>
             </View>
@@ -106,7 +106,7 @@ const  styles=StyleSheet.create({
         marginTop:50,
         padding:6,
         width:200,
-        backgroundColor:'#43bc90',
+        backgroundColor:'#476f95',
         alignSelf:'center',
         alignItems:'center',
         borderRadius:10

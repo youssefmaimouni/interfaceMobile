@@ -28,7 +28,7 @@ const Head = () => (
    
      
     const navigation = useNavigation();
-    const { listeEtudiants, addRapport,updateRapport, listeRapport } = useEtudiants();
+    const { listeEtudiants, addRapport,updateRapport,updateStudent, listeRapport } = useEtudiants();
     
     useEffect(() => {
         if (etudiant) {
@@ -70,6 +70,9 @@ const Head = () => (
                         etudiant: selectedEtudiant,
                     };
                     addRapport(rapport);
+                    selectedEtudiant.id_rapport=1;
+                    console.log(selectedEtudiant);
+                    updateStudent(selectedEtudiant._id,selectedEtudiant);
                     navigation.navigate('Rapport');
                 } else {
                     alert("Un rapport pour cet étudiant existe déjà.");
@@ -96,7 +99,7 @@ const Head = () => (
       return (
         <View style={styles.card}>
           <Image
-            source={require('../../acceuil.png')}
+            source={require('../etu.jpeg')}
             style={styles.image}
           />
           <View style={styles.cardContent}>
@@ -183,10 +186,11 @@ const styles = StyleSheet.create({
     container: {
        
     },image: {
-      flex:2,
-      width: 100,
-      height: 100,
-      borderRadius: 10,
+        width: 80,
+        height: 80,
+        borderRadius: 10,
+        margin: 15,
+        marginTop:10,
     }, cardContent: {
       flex: 2,
       padding: 10,
@@ -198,15 +202,16 @@ const styles = StyleSheet.create({
       marginBottom: 5,
     }, 
     card: {
-      flexDirection: 'row',
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      marginBottom: 10,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        margin: 20,
     },
     headContainer: {
         flexDirection: 'row',
@@ -265,13 +270,6 @@ const styles = StyleSheet.create({
     list: {
         marginHorizontal: 10,
         marginBottom: 10,
-    },
-    card: {
-      backgroundColor: 'white',
-      padding: 16,
-      borderRadius: 8,
-      borderWidth: 1,
-      margin:10,
     },
     item: {
         padding: 10,
