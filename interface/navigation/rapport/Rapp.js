@@ -97,10 +97,16 @@ export default function Rapp({ navigation }) {
     },
     card: {
       backgroundColor: 'white',
-      padding: 16,
-      borderRadius: 8,
-      borderWidth: 1,
-      margin:10,
+        padding: 16,
+        borderRadius: 8,
+        borderWidth: 1,
+        margin:10,
+        borderColor:'white',
+        shadowColor: '#000', // Couleur de l'ombre
+        shadowOffset: { width: 0, height: 2 }, // Décalage horizontal et vertical de l'ombre
+        shadowOpacity: 0.8, // Opacité de l'ombre
+        shadowRadius: 3, // Rayon du flou de l'ombre
+        elevation: 5, 
     },
     contenu:{
         flexDirection: 'row',

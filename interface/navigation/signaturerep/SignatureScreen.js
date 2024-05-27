@@ -32,9 +32,9 @@ const SignatureScreen = ({navigation}) => {
   const style = `.m-signature-pad--footer { display: none; margin: 0px; }`;
   const image = require('./backsign.png');
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.container}>
+    <View style={styles.container}>
       <Head />
-      
+      {/* <View style={styles.con}> */}
       <Text style={styles.title}>Signer ici</Text>
       <Signature
         ref={signatureRef}
@@ -53,8 +53,8 @@ const SignatureScreen = ({navigation}) => {
         <Text style={styles.textButton}>Save</Text>
       </TouchableOpacity>
       </View>
-      
-    </ImageBackground>
+      </View>
+    // </View>
   );
 };
 
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     marginLeft: 5,
+    marginBottom:200
   },
   logo: {
     height: 50,
@@ -100,8 +101,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#01579b',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 25,
     height:38,
+    width:150,
   },
   textButton: {
     color: '#fff',

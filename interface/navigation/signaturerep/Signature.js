@@ -26,7 +26,7 @@ const Card = ({ item }) => {
     <View style={styles.card} >
               <View style={styles.contenu}>
                 <Text style={styles.cardText}>{item.nom_complet}</Text>
-                <TouchableOpacity style={styles.button} onPress={signa}><Text>{signed?'signer':'signé'}</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.button, signed ? styles.buttonsigner: styles.buttonsigne]} onPress={signa}><Text style={styles.buttonText}>{signed?'signer':'signé'}</Text></TouchableOpacity>
               </View>
             </View>
   );
@@ -53,7 +53,7 @@ const Cardr = ({ item }) => {
     <View style={styles.card} >
               <View style={styles.contenu}>
                 <Text style={styles.cardText}>{item.nom_complet}</Text>
-                <TouchableOpacity style={styles.button} onPress={signa}><Text>surveiller</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={signa}><Text style={styles.buttonText}>surveiller</Text></TouchableOpacity>
               </View>
     </View>
   );
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    justifyContent: 'center',
+   alignContent:'center'
   },
       scrollView: {
         marginBottom: 60,
@@ -129,6 +129,12 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         margin:10,
+        borderColor:'white',
+        shadowColor: '#000', // Couleur de l'ombre
+        shadowOffset: { width: 0, height: 2 }, // Décalage horizontal et vertical de l'ombre
+        shadowOpacity: 0.8, // Opacité de l'ombre
+        shadowRadius: 3, // Rayon du flou de l'ombre
+        elevation: 5, // Elevation pour Android
       },
       contenu:{
           flexDirection: 'row',
@@ -142,8 +148,9 @@ const styles = StyleSheet.create({
       },
       button: {
         flexDirection: 'row',
-        backgroundColor: '#01579b', 
-        padding: 5,
+        backgroundColor: '#1949a6', 
+        padding: 8,
+        paddingHorizontal:10,
         borderRadius: 5,
         marginTop: 14,
         marginLeft:5,
@@ -160,4 +167,16 @@ const styles = StyleSheet.create({
         marginRight:200,
 
       },
+      buttonsigner:{
+        backgroundColor: '#1949a6', 
+        padding: 5,
+        borderRadius: 5,
+        margin: 14,
+      },
+      buttonsigne:{
+        backgroundColor: '#b8b9c9', 
+        padding: 5,
+        borderRadius: 5,
+        margin: 14,
+      }
     })
