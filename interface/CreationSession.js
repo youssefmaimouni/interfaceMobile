@@ -40,7 +40,7 @@ export default function CreationSession({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./navigation/back2.jpeg');
+  const image = require('./bg2.jpg');
   return (
     <ImageBackground source={image}  style={styles.container}>
       <StatusBar />
