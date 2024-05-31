@@ -11,6 +11,7 @@ import DemandeRefuser from './interface/DemandeRefuser';
 import axios from 'axios';
 import * as Device from 'expo-device';
 import base64 from 'base-64';
+import EnvoiDeDonneer from './EnvoiDeDonneer';
 
 const username = 'admin';
 const password = 'admin';
@@ -20,14 +21,14 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='10.115.251.236';
+  const ipAdress='192.168.245.241';
   const [screen,setScreen]=useState(null);
   const [pvExiste,setPvExiste]=useState(null);
   const checkDocuments = async () => {
     try {
       const responses = await Promise.all([
-        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+         axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+         axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
       ]);
@@ -111,6 +112,7 @@ const Home = () => {
             <Stack.Screen name="DemandeEnvoye" component={DemandeEnvoye} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="DemandeAccepter" component={DemandeAccepter} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="DemandeRefuser" component={DemandeRefuser} initialParams={{ipAdress:ipAdress}}/>
+            <Stack.Screen name="EnvoiDeDonneer" component={EnvoiDeDonneer} initialParams={{ipAdress:ipAdress}}/>
          </Stack.Navigator>
     
     

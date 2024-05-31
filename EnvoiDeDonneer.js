@@ -6,34 +6,60 @@ const EnvoiDeDonneer=()=>{
     const ipAdress='192.168.245.241';
 
     const associer = async () => {
-        const data= [
-            {
-                "codeApogee": "A12345",
-                "photo": "url_to_photo1.jpg",
-                "CNE": "10001",
-                "prenom_etudiant": "Alice",
-                "nom_etudiant": "Smith"
-            },
-            {
-                "codeApogee": "B67890",
-                "photo": "url_to_photo2.jpg",
-                "CNE": "10002",
-                "prenom_etudiant": "Bob",
-                "nom_etudiant": "Johnson"
-            },
-            {
-                "codeApogee": "C13579",
-                "photo": "url_to_photo3.jpg",
-                "CNE": "10003",
-                "prenom_etudiant": "Charlie",
-                "nom_etudiant": "Williams"
-            }
-        ];
-
-        data.map(async (item)=>{
+        const pv={
+            "rapports":[
+                    {
+          "titre_rapport": "qwertz",
+          "contenu": "dlddjldjd",
+          "id_pv": "1",
+          "codeApogee": "2222"
+        },{
+          "titre_rapport": "siosos",
+          "contenu": "sskskks",
+          "id_pv": "1",
+          "codeApogee": "2222"
+        }
+            ],
+            "passers":[
+          {
+            "id_examen": 1,
+            "id_local": 1,
+            "codeApogee": 333,
+            "isPresent": true,
+            "num_exam": 1,
+            "created_at": "2024-05-30T22:55:00.000000Z",
+            "updated_at": "2024-05-30T22:55:00.000000Z"
+          },
+          {
+            "id_examen": 1,
+            "id_local": 1,
+            "codeApogee": 1111,
+            "isPresent": true,
+            "num_exam": 1,
+            "created_at": "2024-05-30T22:55:09.000000Z",
+            "updated_at": "2024-05-30T22:55:09.000000Z"
+          },
+          {
+            "id_examen": 1,
+            "id_local": 1,
+            "codeApogee": 2222,
+            "isPresent": true,
+            "num_exam": 1,
+            "created_at": "2024-05-30T22:54:46.000000Z",
+            "updated_at": "2024-05-30T22:54:46.000000Z"
+          }
+        ],
+            "signers":[
+                {
+          "id_surveillant": 1,
+          "id_pv": 1,
+          "signer": true
+        }
+            ]
+        };
 
             try {
-              const response = await axios.post(`http://${ipAdress}:8000/api/etudiant/create`, item, {
+              const response = await axios.post(`http://${ipAdress}:8000/api/tablette/setPV`, pv, {
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -41,9 +67,8 @@ const EnvoiDeDonneer=()=>{
                   });
              console.log(response.data);
             } catch (error) {
-              console.log(error);
+              console.error(error);
             }
-        })
           }
 
     return(
