@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ScannerStack,SignatureStack,RapportStack ,Acceuil} from './navigation';
+import { ScannerStack,SignatureStack,RapportStack ,AcceuilStack} from './navigation';
 import EtudiantStack from './navigation/EtudiantStack';
 import {Entypo , MaterialCommunityIcons,FontAwesome5 ,FontAwesome ,Fontisto} from '@expo/vector-icons';
 import { View,Text, StyleSheet, TouchableOpacity,  StatusBar } from 'react-native';
@@ -183,6 +183,38 @@ const addSurveillants = async (rapport) => {
     console.error('Error posting document:', error);
   }
 };
+const updateSurveillant = async (docId, updatedFields) => {
+  try {
+    
+    const fetchUrl = `http://${ipAdress}:5984/surveillants/${docId}`;
+    let response = await axios.get(fetchUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+
+    const surveillant = response.data;
+
+    
+    Object.assign(surveillant, updatedFields);
+
+    // Saving the updated student
+    const saveUrl = `http://${ipAdress}:5984/surveillants/${surveillant._id}`;
+    response = await axios.put(saveUrl, surveillant, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+
+    console.log('rapport updated successfully:', response.data);
+    
+    await fetchRapports();
+  } catch (error) {
+    console.error('Error updating surveillant:', error);
+  }
+};
 const fetchSurveillants = async () => {
   try {
     const response = await axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, {
@@ -276,7 +308,7 @@ useEffect(() => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} >
+         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} updateSurveillant={updateSurveillant}>
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
@@ -293,7 +325,7 @@ useEffect(() => {
                 borderColor:'#a3b7ca'
        }})
      }
-    initialRouteName='Acceuil'>
+    initialRouteName='AcceuilStack'>
          <Tab.Screen name='RapportStack' component={RapportStack} options={{
             tabBarIcon:({focused})=>{
                 return(
@@ -317,9 +349,9 @@ useEffect(() => {
                 )
             }
         }}/>
-        <Tab.Screen name='Acceuil'
-       component={Acceuil}
-       initialParams={{seance}}
+        <Tab.Screen name='AcceuilStack'
+       component={AcceuilStack}
+       initialParams={{seance:seance}}
        options={{
            tabBarIcon:({focused})=>{
              return(

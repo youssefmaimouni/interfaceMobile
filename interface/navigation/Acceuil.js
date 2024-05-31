@@ -1,6 +1,7 @@
 import { View,Text, StyleSheet,Image, ScrollView, Button, ImageBackground, TouchableOpacity, Alert } from 'react-native';
 import { useEtudiants } from './dataScreen';
 import { useNavigation } from '@react-navigation/native';
+import { useSignatures } from './signaturerep/signaturecontexr';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -9,9 +10,21 @@ const Head = () => (
   );
 export default function Acceuil({route}) {
   const image = require('../bg4.jpg');
-  const navigation=useNavigation(); 
+  const navigation=useNavigation() ?? {}; 
   const {seance}=route.params;
+  const { signatures } = useSignatures();
+   
+  const handleGeneratePDF = () => {
+    if (signatures) {  
+      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
+    } else {
+      console.error("No signatures found");  
+    }
+  };  
+
+
   const showAlertWithAction = () => {
+
     Alert.alert(
       "Attention",  
       "Si vous naviguez vers la Séance 2, vous ne pourrez pas retourner.", 
@@ -31,7 +44,9 @@ export default function Acceuil({route}) {
   };
   
   const handleOKPress = () => {
+    
     console.log("OK Pressed");
+
     navigation.navigate("Seance2");
   };
   const handleOKPress2 = () => {
@@ -70,7 +85,7 @@ export default function Acceuil({route}) {
                 {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
                   <Text style={{color:'#fff'}}>Seance 2</Text>
                 </TouchableOpacity>}
-                {seance=='seance2'&&<TouchableOpacity onPress={FinExame} style={styles.button}>
+                {seance=='seance2'&&<TouchableOpacity  onPress={handleGeneratePDF} style={styles.button}>
                   <Text style={{color:'#fff'}}>fin d'examen</Text>
                 </TouchableOpacity>}
                 </View>
