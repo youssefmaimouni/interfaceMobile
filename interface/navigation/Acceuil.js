@@ -65,7 +65,7 @@ export default function Acceuil({route}) {
         },
         {
           text: "OK",
-          onPress: () => handleOKPress2(),  // Action on pressing OK
+          onPress: () => handleGeneratePDF(),  // Action on pressing OK
         }
       ],
       { cancelable: false }  // This prevents the alert from being dismissed by tapping outside of it
@@ -85,7 +85,7 @@ export default function Acceuil({route}) {
                 {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
                   <Text style={{color:'#fff'}}>Seance 2</Text>
                 </TouchableOpacity>}
-                {seance=='seance2'&&<TouchableOpacity  onPress={handleGeneratePDF} style={styles.button}>
+                {seance=='seance2'&&<TouchableOpacity  onPress={FinExame} style={styles.button}>
                   <Text style={{color:'#fff'}}>fin d'examen</Text>
                 </TouchableOpacity>}
                 </View>

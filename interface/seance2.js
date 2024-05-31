@@ -308,7 +308,7 @@ useEffect(() => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-         <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} updateSurveillant={updateSurveillant}>
+         <EtudiantsProvider ipAdress={ipAdress} listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} updateSurveillant={updateSurveillant}>
          <Tab.Navigator screenOptions={({root}) => ({
             tabBarShowLabel:false,
             headerShown:false,
@@ -351,7 +351,7 @@ useEffect(() => {
         }}/>
         <Tab.Screen name='AcceuilStack'
        component={AcceuilStack}
-       initialParams={{seance:seance}}
+       initialParams={{seance:seance,ipAdress:ipAdress}}
        options={{
            tabBarIcon:({focused})=>{
              return(

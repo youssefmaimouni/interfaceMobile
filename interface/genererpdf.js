@@ -6,6 +6,7 @@ import * as Sharing from 'expo-sharing';
 import axios from 'axios';
 import base64 from 'base-64';
 import { useEtudiants } from './navigation/dataScreen';
+import { useNavigation } from '@react-navigation/native';
 
 
 const username = 'admin';
@@ -13,7 +14,8 @@ const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
 
 const GeneratePDF = ({ route }) => {
-  const {listeRapport}=useEtudiants();
+  const navigation=useNavigation();
+  const {listeRapport,ipAdress }=useEtudiants();
   const {  surveillantSignatures } = route.params;
   console.log(surveillantSignatures);
   const [data, setData] = useState({
@@ -31,9 +33,9 @@ const GeneratePDF = ({ route }) => {
   const fetchEtudiants = async () => {
     try {
       const [etu1, etu2, surveillants] = await Promise.all([
-        axios.get(`http://192.168.11.104:5984/etudiantsun/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
-        axios.get(`http://192.168.11.104:5984/etudiantsdeux/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
-        axios.get(`http://192.168.11.104:5984/surveillants/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }})
+        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
+        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
+        axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }})
       ]);
       setData({
         etuPresun: etu1.data.rows.filter(row => row.doc.estPerson).map(row => row.doc),
@@ -226,6 +228,7 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
+      navigation.navigate("EnvoiDeDonneer");
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
