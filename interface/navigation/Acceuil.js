@@ -42,12 +42,35 @@ export default function Acceuil({route}) {
       { cancelable: false }  // This prevents the alert from being dismissed by tapping outside of it
     );
   };
+  
   const handleOKPress = () => {
     
     console.log("OK Pressed");
 
     navigation.navigate("Seance2");
   };
+  const handleOKPress2 = () => {
+    console.log("OK 2");
+    navigation.navigate("EnvoiDeDonneer");
+  };
+  const FinExame=()=>{
+    Alert.alert(
+      "Attention",  
+      "Si vous terminer la seance, vous ne pourrez pas retourner.", 
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress: () => handleGeneratePDF(),  // Action on pressing OK
+        }
+      ],
+      { cancelable: false }  // This prevents the alert from being dismissed by tapping outside of it
+    );
+  }
   
     return(
       <ImageBackground    resizeMode="cover" style={styles.image}>
@@ -62,7 +85,7 @@ export default function Acceuil({route}) {
                 {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
                   <Text style={{color:'#fff'}}>Seance 2</Text>
                 </TouchableOpacity>}
-                {seance=='seance2'&&<TouchableOpacity  onPress={handleGeneratePDF} style={styles.button}>
+                {seance=='seance2'&&<TouchableOpacity  onPress={FinExame} style={styles.button}>
                   <Text style={{color:'#fff'}}>fin d'examen</Text>
                 </TouchableOpacity>}
                 </View>
