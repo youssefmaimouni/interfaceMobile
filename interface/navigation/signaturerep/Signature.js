@@ -1,8 +1,7 @@
 import React, { useState } from 'react'; // Ajout de useState
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, FlatList } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation} from '@react-navigation/native';
 import { useEtudiants } from '../dataScreen';
 
 const Head = () => (
@@ -14,11 +13,11 @@ const Head = () => (
 
 const Card = ({ item }) => {
   const navigation = useNavigation();
-    const [signed,setSigned] = useState(true);
+    const [signed,setSigned] = useState(item.sign);
   const signa = () => {
-    if(signed){
-      setSigned(false);
-      navigation.navigate('SignatureScreen'); 
+    if(!signed){
+      setSigned(true);
+      navigation.navigate('SignatureScreen',{surveillant:item}); 
       
     }
   };
@@ -26,7 +25,7 @@ const Card = ({ item }) => {
     <View style={styles.card} >
               <View style={styles.contenu}>
                 <Text style={styles.cardText}>{item.nom_complet}</Text>
-                <TouchableOpacity style={[styles.button, signed ? styles.buttonsigner: styles.buttonsigne]} onPress={signa}><Text style={styles.buttonText}>{signed?'signer':'signé'}</Text></TouchableOpacity>
+                <TouchableOpacity style={[styles.button, signed ?  styles.buttonsigne:styles.buttonsigner]} onPress={signa}><Text style={styles.buttonText}>{signed?'signé':'signer'}</Text></TouchableOpacity>
               </View>
             </View>
   );
@@ -45,7 +44,6 @@ const Cardr = ({ item }) => {
         nom_complet: item.nom_complet,
     };
       addSurveillants(reserviste);
-      
       deleteReserviste(item._id,item._rev);
     }
   };

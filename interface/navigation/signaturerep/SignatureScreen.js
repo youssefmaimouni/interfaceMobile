@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Alert, Image, ImageBackground } from 'react-native';
 import Signature from 'react-native-signature-canvas';
+import { useEtudiants } from '../dataScreen';
+import { useSignatures } from './signaturecontexr';
 
 const Head = () => (
   <View style={styles.headContainer}>
@@ -9,24 +11,37 @@ const Head = () => (
   </View>
 );
 
-const SignatureScreen = ({navigation}) => {
-  const [signature, setSignature] = useState(null);
-  const signatureRef = useRef();
+const SignatureScreen = ({navigation,route}) => {
+  const surveillant = route.params?.surveillant;
+  const signatureRef = useRef(null);
+  const {updateSurveillant}=useEtudiants();
+  const { addSignature } = useSignatures();
 
-  const handleOK = (signatureBase64) => {
-    setSignature(signatureBase64);
+ 
+ const handleOK = (signatureBase64) => {
+    addSignature(surveillant.nom_complet, signatureBase64);
     Alert.alert('Success', 'Signature captured successfully!');
+
+    const updatedSurveillant = {
+      ...surveillant,
+      sign: true
+    };
+    updateSurveillant(surveillant._id, updatedSurveillant);
     navigation.navigate('Signature');
-    
   };
 
-  const handleClear = () => {
-    signatureRef.current.clearSignature();
-    setSignature(null);
+  const handleClear = (index) => {
+    if (signatureRef.current) {
+      signatureRef.current.clearSignature();
+    }
   };
+
+ 
 
   const handleSave = () => {
-    signatureRef.current.readSignature();
+    if (signatureRef.current) {
+      signatureRef.current.readSignature();
+    }
   };
 
   const style = `.m-signature-pad--footer { display: none; margin: 0px; }`;

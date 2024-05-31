@@ -20,7 +20,7 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='10.115.251.236';
+  const ipAdress='192.168.11.104';
   const [screen,setScreen]=useState(null);
   const [pvExiste,setPvExiste]=useState(null);
   const checkDocuments = async () => {
