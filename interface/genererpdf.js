@@ -208,19 +208,18 @@ const GeneratePDF = ({ route }) => {
     `;
 
     try {
-      // Generate PDF
+    
       const { uri } = await Print.printToFileAsync({ html });
       console.log('PDF generated at: ' + uri);
-
-      // Save PDF to the document directory
-      const pdfName = 'example.pdf';
+      const currentDate = new Date();
+      const pdfName = `pve${currentDate}.pdf`;
       const pdfPath = `${FileSystem.documentDirectory}${pdfName}`;
       await FileSystem.moveAsync({
         from: uri,
         to: pdfPath,
       });
 
-      // Optionally, share the PDF
+      
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(pdfPath);
       } else {
@@ -229,6 +228,27 @@ const GeneratePDF = ({ route }) => {
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
+    }
+  };
+  const uploadPDF = async (filePath) => {
+    const file = {
+      uri: filePath,
+      type: 'application/pdf',
+      name: 'test.pdf',
+    };
+  
+    const formData = new FormData();
+    formData.append('pdf', file);
+  
+    try {
+      const response = await axios.post('http://your-server-url/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
