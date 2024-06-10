@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator,  ImageBackground, Modal, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator,  Image,  ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Device from 'expo-device';
 import axios from 'axios';
@@ -41,13 +41,14 @@ export default function DemandeRefuser({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./bg2.jpg');
+  const image = require('./refus.jpeg');
   return (
-    <ImageBackground source={image}  style={styles.container}>
+    <View style={styles.container}>
       <StatusBar />
-      <Text style={styles.text}>Cette table n'est pas associée au serveur</Text>
+      <Image source={image} style={styles.image} />
+      <Text style={styles.text}>Demande refusée</Text>
       <TouchableOpacity style={styles.button} onPress={associer} >
-        <Text  style={styles.buttonText}>envoi une autre demande d`association</Text>
+        <Text  style={styles.buttonText}>Envoyer une autre demande</Text>
       </TouchableOpacity>
       {modalIsOpen&&<Modal
         isOpen={modalIsOpen}
@@ -68,7 +69,7 @@ export default function DemandeRefuser({route}) {
       >
         <ActivityIndicator size="500" color="#43bc90" />
       </Modal>}
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -86,14 +87,22 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   image:{
-    marginTop:10,
-    height:120,
-    width:120,
+    height:200,
+    width:300,
+    marginBottom: 50
   },
-  button:{
-    marginTop:50,
-    padding:6,
-    width:400,
+  button: {
+    marginTop: 50,
+    padding: 10,
+    width: 330,
+    backgroundColor:'#194a7a',
+    borderRadius: 20,
+  },
+  buttonText:{
+    color:'#fff',
+    alignSelf:'center',
+    fontWeight:'bold',
+    fontSize:18,
   },
   text2:{
     fontSize:15,

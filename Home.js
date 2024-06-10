@@ -27,10 +27,10 @@ const Home = () => {
   const checkDocuments = async () => {
     try {
       const responses = await Promise.all([
-         axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-         axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-         axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-         axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
+        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
       ]);
       const documentExists = responses.some(response => response.data.total_rows > 0);
       console.log('Documents exist:', documentExists);
@@ -105,7 +105,7 @@ const Home = () => {
   }
   
   return (
-         <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName={"EnvoiDeDonneer"} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>

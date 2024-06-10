@@ -4,10 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Initial() {
    const navigation = useNavigation();
-   const image = require('./bg.jpg');
+   const image = require('./bgg.jpeg');
      return(
       <ImageBackground source={image} style={styles.container}>
-         
+         <View style={{backgroundColor:'#fff',marginTop:'55%',flex:1,borderTopRightRadius:30,borderTopLeftRadius:30}}>
+
+        
        <Text style={styles.textprin}>Bienvenue sur notre Application de Gestion des Présences!</Text>
        <Text style={styles.text}>
           Cette application innovante, conçue pour les établissements d'enseignement supérieur, 
@@ -23,7 +25,7 @@ export default function Initial() {
        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Home')}>
          <Text style={styles.textbutton}>commencer</Text>
        </TouchableOpacity>
-
+      </View>
       </ImageBackground>
      );}
      const styles = StyleSheet.create({
@@ -38,6 +40,7 @@ export default function Initial() {
         color: 'black',
         textAlign: 'center', 
         padding:30,
+        marginTop:10
         
      },
      text:{
@@ -49,17 +52,17 @@ export default function Initial() {
      },
      button:{
         marginTop:50,
-        backgroundColor: '#194a7a', 
-        borderRadius: 8,
+        backgroundColor: '#238AF5', 
+        borderRadius: 20,
         padding:5,
-        width: 200,
+        width: 300,
+        alignSelf:'center',
      },
      textbutton:{
         color: 'white',
         textAlign: 'center',
         padding:2,
-        fontSize:15,
-        fontWeight:'bold'
+        fontSize:20,
      }
 }
   )

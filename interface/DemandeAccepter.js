@@ -1,25 +1,27 @@
-import {  Image, ImageBackground, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import {  Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 export default function DemandeAccepter() {
 
-const image = require('./bg2.jpg');
+const image = require('./demandeAccepte.jpeg');
 const navigation=useNavigation();
 
 
   return (
-    <ImageBackground source={image} style={styles.container}>
+    <View style={styles.container}>
+<Image source={image} style={styles.image}/>
+
       <Text style={styles.text}>vous êtes connecté </Text>
-        <Image source={require('./succes.png')} style={styles.image}/>
-      <Text style={styles.text2}>votre code d'association est: xxxxx </Text>
+       
       <TouchableOpacity 
+
         style={styles.button}
         onPress={()=>{navigation.navigate('PV')}}
        >
         <Text style={styles.buttonText} >ouvre le PV</Text>
        </TouchableOpacity>
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -36,9 +38,9 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   image:{
-    marginTop:10,
-    height:120,
-    width:120,
+    height:200,
+    width:300,
+    marginBottom: 50
   },
   button: {
     marginTop: 50,
