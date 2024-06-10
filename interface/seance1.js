@@ -309,13 +309,11 @@ useEffect(() => {
         <View style={styles.container}>
         <TouchableOpacity
           style={styles.buttons1}
-          onPress={()=>navigation.navigate("Seance1")} 
         >
           <Text style={styles.buttonTexts1}>Seance 1</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttons2}
-          onPress={()=>navigation.navigate("Seance2")}
         >
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>

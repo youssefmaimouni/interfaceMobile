@@ -75,9 +75,12 @@ const verificationEtudiant=()=>{
   }
   if (hasPermission === false) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container2}>
+        <Image source={require('../camPermission.jpg')} style={styles.image2} />
         <Text>Pas d'accès à la caméra</Text>
-        <Button title={'Autoriser la caméra'} onPress={() => Camera.requestCameraPermissionsAsync()} />
+        <TouchableOpacity style={styles.button2} onPress={() => Camera.requestCameraPermissionsAsync()}>
+                <Text style={styles.buttonText}>Autoriser la caméra</Text>
+            </TouchableOpacity>
       </View>
     );
   }
@@ -146,6 +149,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor:'#E1E7E7'
+    
+  },
+  container2: {
+    flex: 1,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#fff'
     
   },
   headContainer: {
@@ -232,5 +242,22 @@ const styles = StyleSheet.create({
   fontSize: 18,
   fontWeight: 'bold',
   marginBottom: 5,
-}
+}, button2: {
+  marginTop: 50,
+  padding: 10,
+  width: 330,
+  backgroundColor:'#194a7a',
+  borderRadius: 20,
+},
+buttonText:{
+  color:'#fff',
+  alignSelf:'center',
+  fontWeight:'bold',
+  fontSize:18,
+},
+  image2:{
+    height:300,
+    width:300,
+    marginBottom: 50
+  }
 });

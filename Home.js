@@ -21,14 +21,14 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='192.168.245.241';
+  const ipAdress='10.115.249.239';
   const [screen,setScreen]=useState(null);
   const [pvExiste,setPvExiste]=useState(null);
   const checkDocuments = async () => {
     try {
       const responses = await Promise.all([
-         axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-         axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
       ]);
@@ -105,7 +105,7 @@ const Home = () => {
   }
   
   return (
-         <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName={"EnvoiDeDonneer"} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>

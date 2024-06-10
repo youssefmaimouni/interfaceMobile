@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import * as Device from 'expo-device';
 import axios from 'axios';
@@ -40,13 +40,14 @@ export default function CreationSession({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./bg2.jpg');
+  const image = require('./connexion.jpeg');
   return (
-    <ImageBackground source={image}  style={styles.container}>
+    <View style={styles.container}>
       <StatusBar />
+      <Image source={image} style={styles.image} />
       <Text style={styles.text}>Cette table n'est pas associée au serveur</Text>
       <TouchableOpacity style={styles.button} onPress={associer} >
-        <Text  style={styles.buttonText}>Envoi une demande d'association</Text>
+        <Text  style={styles.buttonText}>Envoyer une demande</Text>
       </TouchableOpacity>
       {modalIsOpen&&<Modal
         isOpen={modalIsOpen}
@@ -67,14 +68,14 @@ export default function CreationSession({route}) {
       >
         <ActivityIndicator size="500" color="#43bc90" />
       </Modal>}
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#A3D7D5',
     alignItems: 'center',
     justifyContent:'center'
     
@@ -96,5 +97,9 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     fontWeight:'bold',
     fontSize:20,
+  },image:{
+    height:200,
+    width:300,
+    marginBottom: 50
   }
 });

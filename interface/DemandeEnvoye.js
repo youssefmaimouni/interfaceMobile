@@ -28,7 +28,7 @@ export default function DemandeEnvoye({route}) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            timeout: 60000
+            timeout: 10000
           });
       if (response.data.status_code==201) {
         setModalIsOpen(false);
@@ -42,16 +42,16 @@ export default function DemandeEnvoye({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./bg2.jpg');
+  const image = require('./evoisDemande2.jpeg');
   return (
-    <ImageBackground source={image} style={styles.container}>
-        <AntDesign name="checkcircleo" size={120} color="#43bc90" />
-      <Text style={styles.text}>la demande d'association a été envoyée</Text>
+    <View  style={styles.container}>
+        <Image source={image} style={styles.image} />
+      <Text style={styles.text}>envoyée</Text>
       <TouchableOpacity 
         style={styles.button}
         onPress={associer}
        >
-        <Text style={styles.buttonText} >envoi une autre demande d`association</Text>
+        <Text style={styles.buttonText} >Envoyer une autre demande</Text>
        </TouchableOpacity>
       <Text style={styles.text2}>Apres la visualisation de votre demande nous vous informerons la réponse lorsque vous avez connecté </Text>
       {modalIsOpen&&<Modal
@@ -67,7 +67,7 @@ export default function DemandeEnvoye({route}) {
       >
         <ActivityIndicator size="500" color="#43bc90" />
       </Modal>}
-    </ImageBackground>
+    </View>
   );
 }
 
@@ -79,15 +79,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text:{
-    fontSize:23,
+    fontSize:25,
     marginTop:10,
     marginBottom:30,
     fontWeight:'bold',
-  },
-  image:{
-    marginTop:-100,
-    height:120,
-    width:120,
+  },image:{
+    height:200,
+    width:300,
+    marginBottom: 50
   },
   button: {
     marginTop: 50,

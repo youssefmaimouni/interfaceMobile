@@ -46,7 +46,7 @@ const TestGetPV = () => {
       })
     const getPV= async () => {
         const data = {
-          "adresse_mac": deviceId,
+          "device_id": deviceId,
           "date": getCurrentDate(),
           "demi_journee": getAmOrPm(),
         };

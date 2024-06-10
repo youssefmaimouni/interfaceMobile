@@ -43,13 +43,12 @@ export default function ErrorConnection({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./bg2.jpg');
+  const image = require('./echecConn.jpeg');
   return (
-    <ImageBackground source={image} style={styles.container}>
-        <MaterialIcons name="error" style={{marginBottom:20}}  size={120} color="#ce3231" />
-      <Text style={styles.text}>échec de connexion</Text>
+    <View source={image} style={styles.container}>
+       <Image source={image} style={styles.image} />
        <TouchableOpacity style={styles.button} onPress={associer}>
-        <Text style={styles.buttonText} >renvoyez la demande d'association</Text>
+        <Text style={styles.buttonText} >renvoyer la demande</Text>
        </TouchableOpacity>
       <Text style={styles.text2}>vérifier l'etat de votre connexion et réssayez </Text>
       {modalIsOpen&&<Modal
@@ -71,14 +70,14 @@ export default function ErrorConnection({route}) {
       >
         <ActivityIndicator size="500" color="#43bc90" />
       </Modal>}
-    </ImageBackground>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#DAEFEA',
     alignItems: 'center',
     justifyContent:'center'
   },
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 330,
     backgroundColor:'#194a7a',
-    borderRadius: 20,
+    borderRadius: 25,
   },
   buttonText:{
     color:'#fff',
@@ -107,6 +106,10 @@ const styles = StyleSheet.create({
     marginTop:30,
     fontWeight:'500',
     color:'#006e4f'
+  },image:{
+    height:200,
+    width:300,
+    marginBottom: 50
   }
   
 });

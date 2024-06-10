@@ -1,4 +1,4 @@
-import { ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import axios from 'axios';
 
 
@@ -70,15 +70,16 @@ const EnvoiDeDonneer=()=>{
               console.error(error);
             }
           }
-          const image = require('./interface/bg2.jpg');
+          const image = require('./interface/demande.jpg');
     return(
-        <ImageBackground source={image}  style={styles.container}>
+        <View  style={styles.container}>
         <StatusBar />
+            <Image source={image} style={styles.image}/>
             <TouchableOpacity style={styles.button} onPress={associer}>
                 <Text style={styles.buttonText}>EnvoiDeDonneer</Text>
             </TouchableOpacity>
             
-        </ImageBackground>
+        </View>
     );
 }
 const styles = StyleSheet.create({
@@ -87,18 +88,23 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
+      backgroundColor:'#4D4D69'
     },button: {
-        marginTop: 30,
+        marginTop: 100,
         padding: 10,
-        width: 300,
-        backgroundColor:'#194a7a',
-        borderRadius: 20,
+        width: 400,
+        backgroundColor:'#238AF5',
+        borderRadius: 25,
       },
       buttonText:{
         color:'#fff',
         alignSelf:'center',
         fontWeight:'bold',
         fontSize:20,
+      },image:{
+        height:300,
+        width:'110%',
+        marginBottom: 50
       }
 });
 
