@@ -7,6 +7,7 @@ import axios from 'axios';
 import base64 from 'base-64';
 import { useEtudiants } from './navigation/dataScreen';
 import { useNavigation } from '@react-navigation/native';
+import * as Device from 'expo-device';
 
 
 const username = 'admin';
@@ -14,6 +15,12 @@ const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
 
 const GeneratePDF = ({ route }) => {
+  const [deviceId, setDeviceId] = useState('');
+
+  useEffect(() => {
+    setDeviceId(Device.osBuildId);
+  }, []);
+  
   const navigation=useNavigation();
   const {listeRapport,ipAdress }=useEtudiants();
   const {  surveillantSignatures } = route.params;
@@ -50,6 +57,14 @@ const GeneratePDF = ({ route }) => {
   };
 
   const generatePDF = async () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Les mois commencent à 0
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const hours = currentDate.getHours();
+    const formattedDate = `${day}-${month}-${year}`;
+    console.log(formattedDate);
+    const period = hours >= 12 ? 'PM' : 'AM';
     const html = `
       <html>
         <head>
@@ -81,7 +96,8 @@ const GeneratePDF = ({ route }) => {
         <body>
     
           <h1>Procès verbaux électronique des examens </h1>
-
+            <p> la date :${formattedDate}</p>
+            <p>demi journee:${period}</p>
           <h2>Étudiants présents (Première Séance)</h2>
           <table>
             <thead>
@@ -213,8 +229,8 @@ const GeneratePDF = ({ route }) => {
     
       const { uri } = await Print.printToFileAsync({ html });
       console.log('PDF generated at: ' + uri);
-      const currentDate = new Date();
-      const pdfName = `pve${currentDate}.pdf`;
+      
+      const pdfName = `pve.pdf`;
       const pdfPath = `${FileSystem.documentDirectory}${pdfName}`;
       await FileSystem.moveAsync({
         from: uri,
@@ -227,31 +243,42 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
-      navigation.navigate("EnvoiDeDonneer");
+      uploadPDF(pdfPath,deviceId);
+
+      //navigation.navigate("EnvoiDeDonneer");
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
     }
   };
-  const uploadPDF = async (filePath) => {
+  const uploadPDF = async (filePath,device_id) => {
+
     const file = {
       uri: filePath,
       type: 'application/pdf',
-      name: 'test.pdf',
+      name: `pve.pdf`,
     };
+
   
     const formData = new FormData();
     formData.append('pdf', file);
+    formData.append('device_id', device_id);
   
     try {
-      const response = await axios.post('http://your-server-url/api/upload', formData, {
+      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
         headers: {
+          
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log("ööööööö");
       console.log(response.data);
-    } catch (error) {
-      console.error(error);
+    }  catch (error) {
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+      } else {
+        console.error(error.message);
+      }
     }
   };
 
