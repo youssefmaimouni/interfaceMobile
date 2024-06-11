@@ -79,7 +79,7 @@ const Home = () => {
   
   const getEtat= async () => {
     const data = {
-      "adresse_mac": deviceId
+      "device_id": deviceId
     };
     try {
       const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getEtat`, data, {
@@ -105,7 +105,7 @@ const Home = () => {
   }
   
   return (
-         <Stack.Navigator initialRouteName={"EnvoiDeDonneer"} key={screen} screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>

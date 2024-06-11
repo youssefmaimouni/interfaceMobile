@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, View, Alert } from 'react-native';
+import { View, Button, Alert, ActivityIndicator, Text } from 'react-native';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -7,6 +7,7 @@ import axios from 'axios';
 import base64 from 'base-64';
 import { useEtudiants } from './navigation/dataScreen';
 import { useNavigation } from '@react-navigation/native';
+import * as Device from 'expo-device';
 
 
 const username = 'admin';
@@ -14,6 +15,14 @@ const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
 
 const GeneratePDF = ({ route }) => {
+  const [loading, setLoading] = useState(true);
+  const [deviceId, setDeviceId] = useState('');
+
+  useEffect(() => {
+    setDeviceId(Device.osBuildId);
+    generatePDF();
+  }, []);
+  
   const navigation=useNavigation();
   const {listeRapport,ipAdress }=useEtudiants();
   const {  surveillantSignatures } = route.params;
@@ -50,6 +59,14 @@ const GeneratePDF = ({ route }) => {
   };
 
   const generatePDF = async () => {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Les mois commencent à 0
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const hours = currentDate.getHours();
+    const formattedDate = `${day}-${month}-${year}`;
+    console.log(formattedDate);
+    const period = hours >= 12 ? 'PM' : 'AM';
     const html = `
       <html>
         <head>
@@ -81,7 +98,8 @@ const GeneratePDF = ({ route }) => {
         <body>
     
           <h1>Procès verbaux électronique des examens </h1>
-
+            <p> la date :${formattedDate}</p>
+            <p>demi journee:${period}</p>
           <h2>Étudiants présents (Première Séance)</h2>
           <table>
             <thead>
@@ -210,36 +228,74 @@ const GeneratePDF = ({ route }) => {
     `;
 
     try {
-      // Generate PDF
+    
       const { uri } = await Print.printToFileAsync({ html });
       console.log('PDF generated at: ' + uri);
-
-      // Save PDF to the document directory
-      const pdfName = 'example.pdf';
+      
+      const pdfName = `pve.pdf`;
       const pdfPath = `${FileSystem.documentDirectory}${pdfName}`;
       await FileSystem.moveAsync({
         from: uri,
         to: pdfPath,
       });
 
-      // Optionally, share the PDF
+      
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(pdfPath);
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
+      uploadPDF(pdfPath,deviceId);
+
       navigation.navigate("EnvoiDeDonneer");
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
     }
   };
+  const uploadPDF = async (filePath,device_id) => {
 
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Generate PDF" onPress={generatePDF} />
-    </View>
-  );
+    const file = {
+      uri: filePath,
+      type: 'application/pdf',
+      name: `pve.pdf`,
+    };
+
+  
+    const formData = new FormData();
+    formData.append('pdf', file);
+    formData.append('device_id', device_id);
+  
+    try {
+      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
+        headers: {
+          
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+    }  catch (error) {
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+      } else {
+        console.error(error.message);
+      }
+    }
+  };
+
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <View style={{ alignItems: 'center' }}>
+            <Text>PDF generation complete!</Text>
+          </View>
+        )}
+      </View>
+    );
+  
 };
 
 export default GeneratePDF;
+

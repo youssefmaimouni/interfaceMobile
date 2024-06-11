@@ -76,7 +76,7 @@ const EnvoiDeDonneer=()=>{
         <StatusBar />
             <Image source={image} style={styles.image}/>
             <TouchableOpacity style={styles.button} onPress={associer}>
-                <Text style={styles.buttonText}>EnvoiDeDonneer</Text>
+                <Text style={styles.buttonText}>Envoyer le PV</Text>
             </TouchableOpacity>
             
         </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:20,
       },image:{
-        height:300,
+        height:200,
         width:'110%',
         marginBottom: 50
       }

@@ -17,7 +17,7 @@ export default function CreationSession({route}) {
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId,
+      "device_id": deviceId,
     };
     try {
       setModalIsOpen(true);
