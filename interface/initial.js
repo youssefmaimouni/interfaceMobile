@@ -7,7 +7,7 @@ export default function Initial() {
    const image = require('./bgg.jpeg');
      return(
       <ImageBackground source={image} style={styles.container}>
-         <View style={{backgroundColor:'#fff',marginTop:'55%',flex:1,borderTopRightRadius:30,borderTopLeftRadius:30}}>
+         <View style={{backgroundColor:'#fff',marginTop:'40%',flex:1,borderTopRightRadius:30,borderTopLeftRadius:30}}>
 
         
        <Text style={styles.textprin}>Bienvenue sur notre Application de Gestion des Présences!</Text>
@@ -46,9 +46,10 @@ export default function Initial() {
      text:{
         
         marginLeft:20,
-          fontSize: 15,
+          fontSize: 13,
           marginRight:20,
-          marginTop:50,
+          marginTop:10,
+          color:'#373A40'
      },
      button:{
         marginTop:50,
