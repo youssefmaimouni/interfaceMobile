@@ -102,7 +102,11 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:20,
       },image:{
+<<<<<<< HEAD
         height:250,
+=======
+        height:200,
+>>>>>>> 70f7a6695947e36162fd065b9669ccbc7612cf70
         width:'110%',
         marginBottom: 50
       }

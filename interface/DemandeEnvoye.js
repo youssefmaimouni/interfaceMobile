@@ -19,7 +19,7 @@ export default function DemandeEnvoye({route}) {
 
   const associer = async () => {
     const data = {
-      "adresse_mac": deviceId,
+      "device_id": deviceId,
     };
 
     try {

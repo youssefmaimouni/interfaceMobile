@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, View, Alert } from 'react-native';
+import { View, Button, Alert, ActivityIndicator, Text } from 'react-native';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -15,12 +15,6 @@ const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
 
 const GeneratePDF = ({ route }) => {
-  const [deviceId, setDeviceId] = useState('');
-
-  useEffect(() => {
-    setDeviceId(Device.osBuildId);
-  }, []);
-  
   const navigation=useNavigation();
   const {listeRapport,ipAdress }=useEtudiants();
   const {  surveillantSignatures } = route.params;
@@ -243,50 +237,26 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
-      uploadPDF(pdfPath,deviceId);
-
-      //navigation.navigate("EnvoiDeDonneer");
+      navigation.navigate("EnvoiDeDonneer");
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
     }
   };
-  const uploadPDF = async (filePath,device_id) => {
 
-    const file = {
-      uri: filePath,
-      type: 'application/pdf',
-      name: `pve.pdf`,
-    };
-
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        {loading ? (
+          <ActivityIndicator size="large" color="#0000ff" />
+        ) : (
+          <View style={{ alignItems: 'center' }}>
+            <Text>PDF generation complete!</Text>
+          </View>
+        )}
+      </View>
+    );
   
-    const formData = new FormData();
-    formData.append('pdf', file);
-    formData.append('device_id', device_id);
-  
-    try {
-      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
-        headers: {
-          
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log("ööööööö");
-      console.log(response.data);
-    }  catch (error) {
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-      } else {
-        console.error(error.message);
-      }
-    }
-  };
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title="Generate PDF" onPress={generatePDF} />
-    </View>
-  );
 };
 
 export default GeneratePDF;
+

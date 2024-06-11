@@ -105,7 +105,7 @@ const Home = () => {
   }
   
   return (
-         <Stack.Navigator initialRouteName={"EnvoiDeDonneer"} key={screen} screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>
