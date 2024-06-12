@@ -51,7 +51,6 @@ const TestGetPV = () => {
           "date": getCurrentDate(),
           "demi_journee": getAmOrPm(),
         };
-        console.log('edwwdtdwtswDFWZkdkUDK')
         try {
           const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPV`, data, {
             headers: {
