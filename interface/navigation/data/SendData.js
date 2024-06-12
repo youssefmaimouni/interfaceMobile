@@ -5,7 +5,7 @@ import * as Device from 'expo-device';
 
 
 const SendData=()=>{
-    const ipAdress='10.115.249.239';
+    const ipAdress='192.168.245.131';
     const [deviceId, setDeviceId] = useState('');
 
     useEffect(() => {
@@ -892,8 +892,8 @@ const SendData=()=>{
             const affectation2 ={
               "id_tablette": 1,
               "id_local": 2,
-              "date_affectation": "2024-06-13",
-              "demi_journee_affectation": "AM"
+              "date_affectation": "2024-06-12",
+              "demi_journee_affectation": "PM"
             }
             const association =[
               {
