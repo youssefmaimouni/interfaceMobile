@@ -1,8 +1,9 @@
-import { View } from "react-native";
+import { Button, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import * as Device from 'expo-device';
 import base64 from 'base-64';
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const username = 'admin';
 const password = 'admin';
@@ -12,7 +13,7 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 
 const TestGetPV = () => {
     const [deviceId, setDeviceId] = useState('');
-    const ipAdress='192.168.245.241';
+    const ipAdress='10.115.249.239';
     useEffect(() => {
       const fetchDeviceId = () => {
         setDeviceId(Device.osBuildId);
@@ -20,11 +21,11 @@ const TestGetPV = () => {
       fetchDeviceId();
     }, []);
   
-    useEffect(() => {
-      if (deviceId) {  
-         getPV();
-      }
-    }, [deviceId]); 
+    // useEffect(() => {
+    //   if (deviceId) {  
+    //      getPV();
+    //   }
+    // }, [deviceId]); 
     const getCurrentDate = () => {
         const date = new Date();
         const year = date.getFullYear(); // Gets the full year (4 digits)
@@ -50,6 +51,7 @@ const TestGetPV = () => {
           "date": getCurrentDate(),
           "demi_journee": getAmOrPm(),
         };
+        console.log('edwwdtdwtswDFWZkdkUDK')
         try {
           const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPV`, data, {
             headers: {
@@ -57,9 +59,11 @@ const TestGetPV = () => {
             },
             timeout: 10000
           });
-          if (response.data.PV) {
-              console.log(response.data.PV.session);  
-          }
+          
+              response.data.PV.etudiantsS2.map((e)=>{
+                console.log(e);
+              })
+          
           
         } catch (error) {
           console.log(error);
@@ -100,10 +104,20 @@ const TestGetPV = () => {
       
 
   return (
-    <View>
-
+    <View style={styles.container}>
+      <Button title="wertzui" onPress={getPV} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor:'#4D4D69'
+  }
+});
 
 export default TestGetPV;
