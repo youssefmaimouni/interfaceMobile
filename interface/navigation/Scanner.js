@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button, TouchableOpacity,Image, ScrollView, Mod
 import { CameraView, Camera } from "expo-camera/next";
 import { useEtudiants } from "./dataScreen";
 import { useNavigation } from '@react-navigation/native';
+import * as FileSystem from 'expo-file-system';
 
 const Head = () => (
   <View style={styles.headContainer}>
@@ -15,6 +16,8 @@ export default function Scanner() {
   const [modalVisible, setModalVisible] =useState(false);
   const [scannedData, setScannedData] = useState({});
   const navigation = useNavigation();
+  const [imageUri, setImageUri] = useState(null);
+
 
   const updateObject = (updatedValues) => {
     const foundItem = listeEtudiants.find(item => isEqual(updatedValues, item));
@@ -53,13 +56,15 @@ const verificationEtudiant=()=>{
 }
   
 
-  const handleBarCodeScanned = ({  data }) => {
+  const handleBarCodeScanned = async ({  data }) => {
     setScanned(true);
     try{
         if (recherchEtuadiant(JSON.parse(data) )) {
           data=JSON.parse(data);
           data.estPerson = true;
           setScannedData(data);
+          const imagePath = `${FileSystem.documentDirectory}${data.codeApogee}.jpg`;
+          await loadImage(imagePath);
           setModalVisible(true);
     }else{
         alert("Etudiant non trouvé");
@@ -84,6 +89,21 @@ const verificationEtudiant=()=>{
       </View>
     );
   }
+  const loadImage = async (imagePath) => {
+    console.log('Loading image from filesystem...');
+    try {
+        const fileInfo = await FileSystem.getInfoAsync(imagePath);
+        if (fileInfo.exists) {
+            console.log('Image loaded from:', imagePath);
+            setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
+        } else {
+            console.log('No image found at the path');
+        }
+    } catch (error) {
+        console.error('Failed to load image:', error);
+    }
+};
+ 
   
   return (
     <View style={styles.container}>
@@ -102,10 +122,7 @@ const verificationEtudiant=()=>{
 /> }
         
        {modalVisible && <View style={styles.card}>
-        <Image
-          source={require('./etu.jpeg')}
-          style={styles.image}
-        />
+       <Image source={{ uri: imageUri }} style={styles.image} />
         <View style={styles.cardContent}>
         <Text style={styles.name}>{scannedData.nom_etudiant && scannedData.prenom_etudiant ? `${scannedData.nom_etudiant} ${scannedData.prenom_etudiant}` : ''}</Text>
       <Text>Code Apogée: {scannedData['codeApogee'] || ''}</Text>

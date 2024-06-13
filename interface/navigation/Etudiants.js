@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
+import * as FileSystem from 'expo-file-system';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -17,7 +18,8 @@ const Head = () => (
   const Card = ({ item }) => {
     const [isPresent, setIsPresent] = useState(item.estPerson);
     const [isReppored, setIsReppored] = useState(item.id_rapport!=null);
-
+    const [imageUri, setImageUri] = useState(null);
+    const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
        
   
     const togglePresence = () => {
@@ -36,16 +38,30 @@ const Head = () => (
       }
       
     };
+    const loadImage = async () => {
+      console.log('Loading image from filesystem...');
+      try {
+          const fileInfo = await FileSystem.getInfoAsync(imagePath);
+          if (fileInfo.exists) {
+              console.log('Image loaded from:', imagePath);
+              setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
+          } else {
+              console.log('No image found at the path');
+          }
+      } catch (error) {
+          console.error('Failed to load image:', error);
+      }
+  };
+  useEffect(()=>{
+    loadImage();
+  },[])
    
 
       
   
     return (
       <View style={styles.card}><View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
-        <Image
-          source={require('./etu.jpeg')}
-          style={styles.image}
-        />
+        <Image source={{ uri: imageUri }} style={styles.image} />
         <View style={styles.cardContent}>
           <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
           <Text>Code Apogée: {item.codeApogee}</Text>
@@ -131,11 +147,11 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 130,
     borderRadius: 10,
-    margin: 15,
-    marginTop:40,
+    margin: 5,
+    marginTop:10,
   },
   cardContent: {
     flex: 1,

@@ -9,11 +9,10 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "base-64": "^1.0.0",
     "expo": "^50.0.19",
     "expo-barcode-scanner": "~12.9.3",
@@ -21,6 +20,7 @@
     "expo-cli": "^6.3.10",
     "expo-device": "^5.9.4",
     "expo-file-system": "~16.0.9",
+    "expo-image-picker": "~14.7.1",
     "expo-network": "~5.8.0",
     "expo-print": "~12.8.1",
     "expo-sharing": "~11.10.0",

@@ -58,30 +58,34 @@ const TestGetPV = () => {
             },
             timeout: 10000
           });
-              console.log('surveillants');
-              response.data.PV.surveillants.map((e)=>{
-                console.log(e);
-              })
-              console.log('local');
-              response.data.PV.local.map((e)=>{
-                console.log(e);
-              })
-              console.log('reserviste');
-              response.data.PV.reserviste.map((e)=>{
-                console.log(e);
-              })
-              console.log('etudiantsS1');
-              response.data.PV.etudiantsS1.map((e)=>{
-                console.log(e);
-              })
-              console.log('etudiantsS2');
-              response.data.PV.etudiantsS2.map((e)=>{
-                console.log(e);
-              })
-              console.log('session');
-              response.data.PV.session.map((e)=>{
-                console.log(e);
-              })
+          if(response.data.PV){
+            console.log('surveillants');
+            response.data.PV.surveillants.map((e)=>{
+              console.log(e);
+            })
+            console.log('local');
+            response.data.PV.local.map((e)=>{
+              console.log(e);
+            })
+            console.log('reserviste');
+            response.data.PV.reserviste.map((e)=>{
+              console.log(e);
+            })
+            console.log('etudiantsS1');
+            response.data.PV.etudiantsS1.map((e)=>{
+              console.log(e);
+            })
+            console.log('etudiantsS2');
+            response.data.PV.etudiantsS2.map((e)=>{
+              console.log(e);
+            })
+            console.log('session');
+            response.data.PV.session.map((e)=>{
+              console.log(e);
+            })
+          }else{
+            console.log(response.data);
+          }
           
           
         } catch (error) {

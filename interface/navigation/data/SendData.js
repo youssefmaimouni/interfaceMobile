@@ -11,9 +11,6 @@ const SendData=()=>{
     useEffect(() => {
       setDeviceId(Device.osBuildId);
     }, []);
-    function delay(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
     const associer = async () => {
       const etudiant1 = [
         {
@@ -399,16 +396,16 @@ const SendData=()=>{
         "id_session": 1,
         "code_module": 1,
         "id_pv": 1,
-        "date_examen": "2024-06-12",
-        "demi_journee_examen": "PM",
+        "date_examen": "2024-06-13",
+        "demi_journee_examen": "AM",
         "seance_examen": "S1"
       }
       const exam2 ={
         "id_session": 1,
         "code_module": 1,
         "id_pv": 1,
-        "date_examen": "2024-06-12",
-        "demi_journee_examen": "PM",
+        "date_examen": "2024-06-13",
+        "demi_journee_examen": "AM",
         "seance_examen": "S2"
       }
       const pv ={ 
@@ -886,14 +883,14 @@ const SendData=()=>{
             const affectation ={
               "id_tablette": 1,
               "id_local": 1,
-              "date_affectation": "2024-06-12",
-              "demi_journee_affectation": "PM"
+              "date_affectation": "2024-06-13",
+              "demi_journee_affectation": "AM"
             }
             const affectation2 ={
               "id_tablette": 1,
               "id_local": 2,
-              "date_affectation": "2024-06-12",
-              "demi_journee_affectation": "PM"
+              "date_affectation": "2024-06-13",
+              "demi_journee_affectation": "AM"
             }
             const association =[
               {
