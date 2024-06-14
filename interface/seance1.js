@@ -40,6 +40,7 @@ export default function Seance1({route}) {
   const [listeSurveillants,setListeSurveillants]=useState([]);
   const [listeRapport,setListeRapport]=useState([]);
   const [listeReserviste,setListeReserviste]=useState([]);
+  const [infoAccuil,setInfoAccuil]=useState([]);
   const ipAdress = route.params.ipAdress;
   const fetchStudents = async () => {
     try {
@@ -277,13 +278,41 @@ const fetchReserviste = async () => {
     console.error('Error fetching documents:', error);
   }
 };
+const fetchAccuill=async ()=>{
+  try {
+    let response = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    const local = response.data.rows.map(row=>row.doc);
+    console.log(local);
+    response = await axios.get(`http://${ipAdress}:5984/sessionun/_all_docs?include_docs=true`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    
+    // Extracting documents from the response
+    const session = response.data.rows.map(row=>row.doc);
+    console.log(session);
+    
+   setInfoAccuil({...local[0],...session[0]});
+   console.log(infoAccuil)
+  } catch (error) {
+    console.error('Error fetching documents:', error);
+  }
+}
   
   
   useEffect(() => {
-    fetchStudents();
-    fetchRapports();
-    fetchSurveillants();
-    fetchReserviste();
+     fetchStudents();
+     fetchRapports();
+     fetchSurveillants();
+     fetchReserviste();
+     fetchAccuill();
 }, []);
 
 const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -318,7 +347,7 @@ useEffect(() => {
           <Text style={styles.buttonTexts2}>Seance 2</Text>
         </TouchableOpacity>
          </View>
-        <EtudiantsProvider listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} updateSurveillant={updateSurveillant}>
+        <EtudiantsProvider infoAccuil={infoAccuil} listeReserviste={listeReserviste} listeSurveillants={listeSurveillants} addSurveillants={addSurveillants}  deleteReserviste={deleteReserviste} listeEtudiants={listeEtudiants} setListeEtudiants={setListeEtudiants} updateStudent={updateStudent} setListeRapport={setListeRapport} listeRapport={listeRapport} updateRapport={updateRapport} addRapport={addRapport} deleteRapport={deleteRapport} updateSurveillant={updateSurveillant}>
          <Tab.Navigator screenOptions={({root}) => ({
            tabBarShowLabel: false,
            headerShown: false,

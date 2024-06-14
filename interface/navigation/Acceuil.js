@@ -12,17 +12,8 @@ const Acceuil = ({ route }) => {
   const navigation = useNavigation();
   const { seance } = route.params;
   const { signatures } = useSignatures();
-
-  useEffect(() => {
-    async function requestNotificationPermission() {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        alert('Permission for notifications was denied');
-      }
-    }
-    requestNotificationPermission();
-  }, []);
-
+  const { infoAccuil } = useEtudiants();
+   
   const handleGeneratePDF = () => {
     if (signatures) {
       navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
@@ -180,6 +171,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10
   }
-});
+  
+    return(
+      <ImageBackground    resizeMode="cover" style={styles.image}>
+            <View style={styles.card}>
+                 <Head />
+                 <View style={styles.con}>
+                <Text >Année universitaire:{ infoAccuil.Annee_universitaire}</Text>
+                <Text>module :{ infoAccuil.intitule_module}</Text>
+                <Text>seance :{ infoAccuil.seance_examen}</Text>
+                <Text>demi_journée:{ infoAccuil.demi_journee_examen}</Text>
+                <Text> local:{ infoAccuil.type_local}-{ infoAccuil.num_local}</Text>
+                {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
+                  <Text style={{color:'#fff'}}>Seance 2</Text>
+                </TouchableOpacity>}
+                {seance=='seance2'&&<TouchableOpacity  onPress={FinExame} style={styles.button}>
+                  <Text style={{color:'#fff'}}>fin d'examen</Text>
+                </TouchableOpacity>}
+                </View>
+            </View>
+      </ImageBackground>
 
 export default Acceuil;

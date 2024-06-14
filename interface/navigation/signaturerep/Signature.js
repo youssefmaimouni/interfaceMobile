@@ -4,10 +4,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation} from '@react-navigation/native';
 import { useEtudiants } from '../dataScreen';
 
-const Head = () => (
+const Head = (props) => (
   <View style={styles.headContainer}>
     <Image source={require('../logofsac.jpeg')} style={styles.logo} />
-    <Text style={styles.year}>Année universitaire ____-____</Text>
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
   </View>
 );
 
@@ -24,7 +24,7 @@ const Card = ({ item }) => {
   return (
     <View style={styles.card} >
               <View style={styles.contenu}>
-                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <Text style={styles.cardText}>{item.nomComplet_s}</Text>
                 <TouchableOpacity style={[styles.button, signed ?  styles.buttonsigne:styles.buttonsigner]} onPress={signa}><Text style={styles.buttonText}>{signed?'signé':'signer'}</Text></TouchableOpacity>
               </View>
             </View>
@@ -41,7 +41,7 @@ const Cardr = ({ item }) => {
       const reserviste = {
         id_surveillant: item.id_surveillant,
         id_departement: item.id_departement,
-        nom_complet: item.nom_complet,
+        nomComplet_s: item.nomComplet_s,
     };
       addSurveillants(reserviste);
       deleteReserviste(item._id,item._rev);
@@ -50,7 +50,7 @@ const Cardr = ({ item }) => {
   return (
     <View style={styles.card} >
               <View style={styles.contenu}>
-                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <Text style={styles.cardText}>{item.nomComplet_s}</Text>
                 <TouchableOpacity style={styles.button} onPress={signa}><Text style={styles.buttonText}>surveiller</Text></TouchableOpacity>
               </View>
     </View>
@@ -62,13 +62,13 @@ const Cardr = ({ item }) => {
 export default function Sign() {
   
   const [afficher, setAfficher] = useState(false);
-  const {listeReserviste,listeSurveillants}=useEtudiants();
+  const {listeReserviste,infoAccuil,listeSurveillants}=useEtudiants();
   
   return (
     <View style={styles.container}>
       <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
-          <Head />
+          <Head annee={ infoAccuil.Annee_universitaire}/>
           <Text style={styles.title}>Liste des surveillants</Text>
           {listeSurveillants.map((item) => (
             <Card item={item} key={item.id_surveillant}/>

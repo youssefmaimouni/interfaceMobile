@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
+import * as FileSystem from 'expo-file-system';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -13,11 +14,13 @@ const Head = () => (
   export default function Etudiants(){
   const navigation=useNavigation();
   const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
+  const [search, setSearch] = useState('');
 
   const Card = ({ item }) => {
     const [isPresent, setIsPresent] = useState(item.estPerson);
     const [isReppored, setIsReppored] = useState(item.id_rapport!=null);
-
+    const [imageUri, setImageUri] = useState(null);
+    const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
        
   
     const togglePresence = () => {
@@ -36,21 +39,35 @@ const Head = () => (
       }
       
     };
+    const loadImage = async () => {
+      console.log('Loading image from filesystem...');
+      try {
+          const fileInfo = await FileSystem.getInfoAsync(imagePath);
+          if (fileInfo.exists) {
+              console.log('Image loaded from:', imagePath);
+              setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
+          } else {
+              console.log('No image found at the path');
+          }
+      } catch (error) {
+          console.error('Failed to load image:', error);
+      }
+  };
+  useEffect(()=>{
+    loadImage();
+  },[])
    
 
       
   
     return (
       <View style={styles.card}><View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
-        <Image
-          source={require('./etu.jpeg')}
-          style={styles.image}
-        />
+        <Image source={{ uri: imageUri }} style={styles.image} />
         <View style={styles.cardContent}>
           <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
           <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
-          <Text>numéro exam: {item.numeroExam}</Text>
+          <Text>numéro exam: {item.num_exam}</Text>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
@@ -72,7 +89,17 @@ const Head = () => (
     ); 
   };
 
- 
+  const handleSearchChange = (text) => {
+    setSearch(text);
+};
+const filteredEtudiants = listeEtudiants.filter(etudiant => {
+  const searchLower = search.toLowerCase();
+  const fullName = `${etudiant.nom_etudiant.toLowerCase()} ${etudiant.prenom_etudiant.toLowerCase()}`;
+  const reversedFullName = `${etudiant.prenom_etudiant.toLowerCase()} ${etudiant.nom_etudiant.toLowerCase()}`;
+  
+  return fullName.includes(searchLower) || reversedFullName.includes(searchLower) ||
+      searchLower.split(' ').every(word => fullName.includes(word) || reversedFullName.includes(word));
+});
   return (
   <ImageBackground  resizeMode="cover" style={styles.container}>
     
@@ -80,8 +107,23 @@ const Head = () => (
       <Head />
 
         <Text style={styles.title}>Liste des étudiants</Text>
-      {listeEtudiants.map((item)=>(
-        <Card item={item} key={item.numeroExam}/>
+        <TextInput
+                style={styles.input}
+                placeholder='Rechercher étudiant'
+                value={search}
+                onChangeText={handleSearchChange}
+            />
+            {search.length > 0 && filteredEtudiants.length > 0 && (
+                <View style={styles.list}>
+                    {filteredEtudiants.map((item) => (
+                        <TouchableOpacity key={item['codeApogee']} onPress={() => handleSelectEtudiant(item)}>
+                            <Card item={item} key={item['numeroExam']}/>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            )}
+      {!search.length > 0 && listeEtudiants.map((item)=>(
+        <Card item={item} key={item.num_exam}/>
       ))}
     
       </ScrollView>
@@ -108,6 +150,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 5,
   },
+  input: {
+    marginBottom: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginHorizontal: 10,
+    width: '100%',
+},
   logo: {
     height: 50,
     width: 120,
@@ -131,11 +182,11 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 100,
+    height: 130,
     borderRadius: 10,
-    margin: 15,
-    marginTop:40,
+    margin: 5,
+    marginTop:10,
   },
   cardContent: {
     flex: 1,
