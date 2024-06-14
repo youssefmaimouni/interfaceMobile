@@ -24,7 +24,7 @@ const Card = ({ item }) => {
   return (
     <View style={styles.card} >
               <View style={styles.contenu}>
-                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <Text style={styles.cardText}>{item.nomComplet_s}</Text>
                 <TouchableOpacity style={[styles.button, signed ?  styles.buttonsigne:styles.buttonsigner]} onPress={signa}><Text style={styles.buttonText}>{signed?'signé':'signer'}</Text></TouchableOpacity>
               </View>
             </View>
@@ -41,7 +41,7 @@ const Cardr = ({ item }) => {
       const reserviste = {
         id_surveillant: item.id_surveillant,
         id_departement: item.id_departement,
-        nom_complet: item.nom_complet,
+        nomComplet_s: item.nomComplet_s,
     };
       addSurveillants(reserviste);
       deleteReserviste(item._id,item._rev);
@@ -50,7 +50,7 @@ const Cardr = ({ item }) => {
   return (
     <View style={styles.card} >
               <View style={styles.contenu}>
-                <Text style={styles.cardText}>{item.nom_complet}</Text>
+                <Text style={styles.cardText}>{item.nomComplet_s}</Text>
                 <TouchableOpacity style={styles.button} onPress={signa}><Text style={styles.buttonText}>surveiller</Text></TouchableOpacity>
               </View>
     </View>

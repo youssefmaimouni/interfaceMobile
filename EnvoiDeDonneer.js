@@ -2,8 +2,8 @@ import { Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, 
 import axios from 'axios';
 
 
-const EnvoiDeDonneer=()=>{
-    const ipAdress='192.168.245.241';
+const EnvoiDeDonneer=({route})=>{
+    const ipAdress=route.params.ipAdress;
 
     const associer = async () => {
         const pv={

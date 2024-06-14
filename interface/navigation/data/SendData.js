@@ -5,7 +5,7 @@ import * as Device from 'expo-device';
 
 
 const SendData=()=>{
-    const ipAdress='192.168.245.131';
+    const ipAdress='10.115.249.239';
     const [deviceId, setDeviceId] = useState('');
 
     useEffect(() => {
@@ -384,6 +384,10 @@ const SendData=()=>{
         "id_filiere": 1,
         "intitule_module": "DBA"
       }
+      const module2={
+        "id_filiere": 1,
+        "intitule_module": "JAVA"
+      }
       const session={
           "nom_session": "automne-hiver",
           "type_session": "Normal",
@@ -396,16 +400,16 @@ const SendData=()=>{
         "id_session": 1,
         "code_module": 1,
         "id_pv": 1,
-        "date_examen": "2024-06-13",
-        "demi_journee_examen": "AM",
+        "date_examen": "2024-06-14",
+        "demi_journee_examen": "PM",
         "seance_examen": "S1"
       }
       const exam2 ={
         "id_session": 1,
-        "code_module": 1,
+        "code_module": 2,
         "id_pv": 1,
-        "date_examen": "2024-06-13",
-        "demi_journee_examen": "AM",
+        "date_examen": "2024-06-14",
+        "demi_journee_examen": "PM",
         "seance_examen": "S2"
       }
       const pv ={ 
@@ -480,6 +484,14 @@ const SendData=()=>{
                 timeout: 10000
               });
               console.log('module:' );
+              console.log(response.data);
+              response = await axios.post(`http://${ipAdress}:8000/api/module/create`, module2, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                timeout: 10000
+              });
+              console.log('module 2:' );
               console.log(response.data);
               response = await axios.post(`http://${ipAdress}:8000/api/examen/create`, exam, {
                 headers: {
@@ -883,14 +895,14 @@ const SendData=()=>{
             const affectation ={
               "id_tablette": 1,
               "id_local": 1,
-              "date_affectation": "2024-06-13",
-              "demi_journee_affectation": "AM"
+              "date_affectation": "2024-06-14",
+              "demi_journee_affectation": "PM"
             }
             const affectation2 ={
               "id_tablette": 1,
               "id_local": 2,
-              "date_affectation": "2024-06-13",
-              "demi_journee_affectation": "AM"
+              "date_affectation": "2024-06-14",
+              "demi_journee_affectation": "PM"
             }
             const association =[
               {

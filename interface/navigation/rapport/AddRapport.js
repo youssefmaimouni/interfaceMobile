@@ -3,6 +3,7 @@ import { KeyboardAvoidingView,Image, StyleSheet, Text, TouchableOpacity, View, T
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
 import { useNavigation } from '@react-navigation/native';
+import * as FileSystem from 'expo-file-system';
 
 const Head = () => (
     <View style={styles.headContainer}>
@@ -97,13 +98,29 @@ const Head = () => (
 
    
     const Card = ({ item }) => {
+        const [imageUri, setImageUri] = useState(null);
+        const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
+        const loadImage = async () => {
+            console.log('Loading image from filesystem...');
+            try {
+                const fileInfo = await FileSystem.getInfoAsync(imagePath);
+                if (fileInfo.exists) {
+                    console.log('Image loaded from:', imagePath);
+                    setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
+                } else {
+                    console.log('No image found at the path');
+                }
+            } catch (error) {
+                console.error('Failed to load image:', error);
+            }
+        };
+        useEffect(()=>{
+          loadImage();
+        },[])
         
       return (
         <View style={styles.card}>
-          <Image
-            source={require('../etu.jpeg')}
-            style={styles.image}
-          />
+          <Image source={{ uri: imageUri }} style={styles.image} />
           <View style={styles.cardContent}>
             <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
             <Text>Code Apogée: {item['codeApogee']}</Text>

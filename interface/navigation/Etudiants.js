@@ -66,7 +66,7 @@ const Head = () => (
           <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
           <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
-          <Text>numéro exam: {item.numeroExam}</Text>
+          <Text>numéro exam: {item.num_exam}</Text>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
@@ -97,7 +97,7 @@ const Head = () => (
 
         <Text style={styles.title}>Liste des étudiants</Text>
       {listeEtudiants.map((item)=>(
-        <Card item={item} key={item.numeroExam}/>
+        <Card item={item} key={item.num_exam}/>
       ))}
     
       </ScrollView>

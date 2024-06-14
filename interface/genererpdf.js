@@ -17,11 +17,17 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const GeneratePDF = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [deviceId, setDeviceId] = useState('');
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
     setDeviceId(Device.osBuildId);
-    generatePDF();
   }, []);
+
+  useEffect(() => {
+  if (dataLoaded) {
+    generatePDF();
+  }
+}, [dataLoaded]);
   
   const navigation=useNavigation();
   const {listeRapport,ipAdress }=useEtudiants();
@@ -35,12 +41,9 @@ const GeneratePDF = ({ route }) => {
     surveillant: []
   });
 
-  useEffect(() => {
-    fetchEtudiants();
-  }, []);
-
   const fetchEtudiants = async () => {
     try {
+      setLoading(true);
       const [etu1, etu2, surveillants] = await Promise.all([
         axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
         axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?include_docs=true`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Basic ${encodedCredentials}` }}),
@@ -53,10 +56,19 @@ const GeneratePDF = ({ route }) => {
         etuAbsdeux: etu2.data.rows.filter(row => !row.doc.estPerson).map(row => row.doc),
         surveillant: surveillants.data.rows.filter(row => row.doc.sign).map(row => row.doc)
       });
+      setLoading(false);
+      setDataLoaded(true);
+      //generatePDF(); // Call generatePDF here after data is set
     } catch (error) {
       console.error('Erreur lors de la récupération des étudiants:', error);
+      setLoading(false);
     }
   };
+  
+  useEffect(() => {
+    fetchEtudiants();
+  }, []);
+  
 
   const generatePDF = async () => {
     const currentDate = new Date();
@@ -247,7 +259,7 @@ const GeneratePDF = ({ route }) => {
       }
       uploadPDF(pdfPath,deviceId);
 
-      navigation.navigate("EnvoiDeDonneer");
+      navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress});
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
@@ -273,7 +285,7 @@ const GeneratePDF = ({ route }) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+        console.log(response.data)
     }  catch (error) {
       if (error.response) {
         console.error('Error response data:', error.response.data);

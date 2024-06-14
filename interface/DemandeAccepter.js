@@ -58,7 +58,7 @@ const fetchAndStoreImage = async () => {
       etudiants.map(async(e)=>{
         const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPhoto/${e.codeApogee}`);
         let imageData = response.data.image;
-        console.log('Image data received:', imageData);
+        //console.log('Image data received:', imageData);
         if (imageData.startsWith('data:image/jpeg;base64,')) {
             imageData = imageData.replace('data:image/jpeg;base64,', '');
         }
@@ -117,46 +117,71 @@ const getPV= async () => {
       "demi_journee": getAmOrPm(),
     };
     try {
-      const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPV`, data, {
+      let response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPV`, data, {
         headers: {
           'Content-Type': 'application/json'
         },
         timeout: 10000
       });
       if(response.data.PV){
+        const {surveillants,local,reserviste,etudiantsS1,etudiantsS2,session}=response.data.PV;
         console.log('surveillants');
-        response.data.PV.surveillants.map((e)=>{
+        surveillants.map((e)=>{
           console.log(e);
         })
         console.log('local');
-        response.data.PV.local.map((e)=>{
+        local.map((e)=>{
           console.log(e);
         })
         console.log('reserviste');
-        response.data.PV.reserviste.map((e)=>{
+        reserviste.map((e)=>{
           console.log(e);
         })
         console.log('etudiantsS1');
-        response.data.PV.etudiantsS1.map((e)=>{
+        etudiantsS1.map((e)=>{
           console.log(e);
         })
         console.log('etudiantsS2');
-        response.data.PV.etudiantsS2.map((e)=>{
+        etudiantsS2.map((e)=>{
+          console.log(e);
+        })
+        console.log('session');
+        session.map((e)=>{
           console.log(e);
         })
         const students=[...response.data.PV.etudiantsS1, ...response.data.PV.etudiantsS2];
         setEtudiants(students);
-        console.log('session');
-        response.data.PV.session.map((e)=>{
-          console.log(e);
-        })
+      await uploadToCouchDB(etudiantsS1,'etudiantsun');
+      await uploadToCouchDB(etudiantsS2,'etudiantsdeux');
+      await uploadToCouchDB(surveillants,'surveillants');
+      await uploadToCouchDB(reserviste,'reserviste');
+      await uploadToCouchDB([session[0]],'sessionun');
+      await uploadToCouchDB([session[1]],'sessiondeux');
+      await uploadToCouchDB([local[0]],'local');
+      
       }else{
         console.log(response.data);
       }
       
       await fetchAndStoreImage();
+      navigation.navigate('PV')
     } catch (error) {
       console.log(error);
+    }
+  }
+  const uploadToCouchDB = async (data,db) => {
+    try {
+      const responses = await Promise.all(data.map(doc => 
+        axios.post(`http://${ipAdress}:5984/${db}/_bulk_docs`, { docs: [doc] }, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+        })
+      ));
+      console.log('All data successfully uploaded:', responses);
+    } catch (error) {
+      console.error('Failed to upload data:', error);
     }
   }
   const checkDocuments = async () => {
