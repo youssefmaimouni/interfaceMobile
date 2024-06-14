@@ -13,6 +13,7 @@ export default function Acceuil({route}) {
   const navigation=useNavigation() ?? {}; 
   const {seance}=route.params;
   const { signatures } = useSignatures();
+  const { infoAccuil } = useEtudiants();
    
   const handleGeneratePDF = () => {
     if (signatures) {  
@@ -77,11 +78,11 @@ export default function Acceuil({route}) {
             <View style={styles.card}>
                  <Head />
                  <View style={styles.con}>
-                <Text >Année universitaire ____-____</Text>
-                <Text>module :</Text>
-                <Text>seance :{seance}</Text>
-                <Text>demi_journée:</Text>
-                <Text> local:</Text>
+                <Text >Année universitaire:{ infoAccuil.Annee_universitaire}</Text>
+                <Text>module :{ infoAccuil.intitule_module}</Text>
+                <Text>seance :{ infoAccuil.seance_examen}</Text>
+                <Text>demi_journée:{ infoAccuil.demi_journee_examen}</Text>
+                <Text> local:{ infoAccuil.type_local}-{ infoAccuil.num_local}</Text>
                 {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
                   <Text style={{color:'#fff'}}>Seance 2</Text>
                 </TouchableOpacity>}

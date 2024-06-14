@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
 import * as FileSystem from 'expo-file-system';
@@ -14,6 +14,7 @@ const Head = () => (
   export default function Etudiants(){
   const navigation=useNavigation();
   const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
+  const [search, setSearch] = useState('');
 
   const Card = ({ item }) => {
     const [isPresent, setIsPresent] = useState(item.estPerson);
@@ -88,7 +89,17 @@ const Head = () => (
     ); 
   };
 
- 
+  const handleSearchChange = (text) => {
+    setSearch(text);
+};
+const filteredEtudiants = listeEtudiants.filter(etudiant => {
+  const searchLower = search.toLowerCase();
+  const fullName = `${etudiant.nom_etudiant.toLowerCase()} ${etudiant.prenom_etudiant.toLowerCase()}`;
+  const reversedFullName = `${etudiant.prenom_etudiant.toLowerCase()} ${etudiant.nom_etudiant.toLowerCase()}`;
+  
+  return fullName.includes(searchLower) || reversedFullName.includes(searchLower) ||
+      searchLower.split(' ').every(word => fullName.includes(word) || reversedFullName.includes(word));
+});
   return (
   <ImageBackground  resizeMode="cover" style={styles.container}>
     
@@ -96,7 +107,22 @@ const Head = () => (
       <Head />
 
         <Text style={styles.title}>Liste des étudiants</Text>
-      {listeEtudiants.map((item)=>(
+        <TextInput
+                style={styles.input}
+                placeholder='Rechercher étudiant'
+                value={search}
+                onChangeText={handleSearchChange}
+            />
+            {search.length > 0 && filteredEtudiants.length > 0 && (
+                <View style={styles.list}>
+                    {filteredEtudiants.map((item) => (
+                        <TouchableOpacity key={item['codeApogee']} onPress={() => handleSelectEtudiant(item)}>
+                            <Card item={item} key={item['numeroExam']}/>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            )}
+      {!search.length > 0 && listeEtudiants.map((item)=>(
         <Card item={item} key={item.num_exam}/>
       ))}
     
@@ -124,6 +150,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 5,
   },
+  input: {
+    marginBottom: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginHorizontal: 10,
+    width: '100%',
+},
   logo: {
     height: 50,
     width: 120,

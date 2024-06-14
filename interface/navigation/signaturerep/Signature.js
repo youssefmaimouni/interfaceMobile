@@ -4,10 +4,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useNavigation} from '@react-navigation/native';
 import { useEtudiants } from '../dataScreen';
 
-const Head = () => (
+const Head = (props) => (
   <View style={styles.headContainer}>
     <Image source={require('../logofsac.jpeg')} style={styles.logo} />
-    <Text style={styles.year}>Année universitaire ____-____</Text>
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
   </View>
 );
 
@@ -62,13 +62,13 @@ const Cardr = ({ item }) => {
 export default function Sign() {
   
   const [afficher, setAfficher] = useState(false);
-  const {listeReserviste,listeSurveillants}=useEtudiants();
+  const {listeReserviste,infoAccuil,listeSurveillants}=useEtudiants();
   
   return (
     <View style={styles.container}>
       <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
-          <Head />
+          <Head annee={ infoAccuil.Annee_universitaire}/>
           <Text style={styles.title}>Liste des surveillants</Text>
           {listeSurveillants.map((item) => (
             <Card item={item} key={item.id_surveillant}/>

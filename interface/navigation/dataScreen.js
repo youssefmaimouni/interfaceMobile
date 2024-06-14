@@ -5,11 +5,11 @@ import {SignatureProvider } from './signaturerep/signaturecontexr';
 
 const EtudiantsContext = createContext();
 
-export const EtudiantsProvider = ({ children,listeEtudiants,setListeEtudiants , deleteReserviste,listeRapport ,setListeRapport , updateStudent,addSurveillants,updateRapport,addRapport ,listeSurveillants ,listeReserviste,updateSurveillant,deleteRapport ,ipAdress}) => {
+export const EtudiantsProvider = ({ children,listeEtudiants,setListeEtudiants , deleteReserviste,listeRapport ,setListeRapport , updateStudent,addSurveillants,updateRapport,addRapport ,listeSurveillants ,listeReserviste,updateSurveillant,deleteRapport ,ipAdress,infoAccuil}) => {
  
 
     return (
-        <EtudiantsContext.Provider value={{ listeEtudiants, setListeEtudiants,deleteReserviste ,listeRapport,setListeRapport,updateStudent,addSurveillants,updateRapport,addRapport,listeSurveillants,listeReserviste,updateSurveillant ,deleteRapport ,ipAdress}}>
+        <EtudiantsContext.Provider value={{ listeEtudiants, setListeEtudiants,deleteReserviste ,listeRapport,setListeRapport,updateStudent,addSurveillants,updateRapport,addRapport,listeSurveillants,listeReserviste,updateSurveillant ,deleteRapport ,ipAdress,infoAccuil}}>
            
             {children}
             
