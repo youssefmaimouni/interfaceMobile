@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function DemandeAccepter() {
 
-const image = require('./demandeAccepte.jpeg');
+const image = require('./image/accept.jpg');
 const navigation=useNavigation();
 
 
@@ -28,7 +28,7 @@ const navigation=useNavigation();
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   image:{
-    height:200,
-    width:300,
+    height:250,
+    width:460,
     marginBottom: 50
   },
   button: {

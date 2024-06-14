@@ -237,10 +237,33 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
+      uploadPDF(pdfPath)
       navigation.navigate("EnvoiDeDonneer");
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
+    }
+  };
+
+  const uploadPDF = async (filePath) => {
+    const file = {
+      uri: filePath,
+      type: 'application/pdf',
+      name: 'test.pdf',
+    };
+
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    try {
+      const response = await axios.post('http://10.115.251.236:8000/api/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 

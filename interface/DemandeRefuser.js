@@ -41,7 +41,7 @@ export default function DemandeRefuser({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./refus.jpeg');
+  const image = require('./image/refus.jpg');
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -76,7 +76,7 @@ export default function DemandeRefuser({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   image:{
-    height:200,
+    height:250,
     width:300,
     marginBottom: 50
   },

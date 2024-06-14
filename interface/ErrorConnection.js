@@ -43,7 +43,7 @@ export default function ErrorConnection({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./echecConn.jpeg');
+  const image = require('./image/erreur_serv.jpg');
   return (
     <View source={image} style={styles.container}>
        <Image source={image} style={styles.image} />
@@ -77,7 +77,7 @@ export default function ErrorConnection({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DAEFEA',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent:'center'
   },
@@ -107,9 +107,10 @@ const styles = StyleSheet.create({
     fontWeight:'500',
     color:'#006e4f'
   },image:{
-    height:200,
+    height:300,
     width:300,
-    marginBottom: 50
+    marginBottom: 50,
+    marginRight:60
   }
   
 });

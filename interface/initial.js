@@ -1,17 +1,76 @@
-import react from "react";
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useRef, useState } from 'react';
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, Platform, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import * as Notifications from 'expo-notifications';
+import { initializeApp } from 'firebase/app';
+import Constants from 'expo-constants';
+import registerForPushNotificationsAsync from './navigation/registerForPushNotificationsAsync';
+
+const firebaseConfig = Constants.expoConfig?.extra ?? undefined;
+
+if (!firebaseConfig) {
+  console.error('Firebase configuration is missing or not loaded properly.');
+} else {
+  initializeApp(firebaseConfig);
+}
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+const sendNotification = async () => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "Hello",
+      body: "This is a test notification",
+    },
+    trigger: null,
+  });
+};
 
 export default function Initial() {
-   const navigation = useNavigation();
-   const image = require('./bgg.jpeg');
-     return(
-      <ImageBackground source={image} style={styles.container}>
-         <View style={{backgroundColor:'#fff',marginTop:'40%',flex:1,borderTopRightRadius:30,borderTopLeftRadius:30}}>
+  const navigation = useNavigation();
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-        
-       <Text style={styles.textprin}>Bienvenue sur notre Application de Gestion des Présences!</Text>
-       <Text style={styles.text}>
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => {
+      if (token) {
+        setExpoPushToken(token);
+      }
+    });
+
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      console.log(notification);
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (expoPushToken) {
+      sendNotification(); // Send a test notification after registering
+    }
+  }, [expoPushToken]);
+
+  const image = require('./bgg.jpeg');
+  return (
+    <ImageBackground source={image} style={styles.container}>
+      <View style={styles.innerContainer}>
+        <Text style={styles.textprin}>Bienvenue sur notre Application de Gestion des Présences!</Text>
+        <Text style={styles.text}>
           Cette application innovante, conçue pour les établissements d'enseignement supérieur, 
           révolutionne la gestion des présences durant les examens grâce à la technologie de scan de QR codes. 
           Développée par des étudiants de l'Université Hassan II de Casablanca, 
@@ -21,49 +80,50 @@ export default function Initial() {
           notre application assure une expérience fluide tant pour les surveillants que pour l'administration,
           facilitant une gestion efficace des présences en temps réel.
           Embarquez dans l'ère de la digitalisation avec nous et optimisez la gestion des présences lors de vos examens!
-       </Text>     
-       <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Home')}>
-         <Text style={styles.textbutton}>commencer</Text>
-       </TouchableOpacity>
+        </Text>     
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.textbutton}>commencer</Text>
+        </TouchableOpacity>
       </View>
-      </ImageBackground>
-     );}
-     const styles = StyleSheet.create({
-     container : {
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-     },
-     textprin:{
-        fontSize: 30,
-        fontWeight: 'bold', 
-        color: 'black',
-        textAlign: 'center', 
-        padding:30,
-        marginTop:10
-        
-     },
-     text:{
-        
-        marginLeft:20,
-          fontSize: 13,
-          marginRight:20,
-          marginTop:10,
-          color:'#373A40'
-     },
-     button:{
-        marginTop:50,
-        backgroundColor: '#238AF5', 
-        borderRadius: 20,
-        padding:5,
-        width: 300,
-        alignSelf:'center',
-     },
-     textbutton:{
-        color: 'white',
-        textAlign: 'center',
-        padding:2,
-        fontSize:20,
-     }
+    </ImageBackground>
+  );
 }
-  )
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    backgroundColor: '#fff',
+    marginTop: '40%',
+    flex: 1,
+    borderTopRightRadius: 30,
+    borderTopLeftRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  textprin: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  text: {
+    fontSize: 13,
+    color: '#373A40',
+    marginBottom: 30,
+  },
+  button: {
+    backgroundColor: '#238AF5',
+    borderRadius: 20,
+    padding: 10,
+    alignItems: 'center',
+  },
+  textbutton: {
+    color: 'white',
+    fontSize: 20,
+  },
+});

@@ -15,12 +15,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "proces.Verbaux_2"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "package": "proces.Verbaux_2",
+        "googleServicesFile": "./google-services.json"
+      },
+      "package": "proces.Verbaux_2"
+    },
+    "extra": {
+      "firebaseConfig": {
+        "apiKey": "AIzaSyD2Z1txga78HrJX7itbxyhcUOI_PrI6KcI",
+        "authDomain": "interfacemobile-bcd97.firebaseapp.com",
+        "databaseURL": "https://interfacemobile-bcd97.firebaseio.com",
+        "projectId": "interfacemobile-bcd97",
+        "storageBucket": "interfacemobile-bcd97.appspot.com",
+        "messagingSenderId": "865247254702",
+        "appId": "1:865247254702:android:4e0a76c9fc577d55e9353f"
+      },
+      "projectId": "084bcfc7-5c26-4662-bb72-7c6ef37703ca",
+      "eas": {
+        "projectId": "084bcfc7-5c26-4662-bb72-7c6ef37703ca"
       }
     },
     "web": {
