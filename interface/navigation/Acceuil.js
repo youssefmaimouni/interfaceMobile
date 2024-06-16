@@ -172,24 +172,6 @@ const styles = StyleSheet.create({
     borderRadius: 10
   }
   
-    return(
-      <ImageBackground    resizeMode="cover" style={styles.image}>
-            <View style={styles.card}>
-                 <Head />
-                 <View style={styles.con}>
-                <Text >Année universitaire:{ infoAccuil.Annee_universitaire}</Text>
-                <Text>module :{ infoAccuil.intitule_module}</Text>
-                <Text>seance :{ infoAccuil.seance_examen}</Text>
-                <Text>demi_journée:{ infoAccuil.demi_journee_examen}</Text>
-                <Text> local:{ infoAccuil.type_local}-{ infoAccuil.num_local}</Text>
-                {seance=='seance1'&&<TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
-                  <Text style={{color:'#fff'}}>Seance 2</Text>
-                </TouchableOpacity>}
-                {seance=='seance2'&&<TouchableOpacity  onPress={FinExame} style={styles.button}>
-                  <Text style={{color:'#fff'}}>fin d'examen</Text>
-                </TouchableOpacity>}
-                </View>
-            </View>
-      </ImageBackground>
+})
 
 export default Acceuil;
