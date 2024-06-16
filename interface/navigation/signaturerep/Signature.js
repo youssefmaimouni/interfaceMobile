@@ -6,7 +6,7 @@ import { useEtudiants } from '../dataScreen';
 
 const Head = (props) => (
   <View style={styles.headContainer}>
-    <Image source={require('../logofsac.jpeg')} style={styles.logo} />
+    <Image source={require('../fsacLog.png')} style={styles.logo} />
     <Text style={styles.year}>Année universitaire:{props.annee}</Text>
   </View>
 );
