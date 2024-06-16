@@ -265,33 +265,26 @@ const GeneratePDF = ({ route }) => {
       Alert.alert('Error', 'An error occurred while generating the PDF.');
     }
   };
-  const uploadPDF = async (filePath,device_id) => {
 
+  const uploadPDF = async (filePath) => {
     const file = {
       uri: filePath,
       type: 'application/pdf',
-      name: `pve.pdf`,
+      name: 'test.pdf',
     };
 
-  
     const formData = new FormData();
     formData.append('pdf', file);
-    formData.append('device_id', device_id);
-  
+
     try {
-      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
+      const response = await axios.post('http://10.115.251.236:8000/api/upload', formData, {
         headers: {
-          
           'Content-Type': 'multipart/form-data',
         },
       });
-        console.log(response.data)
-    }  catch (error) {
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-      } else {
-        console.error(error.message);
-      }
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 

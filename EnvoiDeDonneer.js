@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },button: {
         marginTop: 100,
         padding: 10,
-        width: 400,
+        width: 350,
         backgroundColor:'#238AF5',
         borderRadius: 25,
       },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:20,
       },image:{
-        height:200,
+        height:250,
         width:'110%',
         marginBottom: 50
       }

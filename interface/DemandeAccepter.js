@@ -12,7 +12,7 @@ const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
 export default function DemandeAccepter({route}) {
 
-const image = require('./demandeAccepte.jpeg');
+const image = require('./image/accept.jpg');
 const navigation=useNavigation();
 const [deviceId, setDeviceId] = useState('');
 const [etudiants, setEtudiants] = useState([]);
@@ -238,7 +238,7 @@ const getPV= async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   image:{
-    height:200,
-    width:300,
+    height:250,
+    width:460,
     marginBottom: 50
   },
   button: {

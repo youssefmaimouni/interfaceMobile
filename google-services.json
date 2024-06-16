@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "865247254702",
+    "project_id": "interfacemobile-bcd97",
+    "storage_bucket": "interfacemobile-bcd97.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:865247254702:android:4e0a76c9fc577d55e9353f",
+        "android_client_info": {
+          "package_name": "proces.Verbaux_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2Z1txga78HrJX7itbxyhcUOI_PrI6KcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

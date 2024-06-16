@@ -42,7 +42,7 @@ export default function DemandeEnvoye({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./evoisDemande2.jpeg');
+  const image = require('./image/connexion.jpg');
   return (
     <View  style={styles.container}>
         <Image source={image} style={styles.image} />
@@ -74,7 +74,7 @@ export default function DemandeEnvoye({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent: 'center',
   },

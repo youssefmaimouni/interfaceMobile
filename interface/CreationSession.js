@@ -19,6 +19,7 @@ export default function CreationSession({route}) {
     const data = {
       "device_id": deviceId,
     };
+    
     try {
       setModalIsOpen(true);
       const response = await axios.post(`http://${ipAdress}:8000/api/tablette/create`, data, {
@@ -40,7 +41,7 @@ export default function CreationSession({route}) {
       navigation.navigate("ErrorConnection");
     }
   };
-  const image = require('./connexion.jpeg');
+  const image = require('./image/demande.jpg');
   return (
     <View style={styles.container}>
       <StatusBar />
@@ -75,7 +76,7 @@ export default function CreationSession({route}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A3D7D5',
+    backgroundColor: '#B7D8FE',
     alignItems: 'center',
     justifyContent:'center'
     

@@ -5,7 +5,7 @@ import * as Device from 'expo-device';
 
 
 const SendData=()=>{
-    const ipAdress='10.115.249.239';
+    const ipAdress='192.168.11.107';
     const [deviceId, setDeviceId] = useState('');
 
     useEffect(() => {
