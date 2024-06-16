@@ -5,12 +5,12 @@ import { useEtudiants } from '../dataScreen';
 import { useNavigation } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 
-const Head = () => (
+const Head = (props) => (
     <View style={styles.headContainer}>
-        <Image source={require('../logofsac.jpeg')} style={styles.logo} />
-        <Text style={styles.year}>Année universitaire ____-____</Text>
+      <Image source={require('../fsacLog.png')} style={styles.logo} />
+      <Text style={styles.year}>Année universitaire:{props.annee}</Text>
     </View>
-);
+  );
 
 
     export default function AddRapp({ route }) {
@@ -31,7 +31,7 @@ const Head = () => (
    
      
     const navigation = useNavigation();
-    const { listeEtudiants, addRapport,updateRapport,updateStudent, listeRapport } = useEtudiants();
+    const { listeEtudiants,infoAccuil, addRapport,updateRapport,updateStudent, listeRapport } = useEtudiants();
     
     useEffect(() => {
         if (etudiant) {
@@ -146,7 +146,7 @@ const Head = () => (
     const changeContenu = (val) => {
         setContenu(val);
     };
-    const image=require('../../bg0.jpg');
+    const image=require('../../rapp.jpg');
     
 
     return (
@@ -158,7 +158,7 @@ const Head = () => (
         keyboardVerticalOffset={20} // Ajustez selon le besoin pour éviter que le clavier ne recouvre des éléments
       >
           <ScrollView style={styles.scrollView}>
-            <Head />
+          <Head annee={ infoAccuil.Annee_universitaire}/>
             
             <Text style={styles.title}>Rapport</Text>
             <TextInput
@@ -242,11 +242,10 @@ const styles = StyleSheet.create({
         width: 120,
     },
     year: {
-        fontSize: 13,
-        marginLeft: 10,
-        marginTop: 20,
-        marginLeft: 50,
-    },
+        fontSize:13,
+        marginLeft:110,
+        marginTop:20,
+      },
     scrollView: {
       marginBottom: 60,
       marginTop: 20,

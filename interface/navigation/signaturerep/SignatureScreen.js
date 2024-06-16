@@ -4,17 +4,16 @@ import Signature from 'react-native-signature-canvas';
 import { useEtudiants } from '../dataScreen';
 import { useSignatures } from './signaturecontexr';
 
-const Head = () => (
+const Head = (props) => (
   <View style={styles.headContainer}>
-    <Image source={require('../logofsac.jpeg')} style={styles.logo} />
-    <Text style={styles.year}>Année universitaire ____-____</Text>
+    <Image source={require('../fsacLog.png')} style={styles.logo} />
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
   </View>
 );
-
 const SignatureScreen = ({navigation,route}) => {
   const surveillant = route.params?.surveillant;
   const signatureRef = useRef(null);
-  const {updateSurveillant}=useEtudiants();
+  const {updateSurveillant,infoAccuil}=useEtudiants();
   const { addSignature } = useSignatures();
 
  
@@ -48,7 +47,7 @@ const SignatureScreen = ({navigation,route}) => {
   const image = require('./backsign.png');
   return (
     <View style={styles.container}>
-      <Head />
+     <Head annee={ infoAccuil.Annee_universitaire}/>
       {/* <View style={styles.con}> */}
       <Text style={styles.title}>Signer ici</Text>
       <Signature
@@ -95,9 +94,9 @@ const styles = StyleSheet.create({
     width: 120,
   },
   year: {
-    fontSize: 13,
-    marginLeft: 110,
-    marginTop: 20,
+    fontSize:13,
+    marginLeft:110,
+    marginTop:20,
   },
   title: {
     fontSize: 20,

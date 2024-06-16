@@ -6,18 +6,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEtudiants } from '../dataScreen';
 
 
-const Head = () => (
-    <View style={styles.headContainer}>
-      <Image source={require('../../fsacLogo-removebg-preview.png')} style={styles.logo} />
-      <Text style={styles.year}>Année universitaire ____-____</Text>
-    </View>
-  );
-
+const Head = (props) => (
+  <View style={styles.headContainer}>
+    <Image source={require('../fsacLog.png')} style={styles.logo} />
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
+  </View>
+);
     
 
 export default function Rapp({ navigation }) {
 
-    const {listeRapport ,deleteRapport}=useEtudiants();
+    const {listeRapport,infoAccuil ,deleteRapport}=useEtudiants();
     
    
     
@@ -28,7 +27,7 @@ export default function Rapp({ navigation }) {
       <ImageBackground  resizeMode="cover" style={styles.image}>
        <GestureHandlerRootView>
         <ScrollView style={styles.scrollView}>
-        <Head/>
+        <Head annee={ infoAccuil.Annee_universitaire}/>
         <Text style={styles.title}>Rapport</Text>
         <TouchableOpacity style={styles.buttonAjout} onPress={() => navigation.navigate('AddRapport',{screen:'Rapport'})}>
         <Text style={styles.buttonText}>Ajouter</Text>

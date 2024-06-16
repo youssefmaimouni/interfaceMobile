@@ -4,16 +4,16 @@ import { useNavigation } from '@react-navigation/native';
 import { useEtudiants } from './dataScreen';
 import * as FileSystem from 'expo-file-system';
 
-const Head = () => (
-    <View style={styles.headContainer}>
-      <Image source={require('../fsacLogo-removebg-preview.png')} style={styles.logo} />
-      <Text style={styles.year}>Année universitaire ____-____</Text>
-    </View>
-  );
+const Head = (props) => (
+  <View style={styles.headContainer}>
+    <Image source={require('./fsacLog.png')} style={styles.logo} />
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
+  </View>
+);
   const image = require('./backflou.png');
   export default function Etudiants(){
   const navigation=useNavigation();
-  const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
+  const { listeEtudiants,infoAccuil,setListeEtudiants,updateStudent } = useEtudiants();
   const [search, setSearch] = useState('');
 
   const Card = ({ item }) => {
@@ -104,7 +104,7 @@ const filteredEtudiants = listeEtudiants.filter(etudiant => {
   <ImageBackground  resizeMode="cover" style={styles.container}>
     
       <ScrollView style={styles.scrollView}> 
-      <Head />
+      <Head annee={ infoAccuil.Annee_universitaire}/>
 
         <Text style={styles.title}>Liste des étudiants</Text>
         <TextInput
@@ -165,9 +165,9 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   year: {
-    fontSize: 13,
-    marginTop: 20,
-    marginLeft: 120,
+    fontSize:13,
+    marginLeft:110,
+    marginTop:20,
   },
   card: {
     flexDirection: 'row',

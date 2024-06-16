@@ -5,14 +5,14 @@ import { useEtudiants } from "./dataScreen";
 import { useNavigation } from '@react-navigation/native';
 import * as FileSystem from 'expo-file-system';
 
-const Head = () => (
+const Head = (props) => (
   <View style={styles.headContainer}>
-    <Image source={require('../fsacLogo-removebg-preview.png')} style={styles.logo} />
-    <Text style={styles.year}>Année universitaire ____-____</Text>
+    <Image source={require('./fsacLog.png')} style={styles.logo} />
+    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
   </View>
 );
 export default function Scanner() {
-  const { listeEtudiants, setListeEtudiants,updateStudent } = useEtudiants();
+  const { listeEtudiants,infoAccuil, setListeEtudiants,updateStudent } = useEtudiants();
   const [modalVisible, setModalVisible] =useState(false);
   const [scannedData, setScannedData] = useState({});
   const navigation = useNavigation();
@@ -107,7 +107,7 @@ const verificationEtudiant=()=>{
   
   return (
     <View style={styles.container}>
-       <Head/>
+       <Head annee={ infoAccuil.Annee_universitaire}/>
       <View >  
       <Text style={styles.maintext}>Scanner le QR code</Text>
       <View style={styles.barcodebox}>
@@ -185,10 +185,9 @@ const styles = StyleSheet.create({
     width: 120,
   },
   year: {
-    fontSize: 13,
-    marginLeft: 10, 
-    marginTop: 20,
-    marginLeft:120,
+    fontSize:13,
+    marginLeft:110,
+    marginTop:20,
   },
   barcodebox: {
     alignItems: 'center',
@@ -273,8 +272,8 @@ buttonText:{
   fontSize:18,
 },
   image2:{
-    height:300,
-    width:300,
-    marginBottom: 50
+    height:200,
+    width:200,
+    marginBottom: 30
   }
 });
