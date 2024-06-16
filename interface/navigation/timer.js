@@ -4,12 +4,12 @@ import * as Progress from 'react-native-progress';
 import * as Notifications from 'expo-notifications';
 
 const Timer = () => {
-  const totalTime = 2 * 60 * 1000; // 15 minutes in milliseconds
+  const totalTime = 1 * 60 * 1000; // 15 minutes in milliseconds
   const [progress, setProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [isActive, setIsActive] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
-  const [startTime, setStartTime] = useState("12:50"); // Set to your desired start time
+  const [startTime, setStartTime] = useState("17:49"); // Set to your desired start time
 
   useEffect(() => {
     async function requestNotificationPermission() {
