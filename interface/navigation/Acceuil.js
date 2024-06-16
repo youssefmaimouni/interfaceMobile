@@ -4,8 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useSignatures } from './signaturerep/signaturecontexr';
 import Timer from './timer'; 
 import * as Notifications from 'expo-notifications';
+import { useEtudiants } from './dataScreen';
 
 LogBox.ignoreLogs(['expo-permissions is now deprecated — the functionality has been moved to other expo packages that directly use these permissions (e.g. expo-location, expo-camera). The package will be removed in the upcoming releases']); 
+
 
 const Acceuil = ({ route }) => {
   const image = require('../bg4.jpg');
@@ -84,13 +86,14 @@ const Acceuil = ({ route }) => {
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
       <View style={styles.card}>
-        <Head />
+      <Head />
         <View style={styles.con}>
-          <Text>Année universitaire ____-____</Text>
-          <Text>module :</Text>
-          <Text>seance :{seance}</Text>
-          <Text>demi_journée:</Text>
-          <Text>local:</Text>
+          <Text>Année universitaire :{infoAccuil.Annee_universitaire}</Text>
+          <Text>module :{infoAccuil.intitule_module}</Text>
+          <Text>seance :{infoAccuil.seance_examen}</Text>
+          <Text>date examen :{infoAccuil.date_examen}</Text>
+          <Text>demi journée:{infoAccuil.demi_journee_examen}</Text>
+          <Text>local:{infoAccuil.type_local}-{infoAccuil.num_local}</Text>
           <Timer />
           {seance === 'seance1' && (
             <TouchableOpacity onPress={showAlertWithAction} style={styles.button}>
