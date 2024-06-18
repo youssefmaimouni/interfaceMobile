@@ -13,7 +13,7 @@ const App = () => {
     <NavigationContainer>
        <Startstack/>
     </NavigationContainer>
-    //<EnvoiDeDonneer/>
+    //<EnvoiDeDonneer/> 
     //<SendData />
     //<GetPhoto />
     //<TestGetPV />

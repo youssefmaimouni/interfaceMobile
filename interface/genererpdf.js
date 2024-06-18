@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Alert, ActivityIndicator, Text } from 'react-native';
+import { View, Button, Alert, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -8,6 +8,9 @@ import base64 from 'base-64';
 import { useEtudiants } from './navigation/dataScreen';
 import { useNavigation } from '@react-navigation/native';
 import * as Device from 'expo-device';
+import { Asset } from 'expo-asset';
+import { FieldPath } from 'firebase/firestore';
+
 
 
 const username = 'admin';
@@ -23,11 +26,6 @@ const GeneratePDF = ({ route }) => {
     setDeviceId(Device.osBuildId);
   }, []);
 
-  useEffect(() => {
-  if (dataLoaded) {
-    generatePDF();
-  }
-}, [dataLoaded]);
   
   const navigation=useNavigation();
   const {listeRapport,ipAdress }=useEtudiants();
@@ -40,7 +38,9 @@ const GeneratePDF = ({ route }) => {
     etuAbsdeux: [],
     surveillant: []
   });
-
+  const [infoAccuil, setInfoAccuil] = useState({});
+  const [infoAccuil2, setInfoAccuil2] = useState({});
+  
   const fetchEtudiants = async () => {
     try {
       setLoading(true);
@@ -58,7 +58,7 @@ const GeneratePDF = ({ route }) => {
       });
       setLoading(false);
       setDataLoaded(true);
-      //generatePDF(); // Call generatePDF here after data is set
+      //generatePDF(); 
     } catch (error) {
       console.error('Erreur lors de la récupération des étudiants:', error);
       setLoading(false);
@@ -68,51 +68,152 @@ const GeneratePDF = ({ route }) => {
   useEffect(() => {
     fetchEtudiants();
   }, []);
+
+  const fetchAccuill = async () => {
+    try {
+      const responseLocal = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      const localData = responseLocal.data.rows.map(row => row.doc)[0]; // Suppose only one doc is expected
+  
+      const responseSession = await axios.get(`http://${ipAdress}:5984/sessionun/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      const sessionData = responseSession.data.rows.map(row => row.doc)[0]; // Suppose only one doc is expected
+  
+      setInfoAccuil({ ...localData, ...sessionData });
+    } catch (error) {
+      console.error('Error fetching accueil documents:', error);
+    }
+  }
+  
+  useEffect(() => {
+    console.log("InfoAccuil:", infoAccuil);
+    fetchAccuill();
+  }, []);
+  
+  const fetchAccuill2 = async () => {
+    try {
+      const responseLocal = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      const localData = responseLocal.data.rows.map(row => row.doc)[0]; // Suppose only one doc is expected
+  
+      const responseSession = await axios.get(`http://${ipAdress}:5984/sessiondeux/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      const sessionData = responseSession.data.rows.map(row => row.doc)[0]; // Suppose only one doc is expected
+  
+      setInfoAccuil2({ ...localData, ...sessionData });
+    } catch (error) {
+      console.error('Error fetching accueil documents:', error);
+    }
+  }
+  
+  useEffect(() => {
+    console.log("InfoAccuil2:", infoAccuil2);
+    fetchAccuill2();
+  }, []);
   
 
+  
+
+
+
+  
   const generatePDF = async () => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Les mois commencent à 0
-    const day = currentDate.getDate().toString().padStart(2, '0');
-    const hours = currentDate.getHours();
-    const formattedDate = `${day}-${month}-${year}`;
-    console.log(formattedDate);
-    const period = hours >= 12 ? 'PM' : 'AM';
+    
+      
     const html = `
       <html>
         <head>
           <meta charset="utf-8">
           <title>PV</title>
           <style>
-            
-            table {
-              marginTop:100;
-              width: 100%;
-              border-collapse: collapse;
-            }
-            th, td {
-              border: 1px solid black;
-              padding: 8px;
-              text-align: center;
-            }
-            th {
-              background-color: #87CEEB; 
-            }
-            .page-break {
-              page-break-after: always;
-            }
-            h1{
-              text-align: center;
-            }
-          </style>
+  body, html {
+    margin: 0;
+    padding-top: 50px;
+    box-sizing: border-box;
+  }
+
+  @media print {
+    @page {
+      margin-top: 100px; 
+      margin-bottom: 40px;
+      margin-left: 25px;
+      margin-right: 25px;
+    }
+
+    header {
+     position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: #ffffff;
+      color: black;
+      text-align: center;
+      padding: 0;
+      z-index: 1000;
+      justify-content: row;
+    }
+
+    body {
+      padding-top: 120px; 
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #5A639C;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+
+  h1, h2 {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+
         </head>
         <body>
-    
-          <h1>Procès verbaux électronique des examens </h1>
-            <p> la date :${formattedDate}</p>
-            <p>demi journee:${period}</p>
+         <header>
+         <p>Année universitaire :${infoAccuil.Annee_universitaire}</p>
+       </header>
+          
           <h2>Étudiants présents (Première Séance)</h2>
+         
+         <p>module :${infoAccuil.intitule_module}</p>
+         <p>seance :${infoAccuil.seance_examen}</p>
+         <p>date examen :${infoAccuil.date_examen}</p>
+         <p>demi journée:${infoAccuil.demi_journee_examen}</p>
+         <p>local:${infoAccuil.type_local}-${infoAccuil.num_local}</p>
           <table>
             <thead>
               <tr>
@@ -124,7 +225,7 @@ const GeneratePDF = ({ route }) => {
             <tbody>
               ${data.etuPresun.map(item => `
                 <tr>
-                  <td>${item.numeroExam}</td>
+                  <td>${item.num_exam}</td>
                   <td>${item.nom_etudiant}</td>
                   <td>${item.prenom_etudiant}</td>
                 </tr>
@@ -144,7 +245,7 @@ const GeneratePDF = ({ route }) => {
             <tbody>
               ${data.etuAbsun.map(item => `
                 <tr>
-                  <td>${item.numeroExam}</td>
+                  <td>${item.num_exam}</td>
                   <td>${item.nom_etudiant}</td>
                   <td>${item.prenom_etudiant}</td>
                 </tr>
@@ -155,6 +256,12 @@ const GeneratePDF = ({ route }) => {
           <div class="page-break"></div>
 
           <h2>Étudiants présents (Deuxième Séance)</h2>
+          <p>Année universitaire :${infoAccuil2.Annee_universitaire}</p>
+          <p>module :${infoAccuil2.intitule_module}</p>
+          <p>seance :${infoAccuil2.seance_examen}</p>
+          <p>date examen :${infoAccuil2.date_examen}</p>
+          <p>demi journée:${infoAccuil2.demi_journee_examen}</p>
+          <p>local:${infoAccuil2.type_local}-${infoAccuil2.num_local}</p>
           <table>
             <thead>
               <tr>
@@ -166,7 +273,7 @@ const GeneratePDF = ({ route }) => {
             <tbody>
               ${data.etuPresdeux.map(item => `
                 <tr>
-                  <td>${item.numeroExam}</td>
+                  <td>${item.num_exam}</td>
                   <td>${item.nom_etudiant}</td>
                   <td>${item.prenom_etudiant}</td>
                 </tr>
@@ -186,7 +293,7 @@ const GeneratePDF = ({ route }) => {
             <tbody>
               ${data.etuAbsdeux.map(item => `
                 <tr>
-                  <td>${item.numeroExam}</td>
+                  <td>${item.num_exam}</td>
                   <td>${item.nom_etudiant}</td>
                   <td>${item.prenom_etudiant}</td>
                 </tr>
@@ -194,29 +301,36 @@ const GeneratePDF = ({ route }) => {
             </tbody>
           </table>
 
-          <div class="page-break"></div>
-          
-          <h2>Rapport</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>titre</th>
-                <th>contenu</th>
-                <th>etudiant</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${listeRapport.map(item => `
-                <tr>
-                  <td>${item.titre_rapport}</td>
-                  <td>${item.contenu}</td>
-                  <td>${item.etudiant.prenom_etudiant} ${item.etudiant.nom_etudiant}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+     <div class="page-break"></div>
+     <h2>Rapport</h2>
+    ${listeRapport.length === 0 ? `
+     <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
+    <span>aucun rapport</span>
+  </div>
+  ` : `
 
-          <div class="page-break"></div>
+  <table>
+    <thead>
+      <tr>
+        <th>titre</th>
+        <th>contenu</th>
+        <th>etudiant</th>
+         </tr>
+        </thead>
+        <tbody>
+         ${listeRapport.map(item => `
+          <tr>
+          <td>${item.titre_rapport}</td>
+          <td>${item.contenu}</td>
+          <td>${item.etudiant.prenom_etudiant} ${item.etudiant.nom_etudiant}</td>
+           </tr>
+          `).join('')}
+          </tbody>
+         </table>
+        <div class="page-break"></div>`
+      }
+        
+
 
           <h2>Surveillants</h2>
           <table>
@@ -252,55 +366,35 @@ const GeneratePDF = ({ route }) => {
       });
 
       
+     
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(pdfPath);
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
-      uploadPDF(pdfPath,deviceId);
+      
+     
 
-      navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress});
+      navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress,pdfPath:pdfPath});
     } catch (error) {
       console.error(error);
       Alert.alert('Error', 'An error occurred while generating the PDF.');
     }
   };
 
-  const uploadPDF = async (filePath) => {
-    const file = {
-      uri: filePath,
-      type: 'application/pdf',
-      name: 'test.pdf',
-    };
+ 
 
-    const formData = new FormData();
-    formData.append('pdf', file);
-
-    try {
-      const response = await axios.post('http://10.115.251.236:8000/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+ 
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
           <View style={{ alignItems: 'center' }}>
-            <Text>PDF generation complete!</Text>
+           <TouchableOpacity onPress={generatePDF}><Text>consulter le pv</Text></TouchableOpacity>
           </View>
-        )}
+       
       </View>
     );
   
 };
 
 export default GeneratePDF;
-

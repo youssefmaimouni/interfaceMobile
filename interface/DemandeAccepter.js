@@ -70,7 +70,6 @@ const fetchAndStoreImage = async (etudiants) => {
       console.error('Error fetching and storing images:', error);
   }
 };
-
 // useEffect(() => {
 //     loadImage();
 // }, []);
