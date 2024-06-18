@@ -17,12 +17,13 @@ const Acceuil = ({ route }) => {
   const { infoAccuil } = useEtudiants();
    
   const handleGeneratePDF = () => {
-    if (signatures) {
-      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
+    if (signatures == null || (typeof signatures === 'object' && Object.keys(signatures).length === 0)) {
+      Alert.alert('Erreur', 'Veuillez signer avant de terminer l`examen');
     } else {
-      console.error("No signatures found");
+      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
     }
-  };
+};
+
 
   const showAlertWithAction = () => {
     Alert.alert(
