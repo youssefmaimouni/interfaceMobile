@@ -11,6 +11,8 @@ import axios from 'axios';
 import * as Device from 'expo-device';
 import base64 from 'base-64';
 import EnvoiDeDonneer from './EnvoiDeDonneer';
+import TabletteBloquer from './interface/tabletteBloquer';
+import ConnectionErr from './interface/ConnectionErr';
 
 
 const username = 'admin';
@@ -27,8 +29,8 @@ const Home = () => {
   const checkDocuments = async () => {
     try {
       const responses = await Promise.all([
-        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        // axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        // axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
       ]);
@@ -90,12 +92,13 @@ const Home = () => {
       });
       console.log(response.data['statut']);  
       const newScreen = response.data['statut'] === 'non associer' ? 'DemandeEnvoye' :
-                        response.data['statut'] === 'associer' ? 'DemandeAccepter' :
-                        response.data['statut'] === 'refuser' ? 'DemandeRefuser' : 'CreationSession';
+        response.data['statut'] === 'associer' ? 'DemandeAccepter' :
+        response.data['statut'] === 'refuser' ? 'DemandeRefuser' :
+        response.data['statut'] === 'bloquer' ? 'TabletteBloquer' : 'CreationSession';
       setScreen(newScreen);
     } catch (error) {
       console.log(error);
-      setScreen('CreationSession');
+      setScreen('ConnectionErr');
     }
   }
   
@@ -113,6 +116,8 @@ const Home = () => {
             <Stack.Screen name="DemandeAccepter" component={DemandeAccepter} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="DemandeRefuser" component={DemandeRefuser} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="EnvoiDeDonneer" component={EnvoiDeDonneer} initialParams={{ipAdress:ipAdress}}/>
+            <Stack.Screen name="TabletteBloquer" component={TabletteBloquer} initialParams={{ipAdress:ipAdress}}/>
+            <Stack.Screen name="ConnectionErr" component={ConnectionErr} initialParams={{ipAdress:ipAdress}}/>
          </Stack.Navigator>
   );
 };

@@ -1,6 +1,11 @@
 import { Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import axios from 'axios';
+import { useEffect, useState } from "react";
+import base64 from 'base-64';
 
+const username = 'admin';
+const password = 'admin';
+const encodedCredentials = base64.encode(`${username}:${password}`);
 
 
 const uploadPDF = async (filePath, deviceId) => {
@@ -35,61 +40,178 @@ const uploadPDF = async (filePath, deviceId) => {
 };
 const EnvoiDeDonneer=({route})=>{
     const ipAdress=route.params.ipAdress;
-
-    const associer = async () => {
-        const pv={
-            "rapports":[
-                    {
-          "titre_rapport": "qwertz",
-          "contenu": "dlddjldjd",
-          "id_pv": "1",
-          "codeApogee": "2222"
-        },{
-          "titre_rapport": "siosos",
-          "contenu": "sskskks",
-          "id_pv": "1",
-          "codeApogee": "2222"
-        }
-            ],
-            "passers":[
-          {
-            "id_examen": 1,
-            "id_local": 1,
-            "codeApogee": 333,
-            "isPresent": true,
-            "num_exam": 1,
-            "created_at": "2024-05-30T22:55:00.000000Z",
-            "updated_at": "2024-05-30T22:55:00.000000Z"
-          },
-          {
-            "id_examen": 1,
-            "id_local": 1,
-            "codeApogee": 1111,
-            "isPresent": true,
-            "num_exam": 1,
-            "created_at": "2024-05-30T22:55:09.000000Z",
-            "updated_at": "2024-05-30T22:55:09.000000Z"
-          },
-          {
-            "id_examen": 1,
-            "id_local": 1,
-            "codeApogee": 2222,
-            "isPresent": true,
-            "num_exam": 1,
-            "created_at": "2024-05-30T22:54:46.000000Z",
-            "updated_at": "2024-05-30T22:54:46.000000Z"
+    const [infoSessionDeux,setInfoSessionDeux]=useState([]);
+    const [infoSessioUn,setInfoSessioUn]=useState([]);
+    const [rapport,setListeRapport]=useState([]);
+    const [etudiantsUn,setListeEtudiantsUn]=useState([]);
+    const [etudiantsDeux,setListeEtudiantsDeux]=useState([]);
+    const [listeSurveillants,setListeSurveillants]=useState([]);
+    const fetchRapports = async () => {
+      try {
+        const response = await axios.get(`http://${ipAdress}:5984/rapport/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
           }
-        ],
-            "signers":[
-                {
-          "id_surveillant": 1,
-          "id_pv": 1,
-          "signer": true
-        }
-            ]
+        });
+        
+        // Extracting documents from the response
+        const rapports = response.data.rows.map(row=>row.doc);
+        console.log('+++++++++++++');
+       setListeRapport(rapports);
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    };
+    const sessionUn=async ()=>{
+      try {
+        let response = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+        });
+        const local = response.data.rows.map(row=>row.doc);
+        console.log(local);
+        response = await axios.get(`http://${ipAdress}:5984/sessionun/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+        });
+        
+        // Extracting documents from the response
+        const session = response.data.rows.map(row=>row.doc);
+        console.log(session);
+        
+       setInfoSessioUn({...local[0],...session[0]});
+       console.log(infoSessioUn)
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    }
+    const sessionDeux=async ()=>{
+      try {
+        let response = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+        });
+        const local = response.data.rows.map(row=>row.doc);
+        console.log(local);
+        response = await axios.get(`http://${ipAdress}:5984/sessiondeux/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+        });
+        
+        // Extracting documents from the response
+        const session = response.data.rows.map(row=>row.doc);
+        console.log(session);
+        
+       setInfoSessionDeux({...local[0],...session[0]});
+       console.log(infoSessionDeux)
+      } catch (error) {
+        console.error('Error fetching documents:', error);
+      }
+    }
+    const fetchStudentsUn = async () => {
+      try {
+        const response = await axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+          });
+          
+          // Extracting documents from the response
+          const students = response.data.rows.map(row=>row.doc);
+          console.log('---------------------');
+          
+          setListeEtudiantsUn(students);
+          } catch (error) {
+            console.error('Error fetching documents:', error);
+            }
+            };
+    const fetchStudentsDeux = async () => {
+      try {
+        const response = await axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?include_docs=true`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Basic ${encodedCredentials}`
+          }
+          });
+          
+          // Extracting documents from the response
+          const students = response.data.rows.map(row=>row.doc);
+          console.log('---------------------');
+          
+          setListeEtudiantsDeux(students);
+          } catch (error) {
+            console.error('Error fetching documents:', error);
+            }
+            };
+            const fetchSurveillants = async () => {
+              try {
+                const response = await axios.get(`http://${ipAdress}:5984/surveillants/_all_docs?include_docs=true`, {
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${encodedCredentials}`
+                  }
+                });
+                // Extracting documents from the response
+                const surveillants = response.data.rows.map(row=>row.doc);
+                console.log('+++++++++++++');
+                
+               setListeSurveillants(surveillants);
+              } catch (error) {
+                console.error('Error fetching documents:', error);
+              }
+            };
+            useEffect(()=>{
+              fetchStudentsUn();
+              fetchStudentsDeux();
+              fetchSurveillants();
+              sessionDeux();
+              sessionUn();
+              fetchRapports();
+            },[])
+    const associer = async () => {
+      try {
+        const rapports = rapport.map(row=>({
+          "titre_rapport":row.titre_rapport,
+          "contenu":row.contenu,
+          "id_pv":infoSessioUn.id_pv,
+          "codeApogee":row.etudiant.codeApogee
+          }));
+        console.log(rapports);
+        const passersUn = etudiantsUn.map(row=>({
+           "id_examen": infoSessioUn.id_examen,
+            "id_local": infoSessioUn.id_local,
+            "codeApogee": row.codeApogee,
+            "isPresent": row.estPerson ? row.estPerson:false,
+            "num_exam":  row.num_exam,
+        }));
+        const passersDeux = etudiantsDeux.map(row=>({
+          "id_examen": infoSessionDeux.id_examen,
+           "id_local": infoSessionDeux.id_local,
+           "codeApogee": row.codeApogee,
+           "isPresent": row.estPerson ? row.estPerson:false,
+           "num_exam":  row.num_exam,
+       }));
+        const signers = listeSurveillants.map(row=>({
+          "id_surveillant": row.id_surveillant,
+          "id_pv": infoSessioUn.id_pv,
+          "signer": row.sign ?  row.sign:false
+       }));
+        const pv={
+            "rapports":rapports,
+            "passers":[...passersUn,...passersDeux],
+            "signers":signers
         };
-
-            try {
+        console.log(pv)
               const response = await axios.post(`http://${ipAdress}:8000/api/tablette/setPV`, pv, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -97,7 +219,8 @@ const EnvoiDeDonneer=({route})=>{
                     timeout: 10000
                   });
              console.log(response.data);
-            } catch (error) {
+
+             } catch (error) {
               console.error(error);
             }
           }

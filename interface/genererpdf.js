@@ -372,8 +372,12 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
+<<<<<<< HEAD
       
      
+=======
+      //uploadPDF(pdfPath);
+>>>>>>> 726638473ea29c6654ff9787f2f7d2129caac87e
 
       navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress,pdfPath:pdfPath});
     } catch (error) {
@@ -384,7 +388,24 @@ const GeneratePDF = ({ route }) => {
 
  
 
+<<<<<<< HEAD
  
+=======
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    try {
+      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+>>>>>>> 726638473ea29c6654ff9787f2f7d2129caac87e
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
