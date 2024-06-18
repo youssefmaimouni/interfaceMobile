@@ -1,4 +1,4 @@
-import {  Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {  ActivityIndicator, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -15,8 +15,8 @@ export default function DemandeAccepter({route}) {
 const image = require('./image/accept.jpg');
 const navigation=useNavigation();
 const [deviceId, setDeviceId] = useState('');
-const [etudiants, setEtudiants] = useState([]);
 const ipAdress = route.params.ipAdress;
+const [load,setLoad]=useState(null);
 
 const [imageUri, setImageUri] = useState(null);
 const [key, setKey] = useState(0);  // State to force re-render
@@ -52,27 +52,23 @@ const loadImage = async () => {
     }
 };
 
-const fetchAndStoreImage = async () => {
-    console.log('Fetching image from API...');
-    try {
-      etudiants.map(async(e)=>{
-        const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPhoto/${e.codeApogee}`);
-        let imageData = response.data.image;
-        //console.log('Image data received:', imageData);
-        if (imageData.startsWith('data:image/jpeg;base64,')) {
-            imageData = imageData.replace('data:image/jpeg;base64,', '');
-        }
-        const imagePath = `${FileSystem.documentDirectory}${e.codeApogee}.jpg`;
-        const saveSuccessful = await saveImage(imageData,imagePath);
-        if (saveSuccessful) {
-            //loadImage();
-            console.log('saveSuccessful')
-        }
-
-      })
-    } catch (error) {
-        console.error('Error fetching and storing image:', error);
-    }
+const fetchAndStoreImage = async (etudiants) => {
+  console.log('Fetching image from API...');
+  try {
+      await Promise.all(etudiants.map(async (e) => {
+          const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPhoto/${e.codeApogee}`);
+          let imageData = response.data.image;
+          if (imageData.startsWith('data:image/jpeg;base64,')) {
+              imageData = imageData.replace('data:image/jpeg;base64,', '');
+          }
+          const imagePath = `${FileSystem.documentDirectory}${e.codeApogee}.jpg`;
+          await saveImage(imageData, imagePath);
+      }));
+      console.log('All images fetched and stored successfully.');
+      setLoad(true);
+  } catch (error) {
+      console.error('Error fetching and storing images:', error);
+  }
 };
 
 // useEffect(() => {
@@ -85,6 +81,12 @@ useEffect(() => {
   };
   fetchDeviceId();
 }, []);
+
+useEffect(()=>{
+  if(load){
+    navigation.navigate('PV')
+  }
+},[load])
 
 // useEffect(() => {
 //   if (deviceId) {  
@@ -111,11 +113,13 @@ const getCurrentDate = () => {
       checkDocuments();
   })
 const getPV= async () => {
+  setLoad(false);
     const data = {
       "device_id": deviceId,
       "date": getCurrentDate(),
       "demi_journee": getAmOrPm(),
     };
+    console.log(data);
     try {
       let response = await axios.post(`http://${ipAdress}:8000/api/tablette/getPV`, data, {
         headers: {
@@ -123,6 +127,7 @@ const getPV= async () => {
         },
         timeout: 10000
       });
+      console.log(response.data.PV);
       if(response.data.PV){
         const {surveillants,local,reserviste,etudiantsS1,etudiantsS2,session}=response.data.PV;
         console.log('surveillants');
@@ -150,7 +155,6 @@ const getPV= async () => {
           console.log(e);
         })
         const students=[...response.data.PV.etudiantsS1, ...response.data.PV.etudiantsS2];
-        setEtudiants(students);
       await uploadToCouchDB(etudiantsS1,'etudiantsun');
       await uploadToCouchDB(etudiantsS2,'etudiantsdeux');
       await uploadToCouchDB(surveillants,'surveillants');
@@ -158,13 +162,12 @@ const getPV= async () => {
       await uploadToCouchDB([session[0]],'sessionun');
       await uploadToCouchDB([session[1]],'sessiondeux');
       await uploadToCouchDB([local[0]],'local');
-      
+      await fetchAndStoreImage(students);
+      //navigation.navigate('PV')
       }else{
         console.log(response.data);
       }
-      
-      await fetchAndStoreImage();
-      navigation.navigate('PV')
+     
     } catch (error) {
       console.log(error);
     }
@@ -217,7 +220,10 @@ const getPV= async () => {
   };
   
 
-
+if (load === false) {
+    return <View style={styles.container}><ActivityIndicator size="large" /></View>;
+  
+}
   return (
     <View style={styles.container}>
 <Image source={image} style={styles.image}/>
