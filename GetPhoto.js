@@ -8,7 +8,7 @@ const GetPhoto = () => {
     const [key, setKey] = useState(0);  // State to force re-render
     const imagePath = `${FileSystem.documentDirectory}downloadedImage.jpg`;
 
-    const saveImage = async (base64String) => {
+    const saveImage = async (base64String,imagePath) => {
         console.log('Saving image...');
         try {
             await FileSystem.writeAsStringAsync(imagePath, base64String, {
@@ -21,6 +21,7 @@ const GetPhoto = () => {
             return false;
         }
     };
+    
 
     const loadImage = async () => {
         console.log('Loading image from filesystem...');
@@ -38,7 +39,7 @@ const GetPhoto = () => {
         }
     };
 
-    const fetchAndStoreImage = async () => {
+    const fetchAndStoreImage = async (etudiants) => {
         console.log('Fetching image from API...');
         try {
             const response = await axios.post(`http://192.168.245.131:8000/api/tablette/getPhoto/10001`);
@@ -52,9 +53,9 @@ const GetPhoto = () => {
                 loadImage();
             }
         } catch (error) {
-            console.error('Error fetching and storing image:', error);
+            console.error('Error fetching and storing images:', error);
         }
-    };
+      };
 
     useEffect(() => {
         loadImage();

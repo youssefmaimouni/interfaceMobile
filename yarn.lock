@@ -4510,7 +4510,7 @@ expo-application@~5.8.0:
   resolved "https://registry.npmjs.org/expo-application/-/expo-application-5.8.4.tgz"
   integrity sha512-mH0gSlFzMuiT20TkZnBppzUtdF6TFHwcaTRnvkSZanN9iTOeEEfQQ60hHT4lBizHjFWRs/QYZVtXGvkQ/cyMpg==
 
-expo-asset@~9.0.2:
+expo-asset@^9.0.2, expo-asset@~9.0.2:
   version "9.0.2"
   resolved "https://registry.npmjs.org/expo-asset/-/expo-asset-9.0.2.tgz"
   integrity sha512-PzYKME1MgUOoUvwtdzhAyXkjXOXGiSYqGKG/MsXwWr0Ef5wlBaBm2DCO9V6KYbng5tBPFu6hTjoRNil1tBOSow==
