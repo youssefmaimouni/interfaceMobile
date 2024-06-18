@@ -257,7 +257,7 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
-      uploadPDF(pdfPath,deviceId);
+      //uploadPDF(pdfPath);
 
       navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress});
     } catch (error) {
@@ -277,7 +277,7 @@ const GeneratePDF = ({ route }) => {
     formData.append('pdf', file);
 
     try {
-      const response = await axios.post('http://10.115.251.236:8000/api/upload', formData, {
+      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

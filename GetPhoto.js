@@ -41,7 +41,7 @@ const GetPhoto = () => {
     const fetchAndStoreImage = async () => {
         console.log('Fetching image from API...');
         try {
-            const response = await axios.post('http://192.168.245.131:8000/api/tablette/getPhoto/123456');
+            const response = await axios.post(`http://192.168.245.131:8000/api/tablette/getPhoto/10001`);
             let imageData = response.data.image;
             console.log('Image data received:', imageData);
             if (imageData.startsWith('data:image/jpeg;base64,')) {
