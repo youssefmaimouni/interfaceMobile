@@ -3,7 +3,6 @@ import { View,  StyleSheet,  ActivityIndicator } from 'react-native';
 import PV from './interface/PV';
 import CreationSession from './interface/CreationSession';
 import ErrorConnection from './interface/ErrorConnection';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DemandeEnvoye from './interface/DemandeEnvoye';
 import DemandeAccepter from './interface/DemandeAccepter';
@@ -13,6 +12,7 @@ import * as Device from 'expo-device';
 import base64 from 'base-64';
 import EnvoiDeDonneer from './EnvoiDeDonneer';
 
+
 const username = 'admin';
 const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
@@ -21,7 +21,7 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='192.168.245.131';
+  const ipAdress='192.168.11.107';
   const [screen,setScreen]=useState(null);
   const [pvExiste,setPvExiste]=useState(null);
   const checkDocuments = async () => {
@@ -37,7 +37,7 @@ const Home = () => {
       return documentExists;
     } catch (error) {
       console.log('Error checking documents:', error);
-      return false;  // Ensure a boolean is returned even in case of an error
+      return false;
     }
   };
   
@@ -47,7 +47,7 @@ const Home = () => {
     const performCheck = async () => {
       const documentExists = await checkDocuments();
       console.log('Received document existence:', documentExists);
-      setPvExiste(documentExists);  // Update your state here based on the existence of documents
+      setPvExiste(documentExists);  
     };
     performCheck();
   }, []);
@@ -105,7 +105,7 @@ const Home = () => {
   }
   
   return (
-         <Stack.Navigator initialRouteName={screen} key={screen} screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName="EnvoiDeDonneer" key={screen} screenOptions={{headerShown:false}}>
             <Stack.Screen name="CreationSession" component={CreationSession} initialParams={{ipAdress:ipAdress}} />
             <Stack.Screen name="PV" component={PV} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ErrorConnection" component={ErrorConnection} initialParams={{ipAdress:ipAdress}}/>
@@ -114,8 +114,6 @@ const Home = () => {
             <Stack.Screen name="DemandeRefuser" component={DemandeRefuser} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="EnvoiDeDonneer" component={EnvoiDeDonneer} initialParams={{ipAdress:ipAdress}}/>
          </Stack.Navigator>
-    
-    
   );
 };
 
