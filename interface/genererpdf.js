@@ -134,8 +134,6 @@ const GeneratePDF = ({ route }) => {
 
   
   const generatePDF = async () => {
-    
-      
     const html = `
       <html>
         <head>
@@ -144,13 +142,13 @@ const GeneratePDF = ({ route }) => {
           <style>
   body, html {
     margin: 0;
-    padding-top: 50px;
+    padding-top: 20px;
     box-sizing: border-box;
   }
 
   @media print {
     @page {
-      margin-top: 100px; 
+      margin-top: 50px; 
       margin-bottom: 40px;
       margin-left: 25px;
       margin-right: 25px;
@@ -170,9 +168,7 @@ const GeneratePDF = ({ route }) => {
       justify-content: row;
     }
 
-    body {
-      padding-top: 120px; 
-    }
+    
   }
 
   table {
@@ -199,12 +195,31 @@ const GeneratePDF = ({ route }) => {
     text-align: center;
     margin-top: 20px;
   }
+  .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; /* Positions items on opposite ends */
+      padding: 10px 20px; /* Adds padding around the text */
+      box-sizing: border-box; /* Includes padding in width calculation */
+    }
+    .header span {
+      font-size: 16px; /* Adjust font size as needed */
+    }
+    .line-under-header {
+      height: 2px; /* Adjust the thickness of the line */
+      background-color: black; /* Line color */
+      width: 100%; /* Line width */
+    }
 </style>
 
         </head>
         <body>
          <header>
-         <p>Année universitaire :${infoAccuil.Annee_universitaire}</p>
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
        </header>
           
           <h2>Étudiants présents (Première Séance)</h2>
@@ -232,7 +247,12 @@ const GeneratePDF = ({ route }) => {
               `).join('')}
             </tbody>
           </table>
-
+            <div class="page-break"></div>
+             <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
           <h2>Étudiants absents (Première Séance)</h2>
           <table>
             <thead>
@@ -254,7 +274,13 @@ const GeneratePDF = ({ route }) => {
           </table>
 
           <div class="page-break"></div>
-
+               
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
           <h2>Étudiants présents (Deuxième Séance)</h2>
           <p>Année universitaire :${infoAccuil2.Annee_universitaire}</p>
           <p>module :${infoAccuil2.intitule_module}</p>
@@ -280,7 +306,14 @@ const GeneratePDF = ({ route }) => {
               `).join('')}
             </tbody>
           </table>
-
+            <div class="page-break"></div>
+          
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
           <h2>Étudiants absents (Deuxième Séance)</h2>
           <table>
             <thead>
@@ -302,6 +335,13 @@ const GeneratePDF = ({ route }) => {
           </table>
 
      <div class="page-break"></div>
+     
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+      
      <h2>Rapport</h2>
     ${listeRapport.length === 0 ? `
      <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
@@ -327,10 +367,17 @@ const GeneratePDF = ({ route }) => {
           `).join('')}
           </tbody>
          </table>
-        <div class="page-break"></div>`
-      }
+         `
+         }
+        <div class="page-break"></div>
         
-
+          
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
 
           <h2>Surveillants</h2>
           <table>
@@ -342,11 +389,11 @@ const GeneratePDF = ({ route }) => {
             </thead>
             <tbody>
             ${Object.entries(surveillantSignatures).map(([name, signatureDataUrl]) => `
-            <tr>
-              <td>${name}</td>
-              <td><img src="${signatureDataUrl}" alt="Signature de ${name}" style="height: 100px; width: 100px;" /></td>
-            </tr>
-          `).join('')}
+              <tr>
+                <td>${name}</td>
+                <td><img src="${signatureDataUrl}" alt="Signature de ${name}" style="height: 100px; width: 100px;" /></td>
+              </tr>
+            `).join('')}
             </tbody>
           </table>
         </body>

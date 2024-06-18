@@ -18,7 +18,7 @@ const SignatureScreen = ({navigation,route}) => {
 
  
  const handleOK = (signatureBase64) => {
-    addSignature(surveillant.nom_complet, signatureBase64);
+    addSignature(surveillant.nomComplet_s, signatureBase64);
     Alert.alert('Success', 'Signature captured successfully!');
 
     const updatedSurveillant = {
