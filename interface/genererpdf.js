@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Alert, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { View, Button, Alert, ActivityIndicator, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -28,7 +28,8 @@ const GeneratePDF = ({ route }) => {
 
   
   const navigation=useNavigation();
-  const {listeRapport,ipAdress }=useEtudiants();
+  const ipAdress=route.params.ipAdress;
+  const [listeRapport,setListeRapport]=useState([]);
   const {  surveillantSignatures } = route.params;
   console.log(surveillantSignatures);
   const [data, setData] = useState({
@@ -40,7 +41,24 @@ const GeneratePDF = ({ route }) => {
   });
   const [infoAccuil, setInfoAccuil] = useState({});
   const [infoAccuil2, setInfoAccuil2] = useState({});
-  
+  const fetchRapports = async () => {
+    try {
+      const response = await axios.get(`http://${ipAdress}:5984/rapport/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      
+      // Extracting documents from the response
+      const rapports = response.data.rows.map(row=>row.doc);
+      console.log('***********');
+      
+     setListeRapport(rapports);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  };
   const fetchEtudiants = async () => {
     try {
       setLoading(true);
@@ -67,6 +85,7 @@ const GeneratePDF = ({ route }) => {
   
   useEffect(() => {
     fetchEtudiants();
+    fetchRapports();
   }, []);
 
   const fetchAccuill = async () => {
@@ -431,17 +450,46 @@ const GeneratePDF = ({ route }) => {
 
  
 
- 
+  const image = require('./image.png');
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ alignItems: 'center' }}>
-           <TouchableOpacity onPress={generatePDF}><Text>consulter le pv</Text></TouchableOpacity>
-          </View>
+      <View style={styles.container}>
+          <Image source={image} style={styles.image}/>
+          
+          <TouchableOpacity style={styles.button} onPress={generatePDF}>
+          <Text style={styles.buttonText}>consulter le pv</Text>
+            </TouchableOpacity>
+          
        
       </View>
     );
   
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor:'#4D4D69'
+  },button: {
+      marginTop: 100,
+      padding: 10,
+      width: 350,
+      backgroundColor:'#238AF5',
+      borderRadius: 25,
+    },
+    buttonText:{
+      color:'#fff',
+      alignSelf:'center',
+      fontWeight:'bold',
+      fontSize:20,
+    },image:{
+      height:250,
+      width:'110%',
+      marginBottom: 50
+    }
+});
 
 export default GeneratePDF;

@@ -14,13 +14,13 @@ const Acceuil = ({ route }) => {
   const navigation = useNavigation();
   const { seance } = route.params;
   const { signatures } = useSignatures();
-  const { infoAccuil } = useEtudiants();
+  const { infoAccuil,ipAdress } = useEtudiants();
    
   const handleGeneratePDF = () => {
     if (signatures == null || (typeof signatures === 'object' && Object.keys(signatures).length === 0)) {
       Alert.alert('Erreur', 'Veuillez signer avant de terminer l`examen');
     } else {
-      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
+      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures,ipAdress :ipAdress});
     }
 };
 
