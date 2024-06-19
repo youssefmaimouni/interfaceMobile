@@ -2,10 +2,13 @@ import { Image, ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, 
 import axios from 'axios';
 import { useEffect, useState } from "react";
 import base64 from 'base-64';
+import * as Device from 'expo-device';
+
 
 const username = 'admin';
 const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
+  
 
 
 const uploadPDF = async (filePath, deviceId) => {
@@ -13,13 +16,14 @@ const uploadPDF = async (filePath, deviceId) => {
   const year = currentDate.getFullYear();
   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
   const day = currentDate.getDate().toString().padStart(2, '0');
+  
 
   const file = {
     uri: filePath,
     type: 'application/pdf',
     name: `PV_${year}${month}${day}.pdf`,
   };
-
+  
   const formData = new FormData();
   formData.append('pdf', file);
   formData.append('device_id', deviceId);
@@ -38,7 +42,18 @@ const uploadPDF = async (filePath, deviceId) => {
     Alert.alert('Upload Error', `An error occurred while uploading the PDF: ${error.message}`);
   }
 };
+
+
 const EnvoiDeDonneer=({route})=>{
+  const [deviceId, setDeviceId] = useState('');
+  const [listlocal,setListlocal]=useState({});
+  useEffect(() => {
+    const fetchDeviceId = () => {
+      setDeviceId(Device.osBuildId);
+    };
+    fetchDeviceId();
+  }, []);
+  const pdfpath=route.params.pdfpath;
     const ipAdress=route.params.ipAdress;
     const [infoSessionDeux,setInfoSessionDeux]=useState([]);
     const [infoSessioUn,setInfoSessioUn]=useState([]);
@@ -55,7 +70,7 @@ const EnvoiDeDonneer=({route})=>{
           }
         });
         
-        // Extracting documents from the response
+       
         const rapports = response.data.rows.map(row=>row.doc);
         console.log('+++++++++++++');
        setListeRapport(rapports);
@@ -170,6 +185,22 @@ const EnvoiDeDonneer=({route})=>{
                 console.error('Error fetching documents:', error);
               }
             };
+            const fetchLocal = async () => {
+              try {
+               console.log('fetch fetch');
+                const response = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+               headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Basic ${encodedCredentials}`
+          } });
+           const local = response.data.rows.map(row => row.doc);
+            setListlocal(local);
+            console.log('Local data fetched:', local);
+          } catch (error) {
+          console.error('Error fetching local documents:', error);
+  }
+};
+     
             useEffect(()=>{
               fetchStudentsUn();
               fetchStudentsDeux();
@@ -177,6 +208,7 @@ const EnvoiDeDonneer=({route})=>{
               sessionDeux();
               sessionUn();
               fetchRapports();
+              fetchLocal();
             },[])
     const associer = async () => {
       try {
@@ -218,12 +250,41 @@ const EnvoiDeDonneer=({route})=>{
                     },
                     timeout: 10000
                   });
-             console.log(response.data);
+           
+               
+                
+     
 
+
+
+const deletelocal = async () => {
+  const url = `http://${ipAdress}:5984/local`;
+  try {
+      await Promise.all(listlocal.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  // Ensure you include the revision id (_rev) for CouchDB deletion
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting local documents:', error);
+  }
+};
+             
+              console.log(response.data);
+             uploadPDF(pdfpath,deviceId);
+            
+             deletelocal();
+            
              } catch (error) {
               console.error(error);
             }
           }
+          
+      
 
           const image = require('./interface/demande.jpg');
     return(

@@ -29,8 +29,8 @@ const Home = () => {
   const checkDocuments = async () => {
     try {
       const responses = await Promise.all([
-        // axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
-        // axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsdeux/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
+        axios.get(`http://${ipAdress}:5984/etudiantsun/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } }),
         axios.get(`http://${ipAdress}:5984/rapport/_all_docs?limit=1`, { headers: { 'Authorization': `Basic ${encodedCredentials}` } })
       ]);
