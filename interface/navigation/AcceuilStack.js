@@ -13,7 +13,6 @@ function AcceuilStack({route}) {
         
             <Stack.Navigator  screenOptions={{headerShown:false}}>
                 <Stack.Screen name="Acceuil" component={Acceuil}    initialParams={{ seance }}/>
-                <Stack.Screen name="GeneratePDF" component={GeneratePDF} />
             </Stack.Navigator>
        
     );

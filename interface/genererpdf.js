@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Button, Alert, ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { View, Button, Alert, ActivityIndicator, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
@@ -28,7 +28,8 @@ const GeneratePDF = ({ route }) => {
 
   
   const navigation=useNavigation();
-  const {listeRapport,ipAdress }=useEtudiants();
+  const ipAdress=route.params.ipAdress;
+  const [listeRapport,setListeRapport]=useState([]);
   const {  surveillantSignatures } = route.params;
   console.log(surveillantSignatures);
   const [data, setData] = useState({
@@ -40,7 +41,24 @@ const GeneratePDF = ({ route }) => {
   });
   const [infoAccuil, setInfoAccuil] = useState({});
   const [infoAccuil2, setInfoAccuil2] = useState({});
-  
+  const fetchRapports = async () => {
+    try {
+      const response = await axios.get(`http://${ipAdress}:5984/rapport/_all_docs?include_docs=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${encodedCredentials}`
+        }
+      });
+      
+      // Extracting documents from the response
+      const rapports = response.data.rows.map(row=>row.doc);
+      console.log('***********');
+      
+     setListeRapport(rapports);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  };
   const fetchEtudiants = async () => {
     try {
       setLoading(true);
@@ -67,6 +85,7 @@ const GeneratePDF = ({ route }) => {
   
   useEffect(() => {
     fetchEtudiants();
+    fetchRapports();
   }, []);
 
   const fetchAccuill = async () => {
@@ -134,8 +153,6 @@ const GeneratePDF = ({ route }) => {
 
   
   const generatePDF = async () => {
-    
-      
     const html = `
       <html>
         <head>
@@ -144,13 +161,13 @@ const GeneratePDF = ({ route }) => {
           <style>
   body, html {
     margin: 0;
-    padding-top: 50px;
+    padding-top: 20px;
     box-sizing: border-box;
   }
 
   @media print {
     @page {
-      margin-top: 100px; 
+      margin-top: 50px; 
       margin-bottom: 40px;
       margin-left: 25px;
       margin-right: 25px;
@@ -170,9 +187,7 @@ const GeneratePDF = ({ route }) => {
       justify-content: row;
     }
 
-    body {
-      padding-top: 120px; 
-    }
+    
   }
 
   table {
@@ -199,12 +214,31 @@ const GeneratePDF = ({ route }) => {
     text-align: center;
     margin-top: 20px;
   }
+  .header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between; /* Positions items on opposite ends */
+      padding: 10px 20px; /* Adds padding around the text */
+      box-sizing: border-box; /* Includes padding in width calculation */
+    }
+    .header span {
+      font-size: 16px; /* Adjust font size as needed */
+    }
+    .line-under-header {
+      height: 2px; /* Adjust the thickness of the line */
+      background-color: black; /* Line color */
+      width: 100%; /* Line width */
+    }
 </style>
 
         </head>
         <body>
          <header>
-         <p>Année universitaire :${infoAccuil.Annee_universitaire}</p>
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
        </header>
           
           <h2>Étudiants présents (Première Séance)</h2>
@@ -232,7 +266,12 @@ const GeneratePDF = ({ route }) => {
               `).join('')}
             </tbody>
           </table>
-
+            <div class="page-break"></div>
+             <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
           <h2>Étudiants absents (Première Séance)</h2>
           <table>
             <thead>
@@ -254,7 +293,13 @@ const GeneratePDF = ({ route }) => {
           </table>
 
           <div class="page-break"></div>
-
+               
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
           <h2>Étudiants présents (Deuxième Séance)</h2>
           <p>Année universitaire :${infoAccuil2.Annee_universitaire}</p>
           <p>module :${infoAccuil2.intitule_module}</p>
@@ -280,7 +325,14 @@ const GeneratePDF = ({ route }) => {
               `).join('')}
             </tbody>
           </table>
-
+            <div class="page-break"></div>
+          
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
           <h2>Étudiants absents (Deuxième Séance)</h2>
           <table>
             <thead>
@@ -302,6 +354,13 @@ const GeneratePDF = ({ route }) => {
           </table>
 
      <div class="page-break"></div>
+     
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+      
      <h2>Rapport</h2>
     ${listeRapport.length === 0 ? `
      <div style="display: flex; align-items: center; justify-content: center; height: 100vh;">
@@ -327,10 +386,17 @@ const GeneratePDF = ({ route }) => {
           `).join('')}
           </tbody>
          </table>
-        <div class="page-break"></div>`
-      }
+         `
+         }
+        <div class="page-break"></div>
         
-
+          
+         <div class="header">
+            <span>UNIVERSITÉ HASSAN II FSAC</span>
+            <span>Année universitaire: ${infoAccuil.Annee_universitaire}</span>
+          </div>
+          <div class="line-under-header"></div>
+       
 
           <h2>Surveillants</h2>
           <table>
@@ -342,11 +408,11 @@ const GeneratePDF = ({ route }) => {
             </thead>
             <tbody>
             ${Object.entries(surveillantSignatures).map(([name, signatureDataUrl]) => `
-            <tr>
-              <td>${name}</td>
-              <td><img src="${signatureDataUrl}" alt="Signature de ${name}" style="height: 100px; width: 100px;" /></td>
-            </tr>
-          `).join('')}
+              <tr>
+                <td>${name}</td>
+                <td><img src="${signatureDataUrl}" alt="Signature de ${name}" style="height: 100px; width: 100px;" /></td>
+              </tr>
+            `).join('')}
             </tbody>
           </table>
         </body>
@@ -372,6 +438,9 @@ const GeneratePDF = ({ route }) => {
       } else {
         Alert.alert('PDF generated', `PDF saved to ${pdfPath}`);
       }
+      
+     
+
       navigation.navigate("EnvoiDeDonneer",{ipAdress:ipAdress,pdfPath:pdfPath});
     } catch (error) {
       console.error(error);
@@ -381,17 +450,46 @@ const GeneratePDF = ({ route }) => {
 
  
 
- 
+  const image = require('./image.png');
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <View style={{ alignItems: 'center' }}>
-           <TouchableOpacity onPress={generatePDF}><Text>consulter le pv</Text></TouchableOpacity>
-          </View>
+      <View style={styles.container}>
+          <Image source={image} style={styles.image}/>
+          
+          <TouchableOpacity style={styles.button} onPress={generatePDF}>
+          <Text style={styles.buttonText}>consulter le pv</Text>
+            </TouchableOpacity>
+          
        
       </View>
     );
   
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor:'#4D4D69'
+  },button: {
+      marginTop: 100,
+      padding: 10,
+      width: 350,
+      backgroundColor:'#238AF5',
+      borderRadius: 25,
+    },
+    buttonText:{
+      color:'#fff',
+      alignSelf:'center',
+      fontWeight:'bold',
+      fontSize:20,
+    },image:{
+      height:250,
+      width:'110%',
+      marginBottom: 50
+    }
+});
 
 export default GeneratePDF;

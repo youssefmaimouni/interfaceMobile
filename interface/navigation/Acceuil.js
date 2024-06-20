@@ -14,15 +14,16 @@ const Acceuil = ({ route }) => {
   const navigation = useNavigation();
   const { seance } = route.params;
   const { signatures } = useSignatures();
-  const { infoAccuil } = useEtudiants();
+  const { infoAccuil,ipAdress } = useEtudiants();
    
   const handleGeneratePDF = () => {
-    if (signatures) {
-      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures });
+    if (signatures == null || (typeof signatures === 'object' && Object.keys(signatures).length === 0)) {
+      Alert.alert('Erreur', 'Veuillez signer avant de terminer l`examen');
     } else {
-      console.error("No signatures found");
+      navigation.navigate('GeneratePDF', { surveillantSignatures: signatures,ipAdress :ipAdress});
     }
-  };
+};
+
 
   const showAlertWithAction = () => {
     Alert.alert(

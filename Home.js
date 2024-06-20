@@ -13,6 +13,7 @@ import base64 from 'base-64';
 import EnvoiDeDonneer from './EnvoiDeDonneer';
 import TabletteBloquer from './interface/tabletteBloquer';
 import ConnectionErr from './interface/ConnectionErr';
+import GeneratePDF from './interface/genererpdf';
 
 
 const username = 'admin';
@@ -23,7 +24,7 @@ const encodedCredentials = base64.encode(`${username}:${password}`);
 const Home = () => {
   const Stack=createNativeStackNavigator();
   const [deviceId, setDeviceId] = useState('');
-  const ipAdress='192.168.11.100';
+  const ipAdress='192.168.245.131';
   const [screen,setScreen]=useState(null);
   const [pvExiste,setPvExiste]=useState(null);
   const checkDocuments = async () => {
@@ -118,6 +119,7 @@ const Home = () => {
             <Stack.Screen name="EnvoiDeDonneer" component={EnvoiDeDonneer} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="TabletteBloquer" component={TabletteBloquer} initialParams={{ipAdress:ipAdress}}/>
             <Stack.Screen name="ConnectionErr" component={ConnectionErr} initialParams={{ipAdress:ipAdress}}/>
+            <Stack.Screen name="GeneratePDF" component={GeneratePDF} />
          </Stack.Navigator>
   );
 };
