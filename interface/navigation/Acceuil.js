@@ -47,7 +47,7 @@ const Acceuil = ({ route }) => {
   const handleOKPress = () => {
     console.log("OK Pressed");
     navigation.navigate("Seance2");
-    sendNotification("Séance 2", "Vous avez navigué vers la Séance 2.");
+    
   };
 
   const handleOKPress2 = () => {
@@ -83,17 +83,18 @@ const Acceuil = ({ route }) => {
       trigger: null, 
     });
   };
-
+const demi=infoAccuil.demi_journee_examen=='AM'?'matin' :'après-midi';
+const sea=infoAccuil.seance_examen=='S1'? 'seance 1' :'seance 2';
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground  resizeMode="cover" style={styles.image}>
       <View style={styles.card}>
       <Head />
         <View style={styles.con}>
           <Text>Année universitaire :{infoAccuil.Annee_universitaire}</Text>
           <Text>module :{infoAccuil.intitule_module}</Text>
-          <Text>seance :{infoAccuil.seance_examen}</Text>
+          <Text>seance :{sea}</Text>
           <Text>date examen :{infoAccuil.date_examen}</Text>
-          <Text>demi journée:{infoAccuil.demi_journee_examen}</Text>
+          <Text>demi journée:{demi}</Text>
           <Text>local:{infoAccuil.type_local}-{infoAccuil.num_local}</Text>
           <Timer />
           {seance === 'seance1' && (
@@ -122,10 +123,11 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#E1E7E7'
+  
+    backgroundColor: '#E1E7E7',
   },
   con: {
-    marginTop: 100,
+    
   },
   card: {
     margin: 10,

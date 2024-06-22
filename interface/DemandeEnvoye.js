@@ -1,72 +1,63 @@
-import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState, useRef } from 'react';
 import { ActivityIndicator, Button, Image, ImageBackground, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
-import * as Device from 'expo-device';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import * as Device from 'expo-device';
 
 export default function DemandeEnvoye({route}) {
   const [deviceId, setDeviceId] = useState('');
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const navigation=useNavigation();
+  const navigation = useNavigation();
   const ipAdress = route.params.ipAdress;
+  const intervalId = useRef(null);  // Using useRef to keep a mutable reference that doesn't trigger re-renders
 
   useEffect(() => {
     setDeviceId(Device.osBuildId); // Using OS Build ID as a unique identifier for demo purposes
-  }, []);
+    intervalId.current = setInterval(checkAssociationStatus, 5000); // Set up an interval to check tablet association status
 
-  const associer = async () => {
-    const data = {
-      "device_id": deviceId,
-    };
+    return () => clearInterval(intervalId.current); // Cleanup on component unmount
+  }, [deviceId]);
 
+  const checkAssociationStatus = async () => {
+    const data = { "device_id": deviceId };
     try {
-      setModalIsOpen(true);
-      const response = await axios.post(`http://${ipAdress}:8000/api/tablette/create`, data, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            timeout: 10000
-          });
-      if (response.data.status_code==201) {
-        setModalIsOpen(false);
-        console.log(response.data);
-      } else {
-        console.log(response.data);
-        navigation.navigate("ErrorConnection");
+      const response = await axios.post(`http://${ipAdress}:8000/api/tablette/getEtat`, data, {
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 10000
+      });
+      console.log("Status Check:", response.data['statut']);
+      if (response.data['statut'] === 'associer') {
+        clearInterval(intervalId.current); // Stop checking once associated
+        navigation.navigate('DemandeAccepter'); // Navigate to the associated page
       }
     } catch (error) {
-      console.log(error);
-      navigation.navigate("ErrorConnection");
+      console.error("Failed to check association status:", error);
     }
   };
+
   const image = require('./image/connexion.jpg');
   return (
-    <View  style={styles.container}>
-        <Image source={image} style={styles.image} />
-      <Text style={styles.text}>envoyée</Text>
-      <TouchableOpacity 
-        style={styles.button}
-        onPress={associer}
-       >
-        <Text style={styles.buttonText} >Envoyer une autre demande</Text>
-       </TouchableOpacity>
-      <Text style={styles.text2}>Apres la visualisation de votre demande nous vous informerons la réponse lorsque vous avez connecté </Text>
-      {modalIsOpen&&<Modal
-        isOpen={modalIsOpen}
-        onRequestClose={() => setModalIsOpen(false)}
-        contentLabel="Data Modal"
-        style={{
-          content: {
-            alignItems:'center',
-            justifyContent:'center',
-          },
-        }}
-      >
-        <ActivityIndicator size="500" color="#43bc90" />
-      </Modal>}
+    <View style={styles.container}>
+      <Image source={image} style={styles.image} />
+      <Text style={styles.text}>Demande envoyée</Text>
+      <TouchableOpacity style={styles.button} onPress={checkAssociationStatus}>
+        <Text style={styles.buttonText}>Vérifier l'état de l'association</Text>
+      </TouchableOpacity>
+      <Text style={styles.text2}>
+        Après la visualisation de votre demande nous vous informerons de la réponse lorsque vous êtes connecté
+      </Text>
+      {modalIsOpen && (
+        <Modal
+          visible={modalIsOpen}
+          onRequestClose={() => setModalIsOpen(false)}
+          transparent
+          animationType="slide"
+        >
+          <View style={styles.modalView}>
+            <ActivityIndicator size="large" color="#43bc90" />
+          </View>
+        </Modal>
+      )}
     </View>
   );
 }
@@ -78,33 +69,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text:{
-    fontSize:25,
-    marginTop:10,
-    marginBottom:30,
-    fontWeight:'bold',
-  },image:{
-    height:200,
-    width:300,
+  text: {
+    fontSize: 25,
+    marginTop: 10,
+    marginBottom: 30,
+    fontWeight: 'bold',
+  },
+  image: {
+    height: 200,
+    width: 300,
     marginBottom: 50
   },
   button: {
     marginTop: 50,
     padding: 10,
     width: 330,
-    backgroundColor:'#194a7a',
+    backgroundColor: '#194a7a',
     borderRadius: 20,
   },
-  buttonText:{
-    color:'#fff',
-    alignSelf:'center',
-    fontWeight:'bold',
-    fontSize:18,
+  buttonText: {
+    color: '#fff',
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
-  text2:{
-    fontSize:15,
-    marginTop:30,
-    fontWeight:'500',
-    color:'#006e4f'
+  text2: {
+    fontSize: 15,
+    marginTop: 30,
+    fontWeight: '500',
+    color: '#006e4f'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   }
 });

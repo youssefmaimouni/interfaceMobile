@@ -416,13 +416,13 @@ const deleteReserviste = async () => {
              deleteinfoSessioUn();
              deleteinfoSessionDeux();
              deleteReserviste();
-             
+             navigation.navigate("Initial");
              } catch (error) {
               console.error(error);
             }
           }
           
-          navigation.navigate("Initial");
+          
 
           const image = require('./interface/demande.jpg');
     return(
