@@ -9,7 +9,7 @@ const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [isActive, setIsActive] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
-  const [startTime, setStartTime] = useState("20:10"); // Set to your desired start time
+  const [startTime, setStartTime] = useState("14:06"); // Set to your desired start time
 
   useEffect(() => {
     async function requestNotificationPermission() {
