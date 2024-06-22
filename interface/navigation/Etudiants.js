@@ -16,6 +16,7 @@ function Card({ item, updateStudent }) {
   const [isReported, setIsReported] = useState(item.id_rapport != null);
   const [imageUri, setImageUri] = useState(null);
   const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
+  const navigation = useNavigation();
 
   useEffect(() => {
     const loadImage = async () => {
@@ -36,10 +37,12 @@ function Card({ item, updateStudent }) {
     updateStudent(item._id, { ...item, estPerson: newState });
   };
 
-  const toggleReport = () => {
-    const newState = !isReported;
-    setIsReported(newState);
-    updateStudent(item._id, { ...item, id_rapport: newState ? new Date().toISOString() : null });
+  
+  const togglePresenceR = () => {
+    if (!isReported) {
+      setIsReported(!isReported);
+      navigation.navigate('AddRap', { etudiant: item ,screen:'Etudiant'});
+    }
   };
 
   return (
@@ -61,7 +64,7 @@ function Card({ item, updateStudent }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, isReported ? styles.nonRepporedButton : styles.reppordButton]}
-            onPress={toggleReport}
+            onPress={togglePresenceR}
           >
             <Text style={styles.buttonText}>{isReported ? 'Rapporté' : 'Faire Rapport'}</Text>
           </TouchableOpacity>
