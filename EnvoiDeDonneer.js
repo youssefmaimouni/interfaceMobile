@@ -6,9 +6,48 @@ import * as Device from 'expo-device';
 const username = 'admin';
 const password = 'admin';
 const encodedCredentials = base64.encode(`${username}:${password}`);
+import { useNavigation } from '@react-navigation/native';
+
+  
 
 
+const uploadPDF = async (filePath, deviceId) => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = currentDate.getDate().toString().padStart(2, '0');
+  
+
+  const file = {
+    uri: filePath,
+    type: 'application/pdf',
+    name: `PV_${year}${month}${day}.pdf`,
+  };
+  
+  const formData = new FormData();
+  formData.append('pdf', file);
+  formData.append('device_id', deviceId);
+  formData.append('date', `${year}-${month}-${day}`); 
+
+  try {
+    const response = await axios.post(`http://192.168.11.100:8000/api/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    console.log('Upload successful:', response.data);
+    Alert.alert('Upload Successful', 'PDF has been uploaded successfully.');
+  } catch (error) {
+    console.error('Upload error:', error.response ? error.response.data : 'No response data');
+    Alert.alert('Upload Error', `An error occurred while uploading the PDF: ${error.message}`);
+  }
+};
+
+
+
+  
 const EnvoiDeDonneer=({route})=>{
+  const [listlocal,setListlocal]=useState({});
   const ipAdress=route.params.ipAdress;
   const pdfPath=route.params.pdfPath;
   const [infoSessionDeux,setInfoSessionDeux]=useState([]);
@@ -17,46 +56,17 @@ const EnvoiDeDonneer=({route})=>{
   const [etudiantsUn,setListeEtudiantsUn]=useState([]);
   const [etudiantsDeux,setListeEtudiantsDeux]=useState([]);
   const [listeSurveillants,setListeSurveillants]=useState([]);
+  const [reserviste,setReserviste]=useState([]);
   const [deviceId, setDeviceId] = useState('');
+  const navigation = useNavigation();
   useEffect(() => {
     const fetchDeviceId = () => {
       setDeviceId(Device.osBuildId);
     };
     fetchDeviceId();
   }, []);
-  const uploadPDF = async (filePath, deviceId) => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = currentDate.getDate().toString().padStart(2, '0');
   
-    const file = {
-      uri: filePath,
-      type: 'application/pdf',
-      name: `PV_${year}${month}${day}.pdf`,
-    };
-  
-    const formData = new FormData();
-    formData.append('pdf', file);
-    formData.append('device_id', deviceId);
-    formData.append('date', `${year}-${month}-${day}`);
-    console.log('file')
-    console.log(formData) 
-  
-    try {
-      const response = await axios.post(`http://${ipAdress}:8000/api/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Upload successful:', response.data);
-      Alert.alert('Upload Successful', 'PDF has been uploaded successfully.');
-    } catch (error) {
-      console.error('Upload error:', error.response ? error.response.data : 'No response data');
-      Alert.alert('Upload Error', `An error occurred while uploading the PDF: ${error.message}`);
-    }
-  };
-  const fetchRapports = async () => {
+    const fetchRapports = async () => {
       try {
         const response = await axios.get(`http://${ipAdress}:5984/rapport/_all_docs?include_docs=true`, {
           headers: {
@@ -65,7 +75,7 @@ const EnvoiDeDonneer=({route})=>{
           }
         });
         
-        // Extracting documents from the response
+       
         const rapports = response.data.rows.map(row=>row.doc);
         console.log('+++++++++++++');
        setListeRapport(rapports);
@@ -180,6 +190,37 @@ const EnvoiDeDonneer=({route})=>{
                 console.error('Error fetching documents:', error);
               }
             };
+            const fetchLocal = async () => {
+              try {
+               console.log('fetch fetch');
+                const response = await axios.get(`http://${ipAdress}:5984/local/_all_docs?include_docs=true`, {
+               headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Basic ${encodedCredentials}`
+          } });
+           const local = response.data.rows.map(row => row.doc);
+            setListlocal(local);
+            console.log('Local data fetched:', local);
+          } catch (error) {
+          console.error('Error fetching local documents:', error);
+  }
+};
+const fetchReserviste = async () => {
+  try {
+   console.log('fetch fetch');
+    const response = await axios.get(`http://${ipAdress}:5984/reserviste/_all_docs?include_docs=true`, {
+   headers: {
+  'Content-Type': 'application/json',
+  'Authorization': `Basic ${encodedCredentials}`
+} });
+const reserviste = response.data.rows.map(row => row.doc);
+setReserviste(reserviste);
+console.log('reserviste data fetched:', reserviste);
+} catch (error) {
+console.error('Error fetching reserviste documents:', error);
+}
+};
+     
             useEffect(()=>{
               fetchStudentsUn();
               fetchStudentsDeux();
@@ -187,6 +228,8 @@ const EnvoiDeDonneer=({route})=>{
               sessionDeux();
               sessionUn();
               fetchRapports();
+              fetchLocal();
+              fetchReserviste();
             },[])
     const associer = async () => {
       try {
@@ -228,12 +271,158 @@ const EnvoiDeDonneer=({route})=>{
                     },
                     timeout: 10000
                   });
-             console.log(response.data);
-                  uploadPDF(pdfPath,deviceId);
+           
+               
+                
+     
+
+
+
+const deletelocal = async () => {
+  const url = `http://${ipAdress}:5984/local`;
+  try {
+      await Promise.all(listlocal.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document loc deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting local documents:', error);
+  }
+};
+const deletestudentsun = async () => {
+  const url = `http://${ipAdress}:5984/etudiantsun`;
+  try {
+      await Promise.all(etudiantsUn.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document etu un deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting etu documents:', error);
+  }
+};
+const deleteetudiantsdeux = async () => {
+  const url = `http://${ipAdress}:5984/etudiantsdeux`;
+  try {
+      await Promise.all(etudiantsDeux.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document etu deux deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting etu documents:', error);
+  }
+};
+
+const deleterapport = async () => {
+  const url = `http://${ipAdress}:5984/rapport`;
+  try {
+      await Promise.all(rapport.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document rapport deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting rapport documents:', error);
+  }
+}; 
+const deletesurveillants = async () => {
+  const url = `http://${ipAdress}:5984/surveillants`;
+  try {
+      await Promise.all(listeSurveillants.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document surveillants deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting surveillants documents:', error);
+  }
+}; 
+const deleteinfoSessioUn = async () => {
+  const url = `http://${ipAdress}:5984/sessionun`;
+  try {
+    const response = await axios.delete(`${url}/${infoSessioUn._id}?rev=${infoSessioUn._rev}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    console.log('Document session un deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting session un document:', error);
+  }
+};
+
+const deleteinfoSessionDeux = async () => {
+  const url = `http://${ipAdress}:5984/sessiondeux`;
+  try {
+    const response = await axios.delete(`${url}/${infoSessionDeux._id}?rev=${infoSessionDeux._rev}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Basic ${encodedCredentials}`
+      }
+    });
+    console.log('Document session deux deleted:', response.data);
+  } catch (error) {
+    console.error('Error deleting session deux document:', error);
+  }
+};
+const deleteReserviste = async () => {
+  const url = `http://${ipAdress}:5984/reserviste`;
+  try {
+      await Promise.all(reserviste.map(async (item) => {
+          const response = await axios.delete(`${url}/${item._id}?rev=${item._rev}`, {  
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Basic ${encodedCredentials}`
+              }
+          });
+          console.log('Document Reserviste deleted:', response.data);
+      }));
+  } catch (error) {
+      console.error('Error deleting Reserviste documents:', error);
+  }
+}; 
+
+              console.log(response.data);
+             uploadPDF(pdfPath,deviceId);
+            
+             deletelocal();
+             deletestudentsun();
+             deleteetudiantsdeux();
+             deleterapport();
+             deletesurveillants();
+             deleteinfoSessioUn();
+             deleteinfoSessionDeux();
+             deleteReserviste();
+             navigation.navigate("Initial");
              } catch (error) {
               console.error(error);
             }
           }
+          
+          
 
           const image = require('./interface/demande.jpg');
     return(

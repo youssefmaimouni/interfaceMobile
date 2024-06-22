@@ -143,7 +143,7 @@ const verificationEtudiant=()=>{
             style={styles.buttonVer}
             onPress={verificationEtudiant}
           >
-            <Text style={styles.buttonText}>verifier</Text>
+            <Text style={styles.buttonText}>present</Text>
           </TouchableOpacity>
       </View>
       </View>}

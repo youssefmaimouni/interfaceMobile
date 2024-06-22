@@ -7,129 +7,108 @@ import * as FileSystem from 'expo-file-system';
 const Head = (props) => (
   <View style={styles.headContainer}>
     <Image source={require('./fsacLog.png')} style={styles.logo} />
-    <Text style={styles.year}>Année universitaire:{props.annee}</Text>
+    <Text style={styles.year}>Année universitaire: {props.annee}</Text>
   </View>
 );
-  const image = require('./backflou.png');
-  export default function Etudiants(){
-  const navigation=useNavigation();
-  const { listeEtudiants,infoAccuil,setListeEtudiants,updateStudent } = useEtudiants();
-  const [search, setSearch] = useState('');
 
-  const Card = ({ item }) => {
-    const [isPresent, setIsPresent] = useState(item.estPerson);
-    const [isReppored, setIsReppored] = useState(item.id_rapport!=null);
-    const [imageUri, setImageUri] = useState(null);
-    const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
-       
-  
-    const togglePresence = () => {
-      item.estPerson = !item.estPerson;
-      updateStudent(item._id,item);
-      setIsPresent(item.estPerson);
-    };
-    const togglePresenceR = () => {
-      if (isReppored) {
-        item.id_rapport=null;
-        updateStudent(item._id,item);
-        setIsReppored(item.id_rapport!=null);
-      } else {
-        setIsReppored(!isReppored);
-        navigation.navigate('AddRap', { etudiant: item ,screen:'Etudiant'});
-      }
-      
-    };
+function Card({ item, updateStudent }) {
+  const [isPresent, setIsPresent] = useState(item.estPerson);
+  const [isReported, setIsReported] = useState(item.id_rapport != null);
+  const [imageUri, setImageUri] = useState(null);
+  const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
+
+  useEffect(() => {
     const loadImage = async () => {
-      console.log('Loading image from filesystem...');
-      try {
-          const fileInfo = await FileSystem.getInfoAsync(imagePath);
-          if (fileInfo.exists) {
-              console.log('Image loaded from:', imagePath);
-              setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
-          } else {
-              console.log('No image found at the path');
-          }
-      } catch (error) {
-          console.error('Failed to load image:', error);
+      const fileInfo = await FileSystem.getInfoAsync(imagePath);
+      if (fileInfo.exists) {
+        setImageUri(imagePath);
+      } else {
+        console.log('No image found at:', imagePath);
+        setImageUri('path/to/default/image.jpg'); // Default image path
       }
-  };
-  useEffect(()=>{
+    };
     loadImage();
-  },[])
-   
+  }, [item.codeApogee]);
 
-      
-  
-    return (
-      <View style={styles.card}><View style= {{flexDirection:'row',flex:1,alignSelf:'flex-end'}}>
+  const togglePresence = () => {
+    const newState = !isPresent;
+    setIsPresent(newState);
+    updateStudent(item._id, { ...item, estPerson: newState });
+  };
+
+  const toggleReport = () => {
+    const newState = !isReported;
+    setIsReported(newState);
+    updateStudent(item._id, { ...item, id_rapport: newState ? new Date().toISOString() : null });
+  };
+
+  return (
+    <View style={styles.card}>
+      <View style={{ flexDirection: 'row', flex: 1, alignSelf: 'flex-end' }}>
         <Image source={{ uri: imageUri }} style={styles.image} />
         <View style={styles.cardContent}>
           <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
           <Text>Code Apogée: {item.codeApogee}</Text>
           <Text>CNE: {item.CNE}</Text>
-          <Text>numéro exam: {item.num_exam}</Text>
+          <Text>Numéro exam: {item.num_exam}</Text>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
-            style={[styles.button, item.estPerson ? styles.presentButton : styles.absentButton]}
+            style={[styles.button, isPresent ? styles.presentButton : styles.absentButton]}
             onPress={togglePresence}
           >
-            <Text style={styles.buttonText}>{item.estPerson ? 'Présent' : 'Absent'}</Text>
+            <Text style={styles.buttonText}>{isPresent ? 'Présent' : 'Absent'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.button, item.id_rapport!=null ?  styles.nonRepporedButton: styles.reppordButton]}
-            onPress={togglePresenceR}
+            style={[styles.button, isReported ? styles.nonRepporedButton : styles.reppordButton]}
+            onPress={toggleReport}
           >
-            <Text style={styles.buttonText}>{item.id_rapport!=null ? 'rapporté' :'fait Rapport' }</Text>
+            <Text style={styles.buttonText}>{isReported ? 'Rapporté' : 'Faire Rapport'}</Text>
           </TouchableOpacity>
-          
-        </View>
         </View>
       </View>
-    ); 
-  };
+    </View>
+  );
+}
 
-  const handleSearchChange = (text) => {
-    setSearch(text);
-};
-const filteredEtudiants = listeEtudiants.filter(etudiant => {
-  const searchLower = search.toLowerCase();
-  const fullName = `${etudiant.nom_etudiant.toLowerCase()} ${etudiant.prenom_etudiant.toLowerCase()}`;
-  const reversedFullName = `${etudiant.prenom_etudiant.toLowerCase()} ${etudiant.nom_etudiant.toLowerCase()}`;
-  
-  return fullName.includes(searchLower) || reversedFullName.includes(searchLower) ||
-      searchLower.split(' ').every(word => fullName.includes(word) || reversedFullName.includes(word));
-});
+export default function Etudiants() {
+  const navigation = useNavigation();
+  const { listeEtudiants, infoAccuil, updateStudent } = useEtudiants();
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = text => setSearch(text);
+
+  const filteredEtudiants = listeEtudiants.filter(etudiant => {
+    const searchLower = search.toLowerCase();
+    const fullName = `${etudiant.nom_etudiant.toLowerCase()} ${etudiant.prenom_etudiant.toLowerCase()}`;
+    return fullName.includes(searchLower) || searchLower.split(' ').every(word => fullName.includes(word));
+  });
+
   return (
-  <ImageBackground  resizeMode="cover" style={styles.container}>
-    
-      <ScrollView style={styles.scrollView}> 
-      <Head annee={ infoAccuil.Annee_universitaire}/>
-
+    <ImageBackground resizeMode="cover" style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <Head annee={infoAccuil.Annee_universitaire}/>
         <Text style={styles.title}>Liste des étudiants</Text>
         <TextInput
-                style={styles.input}
-                placeholder='Rechercher étudiant'
-                value={search}
-                onChangeText={handleSearchChange}
-            />
-            {search.length > 0 && filteredEtudiants.length > 0 && (
-                <View style={styles.list}>
-                    {filteredEtudiants.map((item) => (
-                        <TouchableOpacity key={item['codeApogee']} onPress={() => handleSelectEtudiant(item)}>
-                            <Card item={item} key={item['numeroExam']}/>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            )}
-      {!search.length > 0 && listeEtudiants.map((item)=>(
-        <Card item={item} key={item.num_exam}/>
-      ))}
-    
+          style={styles.input}
+          placeholder='Rechercher étudiant'
+          value={search}
+          onChangeText={handleSearchChange}
+        />
+        {search.length > 0 && filteredEtudiants.length > 0 ? (
+          filteredEtudiants.map((item) => (
+            <Card key={item.codeApogee} item={item} updateStudent={updateStudent} />
+          ))
+        ) : (
+          listeEtudiants.map((item) => (
+            <Card key={item.num_exam} item={item} updateStudent={updateStudent} />
+          ))
+        )}
       </ScrollView>
     </ImageBackground>
   );
 }
+
 
 
 const styles = StyleSheet.create({

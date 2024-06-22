@@ -11,12 +11,45 @@ const Head = (props) => (
       <Text style={styles.year}>Année universitaire:{props.annee}</Text>
     </View>
   );
+  function Card({ item, updateStudent }) {
 
+    const [imageUri, setImageUri] = useState(null);
+    const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
+  
+    useEffect(() => {
+      const loadImage = async () => {
+        const fileInfo = await FileSystem.getInfoAsync(imagePath);
+        if (fileInfo.exists) {
+          setImageUri(imagePath);
+        } else {
+          console.log('No image found at:', imagePath);
+          setImageUri('path/to/default/image.jpg'); // Default image path
+        }
+      };
+      loadImage();
+    }, [item.codeApogee]);
+  
+    
+  
+    return (
+      <View style={styles.card}>
+        <View style={{ flexDirection: 'row', flex: 1, alignSelf: 'flex-end' }}>
+          <Image source={{ uri: imageUri }} style={styles.image} />
+          <View style={styles.cardContent}>
+            <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
+            <Text>Code Apogée: {item.codeApogee}</Text>
+            <Text>CNE: {item.CNE}</Text>
+            <Text>Numéro exam: {item.num_exam}</Text>
+          </View>
+         
+        </View>
+      </View>
+    );
+  }
 
     export default function AddRapp({ route }) {
     const etudiant = route.params?.etudiant;
     const screen = route.params?.screen;
-
 
     const rapportInitial = route.params?.rapport;
     const [isEditing, setIsEditing] = useState(route.params?.modif || false);
@@ -62,7 +95,12 @@ const Head = (props) => (
                     etudiant: selectedEtudiant,
                 };
                 updateRapport(rapportInitial._id,updatedRapport);
-                navigation.navigate(screen);
+                if(screen) {
+                    navigation.navigate(screen);
+                  } else {
+                    
+                    console.error('No screen name provided in parameters');
+                  }
             } else {
                 const exists = listeRapport.some(rapport => rapport.etudiant.codeApogee === selectedEtudiant.codeApogee);
 
@@ -76,7 +114,12 @@ const Head = (props) => (
                     addRapport(rapport);
                     console.log(selectedEtudiant);
                     updateStudent(selectedEtudiant._id,selectedEtudiant);
-                    navigation.navigate(screen);
+                    if(screen) {
+                        navigation.navigate(screen);
+                      } else {
+                       
+                        console.error('No screen name provided in parameters');
+                      }
                 } else {
                     alert("Un rapport pour cet étudiant existe déjà.");
 
@@ -97,39 +140,7 @@ const Head = (props) => (
     };
 
    
-    const Card = ({ item }) => {
-        const [imageUri, setImageUri] = useState(null);
-        const imagePath = `${FileSystem.documentDirectory}${item.codeApogee}.jpg`;
-        const loadImage = async () => {
-            console.log('Loading image from filesystem...');
-            try {
-                const fileInfo = await FileSystem.getInfoAsync(imagePath);
-                if (fileInfo.exists) {
-                    console.log('Image loaded from:', imagePath);
-                    setImageUri(imagePath + '?' + new Date().getTime()); // Adding a timestamp to the URI to avoid caching issues
-                } else {
-                    console.log('No image found at the path');
-                }
-            } catch (error) {
-                console.error('Failed to load image:', error);
-            }
-        };
-        useEffect(()=>{
-          loadImage();
-        },[])
-        
-      return (
-        <View style={styles.card}>
-          <Image source={{ uri: imageUri }} style={styles.image} />
-          <View style={styles.cardContent}>
-            <Text style={styles.name}>{item.nom_etudiant} {item.prenom_etudiant}</Text>
-            <Text>Code Apogée: {item['codeApogee']}</Text>
-            <Text>CNE: {item.CNE}</Text>
-            <Text>numéro exam: {item['numeroExam']}</Text>
-            </View>
-        </View> 
-      );
-    };
+    
 
     const filteredEtudiants = listeEtudiants.filter(etudiant => {
         const searchLower = search.toLowerCase();
@@ -243,7 +254,7 @@ const styles = StyleSheet.create({
     },
     year: {
         fontSize:13,
-        marginLeft:110,
+        marginLeft:90,
         marginTop:20,
       },
     scrollView: {

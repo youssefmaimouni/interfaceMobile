@@ -22,15 +22,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const sendNotification = async () => {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Hello",
-      body: "This is a test notification",
-    },
-    trigger: null,
-  });
-};
+
 
 export default function Initial() {
   const navigation = useNavigation();
@@ -59,12 +51,7 @@ export default function Initial() {
     };
   }, []);
 
-  useEffect(() => {
-    if (expoPushToken) {
-      sendNotification(); // Send a test notification after registering
-    }
-  }, [expoPushToken]);
-
+  
   const image = require('./bgg.jpeg');
   return (
     <ImageBackground source={image} style={styles.container}>
@@ -97,30 +84,38 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     backgroundColor: '#fff',
-    marginTop: '40%',
+    marginTop: '50%',
     flex: 1,
     borderTopRightRadius: 30,
     borderTopLeftRadius: 30,
     paddingHorizontal: 20,
     paddingVertical: 30,
+    marginLeft:0,
+    marginRight:0,
   },
   textprin: {
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: 'bold',
     color: 'black',
     textAlign: 'center',
-    marginBottom: 20,
+    marginBottom: 50,
+    marginTop :40
   },
   text: {
-    fontSize: 13,
+    fontSize: 16,
     color: '#373A40',
     marginBottom: 30,
+    marginTop:30,
+    marginBottom:50
   },
   button: {
     backgroundColor: '#238AF5',
     borderRadius: 20,
     padding: 10,
     alignItems: 'center',
+    marginBottom: 5,
+    marginTop:20
+
   },
   textbutton: {
     color: 'white',

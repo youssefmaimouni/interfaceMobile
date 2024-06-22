@@ -35,7 +35,7 @@ export default function Rapp({ navigation }) {
          {listeRapport.map( (item)  => (
                 
                 <View style={styles.card} key={item.etudiant.codeApogee}>
-                  <TouchableOpacity onPress={() => navigation.navigate('AddRapport', { rapport: item, modif: true })}>
+                  <TouchableOpacity onPress={() => navigation.navigate('AddRapport', { rapport: item, modif: true, screen:'Rapport'})}>
                   <Text style={styles.cardText}>{item.titre_rapport}</Text>
                   <View style={styles.contenu}>
                   <Text style={styles.cardText}>{item.etudiant.nom_etudiant}</Text>

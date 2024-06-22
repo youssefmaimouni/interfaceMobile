@@ -51,7 +51,7 @@ export default function Seance1({route}) {
         }
       });
       
-      // Extracting documents from the response
+      
       const students = response.data.rows.map(row=>row.doc);
       console.log('---------------------');
       
@@ -62,7 +62,7 @@ export default function Seance1({route}) {
   };
   const updateRapport = async (docId, updatedFields) => {
     try {
-      // Fetching the student by code-apogée
+      
       const fetchUrl = `http://${ipAdress}:5984/rapport/${docId}`;
       let response = await axios.get(fetchUrl, {
         headers: {
