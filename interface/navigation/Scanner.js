@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   },buttonVer: {
     alignSelf: 'flex-end',
     backgroundColor:'#01579b',
-    height:30,
+    height:32,
     padding:5,
     width:100,
     margin: 18,
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
 },buttonRapp: {
     alignSelf: 'flex-start',
     backgroundColor:'#01579b',
-    height:30,
+    height:32,
     width:100,
     margin: 18,
     padding:5,

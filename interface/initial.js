@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: '#373A40',
-    marginBottom: 30,
-    marginTop:10,
+    marginBottom: 20,
     //marginBottom:50
   },
   button: {
@@ -114,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     marginBottom: 5,
-    marginTop:20
+    marginTop:10
 
   },
   textbutton: {

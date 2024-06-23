@@ -5,7 +5,7 @@ import * as Device from 'expo-device';
 
 
 const SendData=()=>{
-    const ipAdress='192.168.11.100';
+    const ipAdress='192.168.17.131';
     const [deviceId, setDeviceId] = useState('');
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const SendData=()=>{
           "prenom_etudiant": "Fatima",
           "numéro-exam": 1,
           "CNE": "123456",
-          "photo": "http://www.fsac.ac.ma/photo/abcde",
+          "photo": "http://127.0.0.1:8000/storage/photos/10001.jpeg",
           "estPerson": false
         },
         {
@@ -28,7 +28,7 @@ const SendData=()=>{
           "prenom_etudiant": "Mohammed",
           "numéro-exam": 2,
           "CNE": "654321",
-          "photo": "http://www.fsac.ac.ma/photo/xyzzy",
+          "photo": "http://127.0.0.1:8000/storage/photos/10002.jpeg",
           "estPerson": false
         },
         {
@@ -37,7 +37,7 @@ const SendData=()=>{
           "prenom_etudiant": "Nawal",
           "numéro-exam": 3,
           "CNE": "987654",
-          "photo": "http://www.fsac.ac.ma/photo/pqrst",
+          "photo": "http://127.0.0.1:8000/storage/photos/10003.jpeg",
           "estPerson": false
         },
         {
@@ -46,7 +46,7 @@ const SendData=()=>{
           "prenom_etudiant": "Youssef",
           "numéro-exam": 4,
           "CNE": "456789",
-          "photo": "http://www.fsac.ac.ma/photo/lmnop",
+          "photo": "http://127.0.0.1:8000/storage/photos/10004.jpeg",
           "estPerson": false
         },
         {
@@ -55,7 +55,7 @@ const SendData=()=>{
           "prenom_etudiant": "Khadija",
           "numéro-exam": 5,
           "CNE": "987654",
-          "photo": "http://www.fsac.ac.ma/photo/defgh",
+          "photo": "http://127.0.0.1:8000/storage/photos/10005.jpeg",
           "estPerson": false
         },
         {
@@ -64,7 +64,7 @@ const SendData=()=>{
           "prenom_etudiant": "Ahmed",
           "numéro-exam": 6,
           "CNE": "234567",
-          "photo": "http://www.fsac.ac.ma/photo/ghijk",
+          "photo": "http://127.0.0.1:8000/storage/photos/10006.jpeg",
           "estPerson": false
         },
         {
@@ -73,7 +73,7 @@ const SendData=()=>{
           "prenom_etudiant": "Amina",
           "numéro-exam": 7,
           "CNE": "345678",
-          "photo": "http://www.fsac.ac.ma/photo/abcde",
+          "photo": "http://127.0.0.1:8000/storage/photos/10007.jpeg",
           "estPerson": false
         },
         {
@@ -82,7 +82,7 @@ const SendData=()=>{
           "prenom_etudiant": "Omar",
           "numéro-exam": 8,
           "CNE": "876543",
-          "photo": "http://www.fsac.ac.ma/photo/jklmn",
+          "photo": "http://127.0.0.1:8000/storage/photos/10008.jpeg",
           "estPerson": false
         },
         {
@@ -91,7 +91,7 @@ const SendData=()=>{
           "prenom_etudiant": "Salma",
           "numéro-exam": 9,
           "CNE": "987655",
-          "photo": "http://www.fsac.ac.ma/photo/mnopq",
+          "photo": "http://127.0.0.1:8000/storage/photos/10009.jpeg",
           "estPerson": false
         },
         {
@@ -100,7 +100,7 @@ const SendData=()=>{
           "prenom_etudiant": "Mohamed",
           "numéro-exam": 10,
           "CNE": "765432",
-          "photo": "http://www.fsac.ac.ma/photo/qrsuv",
+          "photo": "http://127.0.0.1:8000/storage/photos/10010.jpeg",
           "estPerson": false
         },
         {
@@ -109,7 +109,7 @@ const SendData=()=>{
           "prenom_etudiant": "Fadwa",
           "numéro-exam": 11,
           "CNE": "654321",
-          "photo": "http://www.fsac.ac.ma/photo/tuvwx",
+          "photo": "http://127.0.0.1:8000/storage/photos/10011.jpeg",
           "estPerson": false
         },
         {
@@ -118,7 +118,7 @@ const SendData=()=>{
           "prenom_etudiant": "Houda",
           "numéro-exam": 12,
           "CNE": "543219",
-          "photo": "http://www.fsac.ac.ma/photo/efghi",
+          "photo": "http://127.0.0.1:8000/storage/photos/10012.jpeg",
           "estPerson": false
         },
         {
@@ -127,7 +127,7 @@ const SendData=()=>{
           "prenom_etudiant": "Othmane",
           "numéro-exam": 13,
           "CNE": "234567",
-          "photo": "http://www.fsac.ac.ma/photo/ijklm",
+          "photo": "http://127.0.0.1:8000/storage/photos/10013.jpeg",
           "estPerson": false
         },
         {
@@ -136,7 +136,7 @@ const SendData=()=>{
           "prenom_etudiant": "Sanaa",
           "numéro-exam": 14,
           "CNE": "432198",
-          "photo": "http://www.fsac.ac.ma/photo/mnopq",
+          "photo": "http://127.0.0.1:8000/storage/photos/10014.jpeg",
           "estPerson": false
         },
         {
@@ -145,7 +145,7 @@ const SendData=()=>{
           "prenom_etudiant": "Fatima Zahra",
           "numéro-exam": 15,
           "CNE": "321987",
-          "photo": "http://www.fsac.ac.ma/photo/xyzzy",
+          "photo": "http://127.0.0.1:8000/storage/photos/10015.jpeg",
           "estPerson": false
         },
         {
@@ -154,7 +154,7 @@ const SendData=()=>{
           "prenom_etudiant": "Yasmine",
           "numéro-exam": 16,
           "CNE": "876543",
-          "photo": "http://www.fsac.ac.ma/photo/uvwxy",
+          "photo": "http://127.0.0.1:8000/storage/photos/10016.jpeg",
           "estPerson": false
         },
         {
@@ -163,7 +163,7 @@ const SendData=()=>{
           "prenom_etudiant": "Youssef",
           "numéro-exam": 17,
           "CNE": "987656",
-          "photo": "http://www.fsac.ac.ma/photo/qrsuv",
+          "photo": "http://127.0.0.1:8000/storage/photos/10017.jpeg",
           "estPerson": false
         },
         {
@@ -172,7 +172,7 @@ const SendData=()=>{
           "prenom_etudiant": "Sara",
           "numéro-exam": 18,
           "CNE": "876543",
-          "photo": "http://www.fsac.ac.ma/photo/ghijk",
+          "photo": "http://127.0.0.1:8000/storage/photos/10018.jpeg",
           "estPerson": false
         },
         {
@@ -181,7 +181,7 @@ const SendData=()=>{
           "prenom_etudiant": "Mehdi",
           "numéro-exam": 19,
           "CNE": "987649",
-          "photo": "http://www.fsac.ac.ma/photo/abcde",
+          "photo": "http://127.0.0.1:8000/storage/photos/10019.jpeg",
           "estPerson": false
         },
         {
@@ -190,7 +190,7 @@ const SendData=()=>{
           "prenom_etudiant": "Nada",
           "numéro-exam": 20,
           "CNE": "876543",
-          "photo": "http://www.fsac.ac.ma/photo/fghij",
+          "photo": "http://127.0.0.1:8000/storage/photos/10020.jpeg",
           "estPerson": false
         }
       ];
@@ -201,7 +201,7 @@ const SendData=()=>{
               "prenom_etudiant": "Fatima",
               "numéro-exam": 1,
               "CNE": "123456",
-              "photo": "http://www.fsac.ac.ma/photo/abcde",
+              "photo": "http://127.0.0.1:8000/storage/photos/10021.jpeg",
               "estPerson": false
           },
           {
@@ -210,7 +210,7 @@ const SendData=()=>{
               "prenom_etudiant": "Youssef",
               "numéro-exam": 2,
               "CNE": "123457",
-              "photo": "http://www.fsac.ac.ma/photo/abcd1",
+              "photo": "http://127.0.0.1:8000/storage/photos/10022.jpeg",
               "estPerson": false
           },
           {
@@ -219,7 +219,7 @@ const SendData=()=>{
               "prenom_etudiant": "Sara",
               "numéro-exam": 3,
               "CNE": "123458",
-              "photo": "http://www.fsac.ac.ma/photo/abcd2",
+              "photo": "http://127.0.0.1:8000/storage/photos/10023.jpeg",
               "estPerson": false
           },
           {
@@ -228,7 +228,7 @@ const SendData=()=>{
               "prenom_etudiant": "Karim",
               "numéro-exam": 4,
               "CNE": "123459",
-              "photo": "http://www.fsac.ac.ma/photo/abcd3",
+              "photo": "http://127.0.0.1:8000/storage/photos/10024.jpeg",
               "estPerson": false
           },
           {
@@ -237,7 +237,7 @@ const SendData=()=>{
               "prenom_etudiant": "Amina",
               "numéro-exam": 5,
               "CNE": "123460",
-              "photo": "http://www.fsac.ac.ma/photo/abcd4",
+              "photo": "http://127.0.0.1:8000/storage/photos/10025.jpeg",
               "estPerson": false
           },
           {
@@ -246,7 +246,7 @@ const SendData=()=>{
               "prenom_etudiant": "Hanae",
               "numéro-exam": 6,
               "CNE": "123461",
-              "photo": "http://www.fsac.ac.ma/photo/abcd5",
+              "photo": "http://127.0.0.1:8000/storage/photos/10026.jpeg",
               "estPerson": false
           },
           {
@@ -255,7 +255,7 @@ const SendData=()=>{
               "prenom_etudiant": "Leila",
               "numéro-exam": 7,
               "CNE": "123462",
-              "photo": "http://www.fsac.ac.ma/photo/abcd6",
+              "photo": "http://127.0.0.1:8000/storage/photos/10027.jpeg",
               "estPerson": false
           },
           {
@@ -264,7 +264,7 @@ const SendData=()=>{
               "prenom_etudiant": "Mohammed",
               "numéro-exam": 8,
               "CNE": "123463",
-              "photo": "http://www.fsac.ac.ma/photo/abcd7",
+              "photo": "http://127.0.0.1:8000/storage/photos/10028.jpeg",
               "estPerson": false
           },
           {
@@ -273,7 +273,7 @@ const SendData=()=>{
               "prenom_etudiant": "Imane",
               "numéro-exam": 9,
               "CNE": "123464",
-              "photo": "http://www.fsac.ac.ma/photo/abcd8",
+              "photo": "http://127.0.0.1:8000/storage/photos/10029.jpeg",
               "estPerson": false
           },
           {
@@ -282,7 +282,7 @@ const SendData=()=>{
               "prenom_etudiant": "Hassan",
               "numéro-exam": 10,
               "CNE": "123465",
-              "photo": "http://www.fsac.ac.ma/photo/abcd9",
+              "photo": "http://127.0.0.1:8000/storage/photos/10030.jpeg",
               "estPerson": false
           },
           {
@@ -291,7 +291,7 @@ const SendData=()=>{
               "prenom_etudiant": "Rachid",
               "numéro-exam": 11,
               "CNE": "123466",
-              "photo": "http://www.fsac.ac.ma/photo/abcda",
+              "photo": "http://127.0.0.1:8000/storage/photos/10031.jpeg",
               "estPerson": false
           },
           {
@@ -300,7 +300,7 @@ const SendData=()=>{
               "prenom_etudiant": "Samir",
               "numéro-exam": 12,
               "CNE": "123467",
-              "photo": "http://www.fsac.ac.ma/photo/abcdb",
+              "photo": "http://127.0.0.1:8000/storage/photos/10032.jpeg",
               "estPerson": false
           },
           {
@@ -309,7 +309,7 @@ const SendData=()=>{
               "prenom_etudiant": "Salma",
               "numéro-exam": 13,
               "CNE": "123468",
-              "photo": "http://www.fsac.ac.ma/photo/abcdc",
+              "photo": "http://127.0.0.1:8000/storage/photos/10033.jpeg",
               "estPerson": false
           },
           {
@@ -318,7 +318,7 @@ const SendData=()=>{
               "prenom_etudiant": "Yasmina",
               "numéro-exam": 14,
               "CNE": "123469",
-              "photo": "http://www.fsac.ac.ma/photo/abcdd",
+              "photo": "http://127.0.0.1:8000/storage/photos/10034.jpeg",
               "estPerson": false
           },
           {
@@ -327,7 +327,7 @@ const SendData=()=>{
               "prenom_etudiant": "Othmane",
               "numéro-exam": 15,
               "CNE": "123470",
-              "photo": "http://www.fsac.ac.ma/photo/abcde",
+              "photo": "http://127.0.0.1:8000/storage/photos/10035.jpeg",
               "estPerson": false
           },
           {
@@ -336,7 +336,7 @@ const SendData=()=>{
               "prenom_etudiant": "Anwar",
               "numéro-exam": 16,
               "CNE": "123471",
-              "photo": "http://www.fsac.ac.ma/photo/abcdf",
+              "photo": "http://127.0.0.1:8000/storage/photos/10036.jpeg",
               "estPerson": false
           },
           {
@@ -345,7 +345,7 @@ const SendData=()=>{
               "prenom_etudiant": "Jalil",
               "numéro-exam": 17,
               "CNE": "123472",
-              "photo": "http://www.fsac.ac.ma/photo/abcdg",
+              "photo": "http://127.0.0.1:8000/storage/photos/10037.jpeg",
               "estPerson": false
           },
           {
@@ -354,7 +354,7 @@ const SendData=()=>{
               "prenom_etudiant": "Nour",
               "numéro-exam": 18,
               "CNE": "123473",
-              "photo": "http://www.fsac.ac.ma/photo/abcdh",
+              "photo": "http://127.0.0.1:8000/storage/photos/10038.jpeg",
               "estPerson": false
           },
           {
@@ -363,7 +363,7 @@ const SendData=()=>{
               "prenom_etudiant": "Hamid",
               "numéro-exam": 19,
               "CNE": "123474",
-              "photo": "http://www.fsac.ac.ma/photo/abcdi",
+              "photo": "http://127.0.0.1:8000/storage/photos/10039.jpeg",
               "estPerson": false
           },
           {
@@ -372,7 +372,7 @@ const SendData=()=>{
               "prenom_etudiant": "Rania",
               "numéro-exam": 20,
               "CNE": "123475",
-              "photo": "http://www.fsac.ac.ma/photo/abcdj",
+              "photo": "http://127.0.0.1:8000/storage/photos/10040.jpeg",
               "estPerson": false
           }
       ]
@@ -400,7 +400,7 @@ const SendData=()=>{
         "id_session": 1,
         "code_module": 1,
         "id_pv": 1,
-        "date_examen": "2024-06-22",
+        "date_examen": "2024-06-23",
         "demi_journee_examen": "PM",
         "seance_examen": "S1"
       }
@@ -408,7 +408,7 @@ const SendData=()=>{
         "id_session": 1,
         "code_module": 2,
         "id_pv": 1,
-        "date_examen": "2024-06-22",
+        "date_examen": "2024-06-23",
         "demi_journee_examen": "PM",
         "seance_examen": "S2"
       }
@@ -895,7 +895,7 @@ const SendData=()=>{
             const affectation ={
               "id_tablette": 1,
               "id_local": 1,
-              "date_affectation": "2024-06-22",
+              "date_affectation": "2024-06-23",
               "demi_journee_affectation": "PM"
             }
             const affectation2 ={

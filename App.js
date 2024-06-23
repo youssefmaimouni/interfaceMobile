@@ -10,11 +10,11 @@ import GetPhoto from "./GetPhoto";
 const App = () => {
 
   return (
-       <NavigationContainer>
-        <Startstack/>
-       </NavigationContainer>
+      //  <NavigationContainer>
+      //   <Startstack/>
+      //  </NavigationContainer>
     //<EnvoiDeDonneer/> 
-    //<SendData />
+     <SendData />
     //<GetPhoto />s
     //<TestGetPV />
   );
